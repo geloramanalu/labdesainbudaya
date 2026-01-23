@@ -1,6 +1,16 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import localFont from 'next/font/local';
+ 
+// const projektBlackbird = localFont({
+//   src: '../public/font/projekt-blackbird-v2.otf',
+//   variable: '--font-projekt-blackbird',
+//   display: 'swap',
+//   weight: '400',
+//   style: 'normal',
+// });
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
