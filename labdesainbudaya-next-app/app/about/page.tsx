@@ -60,7 +60,7 @@ const HeroAbout = () => {
       {/* 1. Background Image (Layer: Bottom) */}
       <div className="absolute inset-0 opacity-70 z-0">
         <Image 
-          src="/About/hero/about-hero-image.png" // Replace with actual asset
+          src="/About/hero/about-hero-image.png" 
           alt="Students in workshop"
           fill
           className="object-cover grayscale"
@@ -68,7 +68,7 @@ const HeroAbout = () => {
         />
       </div>
 
-      {/* 2. "Blur" Gradient Component (Layer: Middle) */}
+      {/* blur component */}
       <div 
         className="absolute bottom-0 left-0 w-full h-[60%] z-10 pointer-events-none"
         style={{
@@ -76,18 +76,18 @@ const HeroAbout = () => {
         }}
       />
 
-      {/* Hero Text (Layer: Top - Z-Index 20) 
-          Note: We fade this out when the card expands to avoid clutter 
+      {/* 
+          fade out when the card expands to avoid clutter 
       */}
       <div className={`absolute top-24 left-0 w-full flex flex-col items-center z-20 transition-opacity duration-300 ${isExpanded ? 'opacity-0' : 'opacity-100'}`}>
         <h1 className="text-5xl font-light text-center text-white leading-[1.1] tracking-wide">
-          <span className="block font-normal">LAB</span>
-          <span className="block">DESAIN</span>
-          <span className="block">BUDAYA</span>
+          <span className="block font-normal">Lab</span>
+          <span className="block">Desain</span>
+          <span className="block">Budaya</span>
         </h1>
       </div>
 
-      {/* 3. Accordion Card (Layer: Top-most - Z-Index 30) */}
+      {/* accordion card */}
       <div 
       onClick={() => setIsExpanded(!isExpanded)} 
         className={`
@@ -105,7 +105,7 @@ const HeroAbout = () => {
           </p>
         </div>
 
-        {/* Expandable Content (The Detailed Description) */}
+      {/* expand about */}
         <div 
           className={`
             overflow-hidden transition-all duration-500 ease-in-out 
@@ -128,7 +128,6 @@ const HeroAbout = () => {
           </div>
         </div>
 
-        {/* Toggle Button */}
         <div className="flex justify-end mt-4 shrink-0">
             <button 
                 className="border border-[#2d2d2d] p-2   transition-colors cursor-pointer group"
@@ -159,7 +158,7 @@ const PhilosophySection = () => {
       </div>
 
       {/* Title */}
-      <h2 className="text-6xl tracking-widest mb-4 mt-2 font-blackbird">MINGEI</h2>
+      <h2 className="text-6xl tracking-widest mb-4 mt-2 font-raleway">MINGEI</h2>
 
       {/* Phonetic */}
       <p className="text-xl font-serif italic text-gray-400">['mɪŋgeɪ]</p>
@@ -212,8 +211,8 @@ const FoundersSection = () => {
     <div className="bg-[#2d2d2d] text-white py-20 px-6">
       <div className="text-center mb-12">
         <span className="text-xl font-light text-gray-400 block mb-2">Pendiri</span>
-        <h2 className="text-4xl leading-tight tracking-wide font-blackbird">
-          LAB <br /> DESAIN <br /> BUDAYA
+        <h2 className="text-4xl leading-tight tracking-wide font-raleway">
+          Lab <br /> Desain <br /> Budaya
         </h2>
         <p className="mt-8 text-sm text-gray-300 leading-relaxed max-w-xs mx-auto">
           Lab Desain Budaya terlahir dari ..., berfokus pada pengembangan desain berbasis komunitas, riset material lokal, dan kolaborasi lintas disiplin di berbagai wilayah Indonesia.
@@ -286,11 +285,11 @@ const PartnersSection = () => {
   const [activePartner, setActivePartner] = useState<string | null>(null);
 
   return (
-    <div className="bg-[#F2F2F2] py-20 px-6 border-[#2d2d2d] border-2">
+    <div className="bg-[#F2F2F2] py-20 px-6 ">
 
       {/* International */}
       <div className="mb-16 text-center">
-        <h3 className="text-3xl text-[#333] mb-8 font-blackbird">Mitra Internasional</h3>
+        <h3 className="text-3xl text-[#333] mb-8 font-raleway">Mitra Internasional</h3>
       
         <div className="bg-[#E5E5E5] text-[#2d2d2d] max-w-md mx-auto overflow-hidden">
 
@@ -351,7 +350,7 @@ const PartnersSection = () => {
 
       {/* Institutional */}
       <div className="text-center mt-16">
-        <h3 className="text-3xl text-[#333] mb-8 font-blackbird">Mitra Institusi</h3>
+        <h3 className="text-3xl text-[#333] mb-8 font-raleway">Mitra Institusi</h3>
         
         {/* Grid Container */}
         <div className="grid grid-cols-2 gap-4">
@@ -408,41 +407,6 @@ const PartnerCard = ({ partner }: { partner: { id: number; name: string; src: st
   );
 };
 
-// 7. FOOTER
-const Footer = () => {
-  return (
-    <footer className="bg-[#222] text-white py-12 px-6 flex flex-col items-center text-center">
-      <div className="mb-6">
-        {/* Footer Logo */}
-        <svg width="48" height="48" viewBox="0 0 24 24" fill="white" className="opacity-90">
-          <path d="M12 2L2 7l10 5 10-5-10-5zm0 9l2.5-1.25L12 8.5l-2.5 1.25L12 11zm0 2.5l-5-2.5-5 2.5L12 22l10-8.5-5-2.5-5 2.5z" />
-        </svg>
-      </div>
-
-      <div className="mb-8">
-        <h4 className="font-bold text-sm mb-1">Fakultas Seni Rupa dan Desain</h4>
-        <p className="text-xs text-gray-400 max-w-xs mx-auto leading-relaxed">
-          Jl. Ir Sutami No.36A, Jebres, Kec. Jebres,<br />
-          Kota Surakarta, Jawa Tengah 57126
-        </p>
-      </div>
-
-      <div className="flex space-x-6 mb-12">
-        <a href="https://instagram.com/labdesainbudaya" target='_blank' className="hover:text-gray-300 transition-colors"><Instagram size={24} strokeWidth={1.5} /></a>
-        <a href="mailto:labdesainbudaya@gmail.com" className="hover:text-gray-300 transition-colors"><Mail size={24} strokeWidth={1.5} /></a>
-      </div>
-
-      <div className="text-xs text-gray-500 font-light">
-        labdesainbudaya@gmail.com
-      </div>
-
-      <h1 className="text-4xl font-thin text-white mt-8 opacity-20">
-        Lab Desain Budaya
-      </h1>
-    </footer>
-  );
-};
-
 // --- MAIN PAGE ---
 const About = () => {
   return (
@@ -452,7 +416,6 @@ const About = () => {
       <PhilosophyGrid />
       <FoundersSection />
       <PartnersSection />
-      <Footer />
     </main>
   );
 };
