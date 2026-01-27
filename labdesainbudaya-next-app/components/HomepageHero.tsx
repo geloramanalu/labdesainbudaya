@@ -1,6 +1,7 @@
 "use client"
 import Image from 'next/image';
 import { ArrowRight } from "lucide-react";
+import Link from 'next/link';
 
 const HomepageHero = () => {
   return (
@@ -39,14 +40,14 @@ const HomepageHero = () => {
         <p className="text-center">Lab Desain Budaya merupakan ruang kolaboratif yang berfokus pada <span className="font-bold">pengembangan desain</span> berbasis potensi lokal di Indonesia, khususnya wilayah Jawa Tengah. </p>
 
         {/* hero -> about CTA */}
-        <div
-          className="mt-5 transparent border border-white py-2 px-4 w-62 mx-auto flex justify-between group cursor-pointer"
-          onClick={() => window.location.href = '/about'}
-        >
-          <a className="group-hover:cursor-pointer font-raleway">Read more about us</a>
-          <ArrowRight size={20} strokeWidth={1} />
+        <Link href='/about'>
+          <div
+            className="mt-5 transparent border border-white py-2 px-4 w-62 mx-auto flex justify-between group cursor-pointer">
+            <p className="group-hover:cursor-pointer font-raleway">Read more about us</p>
+            <ArrowRight size={20} strokeWidth={1} />
 
-        </div>
+          </div>
+        </Link>
 
       </div>
     </div>
