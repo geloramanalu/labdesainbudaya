@@ -9,6 +9,11 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
+    # This tells the script to look inside your subfolder for everything
+    defaults:
+      run:
+        working-directory: ./labdesainbudaya/labdesainbudaya-next-app
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -17,7 +22,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
+          # We keep cache disabled for now to ensure it builds 
 
       - name: Install Dependencies
         run: npm install
@@ -31,6 +36,7 @@ jobs:
           server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./out/
+          # Path to the build output inside the subfolder
+          local-dir: ./labdesainbudaya/labdesainbudaya-next-app/out/
           server-dir: ./public_html/
           delete-destination: false
