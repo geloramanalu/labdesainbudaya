@@ -9,7 +9,7 @@ const HomepageHero = () => {
 
       <div className="absolute inset-0 -z-10">
         <Image
-          src="/Homepage/hero-mobile.jpg"
+          src="/homepage/hero-mobile.jpg"
           alt="Craftsman hand"
           fill
           className="object-cover object-bottom-left"

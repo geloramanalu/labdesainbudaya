@@ -96,7 +96,7 @@ const History = () => {
       <div className="flex flex-col gap-4 max-w-sm  mx-auto border border-black">
         <div className="relative overflow-hidden max-w-full h-[330px]">
           <Image
-            src="/Homepage/desa-trangsan-card-thumbnail.png"
+            src="/homepage/desa-trangsan-card-thumbnail.png"
             alt="Craftsman hand"
             fill
             className="object-cover object-left border-b border-black"
@@ -135,7 +135,7 @@ const Publikasi = () => {
         <div className="flex flex-col gap-2">
           <div className="relative overflow-hidden max-w-full h-[163px]">
             <Image
-              src="/Homepage/desa-trangsan-card-thumbnail.png"
+              src="/homepage/desa-trangsan-card-thumbnail.png"
               alt="Craftsman hand"
               fill
               className="object-cover object-left border border-black grayscale"
@@ -162,7 +162,7 @@ const Publikasi = () => {
         <div className="flex flex-col gap-2">
           <div className="relative overflow-hidden max-w-full h-[163px]">
             <Image
-              src="/Homepage/jurnal-thumbnail.png"
+              src="/homepage/jurnal-thumbnail.png"
               alt="Craftsman hand"
               fill
               className="object-cover border border-black grayscale"
@@ -210,7 +210,7 @@ const CTAPesanBuku = () => {
 
       <div className="relative overflow-hidden max-w-full mt-12">
             <Image
-              src="/Homepage/Mockup_Buku.png"
+              src="/homepage/Mockup_Buku.png"
               alt="Craftsman hand"
               width={437}
               height={278}
@@ -232,7 +232,7 @@ const CTAKolaborasi = () => {
 
       <div className="absolute inset-0 -z-10">
         <Image
-          src="/Homepage/cta-homepage.png"
+          src="/homepage/cta-homepage.png"
           alt="Craftsman hand"
           fill
           className="object-cover object-bottom-left"
