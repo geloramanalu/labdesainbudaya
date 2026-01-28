@@ -32,3 +32,4 @@ jobs:
           # the build output is just ./out/
           local-dir: ./out/ 
           server-dir: ./domains/labdesainbudaya.com/public_html/
+          timeout: 60000 #timeout: 1 mins
