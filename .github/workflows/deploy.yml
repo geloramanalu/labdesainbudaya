@@ -34,7 +34,6 @@ jobs:
           server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          # Points to the /out folder generated inside your subfolder
+          
           local-dir: ./labdesainbudaya-next-app/out/
           server-dir: ./domains/labdesainbudaya.com/public_html/
-          delete-destination: false
