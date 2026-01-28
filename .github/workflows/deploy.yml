@@ -2,39 +2,33 @@ name: Build and Deploy Next.js to Hostinger
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-
-    defaults:
-      run:
-        working-directory: labdesainbudaya-next-app
+    # NO working-directory needed anymore!
 
     steps:
-      - name: Checkout Repository
+      - name: 🚚 Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: 🏗️ Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      - name: Install Dependencies
-        run: npm install
+      - name: 📦 Install & Build
+        run: |
+          npm install
+          npm run build
 
-      - name: Build Static Site
-        run: npm run build
-
-      - name: Sync to Hostinger via FTP
+      - name: 🚀 Sync Contents of Out
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-        
-          local-dir: ./labdesainbudaya-next-app/out/
+          # the build output is just ./out/
+          local-dir: ./out/ 
           server-dir: ./domains/labdesainbudaya.com/public_html/
-          delete-destination: false
