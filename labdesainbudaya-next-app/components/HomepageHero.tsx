@@ -27,7 +27,7 @@ const HomepageHero = () => {
 
       <h1 className="leading-[1.1] tracking-wide absolute top-24 mx-auto text-7xl left-0 w-full text-center">Lab <br />
         Desain <br />
-        Budaya</h1>
+        Budaya editttttt </h1>
 
       <div className=" mb-24 flex flex-col gap-4 mx-10">
 
