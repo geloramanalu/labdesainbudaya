@@ -1,23 +1,35 @@
+# Disable directory listing and guesswork
 Options -MultiViews -Indexes
-DirectorySlash Off
+
 RewriteEngine On
 RewriteBase /
 
-# 1. Direct fix for the /about/ path
-# Points /about/ internally to about.html
-RewriteRule ^about/$ about.html [L]
+# 1. FORCE REMOVE TRAILING SLASHES
+# If it's not a real directory, strip the slash (fixes /about/ -> /about)
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} (.+)/$
+RewriteRule ^ %1 [L,R=301]
 
-# 2. Fix for /about (no slash)
+# 2. HANDLE DOUBLE SLASHES (Optional but good for consistency)
+# Fixes /about// -> /about
+RewriteCond %{REQUEST_URI} ^(.*)//+(.*)$
+RewriteRule . %1/%2 [R=301,L]
+
+# 3. MAP PATHS TO .HTML FILES
+# If /about is requested, check if about.html exists and serve it
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{DOCUMENT_ROOT}/about.html -f
-RewriteRule ^about$ about.html [L]
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{DOCUMENT_ROOT}/$1.html -f
+RewriteRule ^(.*)$ $1.html [L]
 
-# 3. Allow images inside the folder to still work
-# Example: /about/photo.jpg
+# 4. ASSET RECOVERY (The folder check)
+# If the request is for an image inside the /about/ folder, allow it
+RewriteCond %{REQUEST_URI} ^/about/.*$
 RewriteCond %{REQUEST_FILENAME} -f
-RewriteRule ^about/(.*)$ about/$1 [L]
+RewriteRule ^ - [L]
 
-# 4. Standard SPA Fallback (Crucial for static exports)
+# 5. SPA FALLBACK
+# Only if all the above fail, show the homepage
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . /index.html [L]
