@@ -3,33 +3,29 @@ name: Build and Deploy Next.js to Hostinger
 on:
   push:
     branches:
-      - main # Change this if your default branch is different
+      - main
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 🚚 Checkout Repository
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: 🏗️ Setup Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20' # Recommended for current Next.js versions
+          node-version: '20'
           cache: 'npm'
 
-      - name: 📦 Install Dependencies
-          run: npm install
+      - name: Install Dependencies
+        run: npm install
 
-      - name: 🔨 Build Static Site
+      - name: Build Static Site
         run: npm run build
-        # If your project uses Supabase or other environment variables,
-        # ensure they are also added to GitHub Secrets and called here:
-        # env:
-        #   NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
 
-      - name: 🚀 Sync to Hostinger via FTP
+      - name: Sync to Hostinger via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_HOST }}
@@ -37,6 +33,4 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./out/
           server-dir: ./public_html/
-          # Set to true only if you want to delete files on the server 
-          # that are no longer in your local /out folder
           delete-destination: false
