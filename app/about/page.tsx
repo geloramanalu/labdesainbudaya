@@ -10,17 +10,17 @@ const FOUNDERS_DATA = [
   {
     id: 'pandu',
     name: 'Pandu Purwandaru, S.Ds.,M.Ds., Ph.D',
-    image: '/About/dosen/pandu_purwandaru_photo.jpg',
+    image: '/about/dosen/pandu_purwandaru_photo.jpg',
   },
   {
     id: 'trisna',
     name: 'Trisna Dwi Putri Novitabella S.Ds., M.Ds.',
-    image: '/About/dosen/placeholders_dosen_individual.jpeg',
+    image: '/about/dosen/placeholders_dosen_individual.jpeg',
   },
   {
     id: 'silmi',
     name: 'Dott. Silmi Cahya Pradini Priliana S.T., M.Sc.',
-    image: '/About/dosen/placeholders_dosen_individual.jpeg',
+    image: '/about/dosen/placeholders_dosen_individual.jpeg',
   },
 ];
 
@@ -29,14 +29,14 @@ const MITRA_INTERNATIONAL_DATA = [
     id: 'aoki',
     name: 'Aoki Hironobu',
     desc: 'Chiba University',
-    image: '/About/dosen/placeholders_dosen_individual.jpeg',
+    image: '/about/dosen/placeholders_dosen_individual.jpeg',
 
   },
   {
     id: 'mitsuha',
     name: 'Mitsuha Sato',
     desc: 'Suha Design',
-    image: '/About/dosen/placeholders_dosen_individual.jpeg',
+    image: '/about/dosen/placeholders_dosen_individual.jpeg',
   },
 
 ];
@@ -60,7 +60,7 @@ const HeroAbout = () => {
       {/* 1. Background Image (Layer: Bottom) */}
       <div className="absolute inset-0 opacity-70 z-0">
         <Image 
-          src="/About/hero/about-hero-image.png" 
+          src="/about/hero/about-hero-image.png" 
           alt="Students in workshop"
           fill
           className="object-cover grayscale"
@@ -232,11 +232,11 @@ const FoundersSection = () => {
               }`}
           >
             <Image
-              src="/About/dosen/placeholders_founder.png" // The "3 cats" image
+              src="/about/dosen/placeholders_founder.png"
               alt="Lab Desain Budaya Founders"
               fill
               className="object-cover grayscale"
-              priority // Load priority to ensure it's ready immediately
+              priority 
             />
           </div>
 
@@ -303,7 +303,7 @@ const PartnersSection = () => {
                 }`}
             >
               <Image
-                src="/About/dosen/placeholders_founder.png" // The "3 cats" image
+                src="/about/dosen/placeholders_founder.png" // The "3 cats" image
                 alt="Lab Desain Budaya Founders"
                 fill
                 className="object-cover grayscale"
