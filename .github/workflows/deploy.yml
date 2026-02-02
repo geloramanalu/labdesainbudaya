@@ -43,5 +43,7 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./out/ 
           server-dir: ./domains/labdesainbudaya.com/public_html/
-          timeout: 120000
+          timeout: 120000 
           dangerous-clean-slate: true # to expell FTPError 550
+
+# this comment added to trigger deploy
