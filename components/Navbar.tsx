@@ -4,12 +4,18 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Menu, Plus } from 'lucide-react';
 
+const NAV_ITEMS = [
+  { label: 'TENTANG KAMI', path: '/about' },
+  { label: 'PRAKARSA', path: '/desa' },
+  { label: 'PUBLIKASI', path: '/publikasi' },
+  { label: 'KOLABORASI', path: '/kolaborasi' },
+];
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [selectedLang, setSelectedLang] = useState('ID');
 
-  // Optional: Handle scroll to add a background if user scrolls down while menu is closed
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -18,13 +24,11 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Toggle Function
   const toggleMenu = () => setIsOpen(!isOpen);
 
-  // Dynamic Text Color based on state
   const bgColorClass = isOpen 
     ? 'bg-[#F2F2F2]' 
-    : isScrolled ? 'bg-transparant backdrop-blur-sm' : 'bg-transparent';
+    : isScrolled ? ' backdrop-blur-sm' : 'bg-transparent';
 
   return (
     <header 
@@ -32,17 +36,15 @@ const Navbar = () => {
     >
       <div className="flex items-center justify-between px-6 py-6">
         
-        {/* 1. LOGO */}
         <div className={`relative z-50 transition-colors duration-300 text-[#1d1d1d]`}>
           <Link href="/">
-             {/* Reusing the SVG Path provided previously */}
             <svg 
                 width="32" 
                 height="26" 
                 viewBox="0 0 28 22" 
                 fill="none" 
                 xmlns="http://www.w3.org/2000/svg"
-                className="fill-current" // Uses parent text color
+                className="fill-current" 
             >
                 <path 
                     fillRule="evenodd" 
@@ -53,23 +55,20 @@ const Navbar = () => {
           </Link>
         </div>
 
-        {/* 2. MENU TOGGLE BUTTON */}
         <button 
           onClick={toggleMenu} 
           className={`relative z-50 p-1 focus:outline-none transition-transform duration-300 text-[#1d1d1d]`}
           aria-label="Toggle Menu"
         >
           {isOpen ? (
-            /* "Plus" Icon rotated 45deg can act as Close, or just use the Plus as shown in mockup */
             <Plus size={32} strokeWidth={1} className="transform rotate-0" />
           ) : (
-             /* Hamburger Icon */
             <Menu size={32} strokeWidth={1} />
           )}
         </button>
       </div>
 
-      {/* 3. FULL SCREEN MENU OVERLAY */}
+
       <div 
         className={`
           absolute inset-0 top-0 left-0 w-full h-full bg-[#F2F2F2] 
@@ -78,21 +77,19 @@ const Navbar = () => {
           ${isOpen ? 'opacity-100 translate-y-0 visible' : 'opacity-0 -translate-y-full invisible'}
         `}
       >
-        {/* Menu Links */}
         <nav className="flex flex-col items-center space-y-10 font-raleway">
-          {['TENTANG KAMI', 'PRAKARSA', 'PUBLIKASI', 'KOLABORASI'].map((item, index) => (
+          {NAV_ITEMS.map((item) => (
             <Link 
-              key={index} 
-              href="/about" 
+              key={item.label} 
+              href={item.path} 
               className="text-2xl font-normal text-[#1A1A1A] tracking-wider hover:text-gray-500 transition-colors"
-              onClick={() => setIsOpen(false)} // Close menu on click
+              onClick={() => setIsOpen(false)} 
             >
-              {item}
+              {item.label}
             </Link>
           ))}
         </nav>
 
-        {/* Language Selector */}
         <div className="mt-20 flex items-center gap-4 text-xl font-normal tracking-wide">
           {['ID', 'EN'].map((lang, index) => (
             <div key={index} className="flex items-center gap-4">

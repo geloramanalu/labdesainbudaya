@@ -1,5 +1,4 @@
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import Link from "next/link";
 import HomepageHero from "@/components/HomepageHero";
 import CardPublikasi from "@/components/CardPublikasi";
 import Image from 'next/image';
@@ -142,9 +141,9 @@ const Publikasi = () => {
       {/* Header Section */}
       <div className="flex gap-6 items-center mb-12 justify-center px-4">
         <h1 className="text-center text-4xl md:text-[50px] font-bold text-[#2d2d2d]">Publikasi</h1>
-        <div className="border border-black p-1 hover:bg-black hover:text-white transition-colors cursor-pointer">
+        <Link href='/publikasi' className="border border-black p-1 hover:bg-black hover:text-white transition-colors cursor-pointer">
           <ArrowRight size={40} strokeWidth={1} className="md:w-[56px] md:h-[56px]" />
-        </div>
+        </Link>
       </div>
 
       {/* Grid Layout for Cards */}
