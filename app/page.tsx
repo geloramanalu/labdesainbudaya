@@ -169,21 +169,28 @@ const Publikasi = () => {
 
 const CTAPesanBuku = () => {
   return (
-    <div className="mt-12 mx-12 flex flex-col gap-4">
-      <h1 className="font-bold text-3xl text-center">Menandur</h1>
+    <div className="mt-12 mx-12 flex flex-col gap-4 xl:flex-row xl:ml-48">
+      <div className="flex flex-col justify-between xl:py-20">
+        <h1 className="text-3xl text-center font-extralight xl:hidden">Segera Terbit</h1>
+        <h1 className="font-extralight hidden xl:inline xl:text-start xl:text-6xl xl:leading-16">Segera <br/> Terbit</h1>
 
-      <p className="text-center">Lab Desain Budaya merupakan ruang kolaboratif yang berfokus pada pengembangan desain berbasis potensi lokal di Indonesia, khususnya wilayah Jawa Tengah. Terinspirasi dari filosofi Mingei "seni untuk rakyat", lab ini menyoroti nilai kesederhanaan, keindahan, dan keberlanjutan yang lahir dari kehidupan sehari-hari masyarakat. </p>
+        <div className="xl:flex flex-col">
+          <p className="text-center xl:text-start xl:max-w-sm">Lab Desain Budaya merupakan ruang kolaboratif yang berfokus pada pengembangan desain berbasis potensi lokal di Indonesia, khususnya wilayah Jawa Tengah.  </p>
 
-      <div className="items-center mt-5 transparent border border-black px-4 w-62 mx-auto flex justify-between group cursor-pointer">
-        <a href='mailto:labdesainbudaya@gmail.com?subject=Pesan Buku Menandur&body=Halo Lab Desain Budaya,%0D%0A%0D%0ASaya tertarik untuk memesan buku "Menandur". Mohon informasi lebih lanjut mengenai proses pemesanan dan pembayaran.%0D%0A%0D%0ATerima kasih.'
-          className="group-hover:cursor-pointer font-raleway text-lg" >
-          Pesan lebih awal
-        </a>
-        <ArrowRight size={20} strokeWidth={1} />
+          <div className="items-center mt-5 transparent border border-black px-4 w-62 mx-auto xl:ml-0 flex justify-between group cursor-pointer">
+            <a href='mailto:labdesainbudaya@gmail.com?subject=Pesan Buku Menandur&body=Halo Lab Desain Budaya,%0D%0A%0D%0ASaya tertarik untuk memesan buku "Menandur". Mohon informasi lebih lanjut mengenai proses pemesanan dan pembayaran.%0D%0A%0D%0ATerima kasih.'
+              className="group-hover:cursor-pointer font-raleway text-lg" >
+              Pesan lebih awal
+            </a>
+            <ArrowRight size={20} strokeWidth={1} />
+
+          </div>
+
+        </div>
 
       </div>
 
-      <div className="relative overflow-hidden max-w-full mt-12">
+      <div className="xl:hidden relative overflow-hidden max-w-full mt-12 mx-auto">
         <Image
           src="/homepage/Mockup_Buku.png"
           alt="Craftsman hand"
@@ -194,55 +201,82 @@ const CTAPesanBuku = () => {
         />
       </div>
 
+      <div className="hidden xl:inline overflow-hidden max-w-full mt-12 mx-auto">
+        <Image
+          src="/homepage/Mockup_Buku.png"
+          alt="Craftsman hand"
+          width={743}
+          height={471}
+          className=""
 
-    </div>
-  )
-}
-
-const CTAKolaborasi = () => {
-  return (
-    <div className="mt-16 flex flex-col gap-12">
-
-      <div className="flex py-24 px-16 max-w-xl flex-col h-screen w-full relative text-white justify-around">
-
-        <div className="absolute inset-0 -z-10">
-          <Image
-            src="/homepage/cta-homepage.png"
-            alt="Craftsman hand"
-            fill
-            className="object-cover object-bottom-left"
-            priority
-          />
-        </div>
-
-
-        <div
-          className="absolute bottom-0 left-0 w-full h-[60%] -z-10 pointer-events-none"
-          style={{
-            background: 'linear-gradient(180deg, rgba(45, 45, 45, 0) 0%, rgba(45, 45, 45, 0.7) 53.36%, rgba(45, 45, 45, 0.7) 100%)'
-          }}
         />
-
-        <h1 className="font-bold mx-auto text-6xl left-0 w-full text-center">Kolaborasi dengan Kami!</h1>
-
-        <p className="text-center">
-          Mari <span className="font-bold">bermitra</span> untuk mengembangkan desain yang mengangkat identitas lokal dan memberikan dampak nyata bagi komunitas. <br />
-          <br />
-
-          Kami menyambut <span className="font-bold">desa, instansi,</span> atau <span className="font-bold">penggiat</span> untuk berkarya dan bertumbuh bersama.
-        </p>
-
-        <a className="hover:cursor-pointer" href="mailto:labdesainbudaya@gmail.com">
-          <svg className="mx-auto" width="83" height="73" viewBox="0 0 83 73" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="83" height="73" rx="7" fill="#EFEFEF" />
-            <rect x="1.5" y="1.5" width="80" height="70" rx="5.5" stroke="#2D2D2D" strokeWidth="3" />
-            <path d="M79.6799 7.30029L41.5002 38.3247L3.31958 7.30029L4.99341 4.81006L41.4993 34.4751L78.0061 4.81006L79.6799 7.30029Z" fill="#2D2D2D" />
-          </svg>
-
-        </a>
       </div>
 
 
     </div>
   )
 }
+
+
+const CTAKolaborasi = () => {
+  return (
+
+    <div className="relative h-screen xl:h-[600px] xl:mt-16 xl:mx-8 xl:mb-8 overflow-hidden flex items-center justify-center xl:border-[#1d1d1d] xl:border-2">
+      
+      <div className="absolute inset-0 -z-10">
+        <Image
+          src="/homepage/cta-homepage.png"
+          alt="Craftsman hand"
+          fill
+          className="object-cover object-bottom xl:hidden" 
+          priority
+        />
+
+        <Image
+          src="/homepage/CTA-homepage-desktop.png"
+          alt="Craftsman hand desktop"
+          fill
+          className="object-cover object-bottom hidden xl:inline" 
+          priority
+        />
+  
+        <div
+          className="absolute inset-0 w-full h-full pointer-events-none"
+          style={{
+            background: 'linear-gradient(180deg, rgba(45, 45, 45, 0) 0%, rgba(45, 45, 45, 0.4) 50%, rgba(45, 45, 45, 0.8) 100%)'
+          }}
+        />
+      </div>
+
+      <div className="z-10 flex flex-col items-center justify-center gap-8 px-6 text-white text-center max-w-4xl mx-auto">
+        
+        <h1 className="font-bold text-5xl md:text-6xl xl:text-7xl tracking-tight leading-tight">
+          Kolaborasi dengan Kami!
+        </h1>
+
+        <p className="text-base md:text-lg xl:text-xl leading-relaxed max-w-2xl font-raleway opacity-90">
+          Mari <span className="font-bold">bermitra</span> untuk mengembangkan desain yang 
+          mengangkat identitas lokal dan memberikan dampak nyata bagi komunitas.
+          <br className="hidden md:block" />
+          <span className="block mt-4 md:mt-2">
+            Kami menyambut <span className="font-bold">desa, instansi,</span> atau <span className="font-bold">penggiat</span> untuk berkarya dan bertumbuh bersama.
+          </span>
+        </p>
+
+        <a 
+          className="hover:scale-105 transition-transform duration-300 ease-in-out mt-4" 
+          href="mailto:labdesainbudaya@gmail.com"
+          aria-label="Email Us"
+        >
+          <svg width="83" height="73" viewBox="0 0 83 73" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="83" height="73" rx="7" fill="#EFEFEF" />
+            <rect x="1.5" y="1.5" width="80" height="70" rx="5.5" stroke="#2D2D2D" strokeWidth="3" />
+            <path d="M79.6799 7.30029L41.5002 38.3247L3.31958 7.30029L4.99341 4.81006L41.4993 34.4751L78.0061 4.81006L79.6799 7.30029Z" fill="#2D2D2D" />
+          </svg>
+        </a>
+
+      </div>
+    </div>
+  );
+};
+
