@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 const raleway = Raleway({
-  weight: ["400"],
+  weight: ["200", "400"],
   variable: "--font-raleway",
   subsets: ["latin"],
 });

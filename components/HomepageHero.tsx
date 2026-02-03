@@ -1,22 +1,63 @@
-"use client"
+'use client';
+
+import React, { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import { ArrowRight } from "lucide-react";
 import Link from 'next/link';
+import useEmblaCarousel from 'embla-carousel-react';
+import Autoplay from 'embla-carousel-autoplay';
+
+const HERO_IMAGES = [
+  "/homepage/hero/hero-mobile.jpg",
+  "/homepage/hero/temp-hero-2.jpg",
+  "/homepage/hero/temp-hero-3.jpeg",
+  "/homepage/hero/temp-hero-4.jpeg",
+  "/homepage/hero/temp-hero-5.webp",
+  "/homepage/hero/temp-hero-6.jpeg"
+];
 
 const HomepageHero = () => {
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    { loop: true, duration: 40 }, 
+    [Autoplay({ delay: 5000, stopOnInteraction: false })]
+  );
+  
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return;
+    setSelectedIndex(emblaApi.selectedScrollSnap());
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    onSelect();
+    emblaApi.on('select', onSelect);
+    return () => {
+      emblaApi.off('select', onSelect);
+    };
+  }, [emblaApi, onSelect]);
+
+  const rectPositions = [0, 17.5, 34.5, 51.5, 68.5, 85.5];
+
   return (
-    <div className="flex flex-col justify-end h-screen w-full relative text-white">
-
-      <div className="absolute inset-0 -z-10">
-        <Image
-          src="/homepage/hero-mobile.jpg"
-          alt="Craftsman hand"
-          fill
-          className="object-cover object-bottom-left"
-          priority
-        />
+    <div className="relative h-screen w-full overflow-hidden text-white font-sans">
+      {/* to do: 1. load heavy image optimization 2. enter homepage animation */}
+      <div className="absolute inset-0 -z-20" ref={emblaRef}>
+        <div className="flex h-full w-full">
+          {HERO_IMAGES.map((src, index) => (
+            <div className="relative flex-[0_0_100%] h-full w-full min-w-0" key={index}>
+              <Image
+                src={src}
+                alt={`Hero background ${index + 1}`}
+                fill
+                className="object-cover object-center xl:object-center"
+                priority={index === 0}
+              />
+            </div>
+          ))}
+        </div>
       </div>
-
 
       <div
         className="absolute bottom-0 left-0 w-full h-[60%] -z-10 pointer-events-none"
@@ -25,33 +66,61 @@ const HomepageHero = () => {
         }}
       />
 
-      <h1 className="leading-[1.1] tracking-wide absolute top-24 mx-auto text-7xl left-0 w-full text-center">Lab <br />
-        Desain <br />
-        Budaya editttttt </h1>
+      <div className="absolute inset-0 flex flex-col justify-between xl:flex-row xl:items-center w-full h-full pb-10 pt-24 xl:py-24 pointer-events-none"> 
+        
+        <div className="flex flex-col items-center xl:items-start xl:pl-[92px] gap-8 w-full xl:w-1/2 xl:h-full xl:justify-between pointer-events-auto">
+          
+          <h1 className="text-5xl leading-[1.1] tracking-wide text-center xl:text-left xl:text-[100px] 2xl:text-[120px] xl:leading-[0.9] xl:font-thin xl:tracking-tighter">
+            <span className="block">Lab</span>
+            <span className="block">Desain</span>
+            <span className="block">Budaya</span>
+          </h1>
 
-      <div className=" mb-24 flex flex-col gap-4 mx-10">
-
-        <div className="flex justify-around font-raleway  mb-11 text-xl">
-          <h3>01 / Research </h3>
-          <h3>02 / Archive </h3>
-          <h3>03 / Innovate </h3>
+          <div className="hidden xl:block scale-150 origin-left opacity-90">
+             <svg width="95" height="45" viewBox="0 0 95 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+                {rectPositions.map((xPos, index) => {
+                  const isActive = index === selectedIndex;
+                  return (
+                    <rect 
+                      key={index}
+                      x={isActive ? xPos : xPos} 
+                      y={isActive ? 0 : 0.5} 
+                      width={isActive ? 10 : 9} 
+                      height={isActive ? 45 : 44} 
+                      fill={isActive ? "#EFEFEF" : "transparent"} 
+                      stroke={isActive ? "none" : "#EFEFEF"}
+                      className="transition-all duration-500 ease-in-out"
+                    />
+                  );
+                })}
+            </svg>
+          </div>
         </div>
 
-        <p className="text-center">Lab Desain Budaya merupakan ruang kolaboratif yang berfokus pada <span className="font-bold">pengembangan desain</span> berbasis potensi lokal di Indonesia, khususnya wilayah Jawa Tengah. </p>
+        <div className="flex flex-col gap-6 px-6 xl:px-0 xl:pr-[92px] xl:items-end xl:text-right w-full xl:w-1/2 xl:h-full xl:justify-end pointer-events-auto">
 
-        {/* hero -> about CTA */}
-        <Link href='/about'>
-          <div
-            className="mt-5 transparent border border-white py-2 px-4 w-62 mx-auto flex justify-between group cursor-pointer">
-            <p className="group-hover:cursor-pointer font-raleway">Read more about us</p>
-            <ArrowRight size={20} strokeWidth={1} />
-
+          <div className="flex justify-around w-full font-raleway text-lg xl:flex-col xl:gap-2 xl:text-4xl xl:tracking-tight xl:w-auto xl:mb-4">
+            <h3 className="">01 / Research </h3>
+            <h3 className="">03 / Innovate </h3>
+            <h3 className="">02 / Archive </h3>
           </div>
-        </Link>
+
+          <p className="text-center text-sm leading-relaxed xl:text-right xl:text-base xl:max-w-md opacity-90">
+            Lab Desain Budaya merupakan ruang kolaboratif yang berfokus pada <span className="font-bold">pengembangan desain</span> berbasis potensi lokal di Indonesia, khususnya wilayah Jawa Tengah.
+          </p>
+
+          <Link href='/about' className="mx-auto xl:mx-0">
+            <div className="group flex items-center justify-between gap-4 border border-white/50 bg-transparent py-1 px-4 transition-all hover:bg-white hover:text-black hover:border-white">
+              <span className="font-raleway tracking-wider">Read more about us</span>
+              <ArrowRight size={18} strokeWidth={1} className="transition-transform group-hover:translate-x-1" />
+            </div>
+          </Link>
+
+        </div>
 
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default HomepageHero;
