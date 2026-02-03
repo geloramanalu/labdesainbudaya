@@ -42,8 +42,6 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./out/ 
-          server-dir: ./domains/labdesainbudaya.com/public_html/
+          server-dir: ./ #try to push to proper directory
           timeout: 120000 
           dangerous-clean-slate: true # to expell FTPError 550
-
-# this comment added to trigger deploy
