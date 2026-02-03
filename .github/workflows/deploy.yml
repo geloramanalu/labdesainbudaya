@@ -42,6 +42,7 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./out/ 
-          server-dir: ./ #try to push to proper directory
+          server-dir: ../domains/labdesainbudaya.com/public_html/ #try absolute path
           timeout: 120000 
           dangerous-clean-slate: true # to expell FTPError 550
+
