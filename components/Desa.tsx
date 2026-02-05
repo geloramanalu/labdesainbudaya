@@ -4,7 +4,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import useEmblaCarousel from 'embla-carousel-react'; // docs: https://www.embla-carousel.com/get-started/react/
 import HeroCard from './HeroCard';
 
-const History = () => {
+const Desa = () => {
   const CAROUSEL_DATA = [
     {
       id: 1,
@@ -111,4 +111,4 @@ const History = () => {
   );
 };
 
-export default History;
+export default Desa;

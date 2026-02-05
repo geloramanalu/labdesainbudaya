@@ -3,14 +3,14 @@ import HomepageHero from "@/components/HomepageHero";
 import CardPublikasi from "@/components/CardPublikasi";
 import Image from 'next/image';
 import { ArrowRight } from "lucide-react";
-import History from "@/components/History";
+import Desa from "@/components/Desa";
 export default function Home() {
   return (
     <div className="">
 
       <HomepageHero />
       <Prakarsa />
-      <History />
+      <Desa />
       <Publikasi />
       <CTAPesanBuku />
       <CTAKolaborasi />
@@ -88,7 +88,7 @@ const Prakarsa = () => {
         <div className="xl:mt-5 bg-transparent border border-[#2d2d2d] xl:py-2 xl:px-4 xl:w-62 xl:mx-auto xl:flex xl:justify-between group cursor-pointer hover:bg-[#2d2d2d] transition-colors duration-300">
           <a
             className="group-hover:cursor-pointer font-raleway text-lg group-hover:text-white transition-colors duration-300 "
-            href="/about"
+            href="/desa"
           >
             Baca selengkapnya
           </a>

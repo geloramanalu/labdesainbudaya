@@ -25,7 +25,7 @@ const HeroCard = ({ title, desc, picture }: HeroCardProps) => {
         </p>
         
         <div className="mt-5 xl:mt-8 w-full flex justify-center xl:block">
-          <Link href='/desa-trangsan'>
+          <Link href='/desa'>
             <div className="border border-[#2d2d2d] py-2 px-4 w-[248px] xl:w-full flex justify-between items-center group cursor-pointer hover:bg-[#2d2d2d] transition-colors duration-300">
               <p className="group-hover:cursor-pointer font-raleway text-lg xl:text-base group-hover:text-white transition-colors duration-300" >
                 Read more

@@ -9,34 +9,31 @@ const ArchivePage = () => {
   return (
     <div className="flex flex-col gap-8">
       {/* Grid Container */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 xl:gap-6">
+      <div className="grid grid-cols-2 xl:grid-cols-3 gap-4 xl:gap-6 p-4 border">
         {ARCHIVE_ITEMS.map((item) => (
           <a 
-            key={item.id} 
+            key={item.id}
             href={item.link}
-            className="group block border border-[#2D2D2D] bg-white transition-all duration-300"
+            className="group block border border-[#2D2D2D] bg-transparent hover:bg-[#2D2D2D] transition-all duration-300"
           >
-       
-            <div className="relative aspect-square w-full border-[#2D2D2D]  p-2">
+          
+            <div className="relative w-full aspect-275/319  ">
               <Image
                 src={item.image}
                 alt={item.title}
-                width={275}
-                height={319}
-
-                className="object-cover" 
+                fill
+                className="object-contain p-4"
               />
             </div>
 
-            {/* Content Area */}
-            <div className="px-4 py-3 flex justify-between items-center bg-[#EFEFEF] group-hover:bg-[#2D2D2D] group-hover:text-white transition-colors duration-300">
-              <span className="font-sans text-sm xl:text-base font-medium">
+            <div className="px-4 pb-3 flex justify-between items-center transition-colors duration-300  group-hover:text-white">
+              <span className="font-raleway text-lg xl:text-2xl font-medium">
                 {item.title}
               </span>
               <ArrowRight 
                 size={18} 
                 strokeWidth={1.5} 
-                className="transform group-hover:translate-x-1 transition-transform duration-300" 
+                className="transform transition-transform duration-300 group-hover:translate-x-1" 
               />
             </div>
           </a>
