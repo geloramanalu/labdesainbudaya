@@ -42,9 +42,9 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./dummy-out/ #test dummy file
-          server-dir: /domains/labdesainbudaya.com/public_html/ #test routing #2
+          server-dir: /domains/labdesainbudaya.com/public_html/ #test routing #6
           # local-dir: ./out/ 
           # server-dir: ../domains/labdesainbudaya.com/public_html/ #try absolute path
           timeout: 120000 
-          dangerous-clean-slate: true # to expell FTPError 550
+          # dangerous-clean-slate: true # to expell FTPError 550
 
