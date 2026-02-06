@@ -43,6 +43,6 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./out/ #real output file
           server-dir: /domains/labdesainbudaya.com/public_html/ 
-          timeout: 120000 
+          timeout: 240000 
           # dangerous-clean-slate: true # to expell FTPError 550 | caused state discrepancy (?) removed for now to keep clear state tracing
 
