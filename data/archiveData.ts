@@ -10,6 +10,7 @@ export const ARCHIVE_ITEMS = [
   {
     id: 1,
     title: "Kursi Bonceng",
+    subtitle: "Dummy subtitle",
     image: "/archive/dummy-archive.png",
     link: "#"
   },

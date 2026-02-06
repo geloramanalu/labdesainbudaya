@@ -62,7 +62,7 @@ export default function DesaLayout({ children }: { children: React.ReactNode }) 
         </div>
       </div>
 
-      <div className="flex flex-col xl:flex-row max-w-[1440px] mx-auto xl:px-12 py-12 xl:py-24 gap-12">
+      <div className="flex flex-col xl:flex-row max-w-[1440px] mx-auto xl:px-12 py-12 xl:py-24 gap-12 xl:gap-0">
         <aside className="w-full xl:w-1/4 xl:sticky xl:top-32 h-fit px-0 xl:px-0 z-20">
           <SidebarAccordion 
             items={MENU_ITEMS}

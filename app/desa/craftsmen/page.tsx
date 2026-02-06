@@ -1,15 +1,12 @@
-'use client';
-
-import React from 'react';
+;
 import { ARCHIVE_ITEMS } from '@/data/archiveData';
 import HorizontalCard from '@/components/HorizontalCard';
 import { ArrowRight } from 'lucide-react';
 
-
-const ArchivePage = () => {
+const Craftsmen = () => {
   return (
-    <div className="flex flex-col gap-8">
-      <div className="grid grid-cols-2 xl:grid-cols-3 gap-4 xl:gap-6">
+    <div>
+        <div className="grid grid-cols-2 xl:grid-cols-3 gap-4 xl:gap-6">
         {ARCHIVE_ITEMS.map((item) => (
           <HorizontalCard 
             key={item.id}
@@ -37,7 +34,7 @@ const ArchivePage = () => {
         </button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ArchivePage;
+export default Craftsmen
