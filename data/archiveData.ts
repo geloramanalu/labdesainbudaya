@@ -1,11 +1,3 @@
-export const ARCHIVE_CATEGORIES = [
-  { id: 'artefak', title: 'Artefak' },
-  { id: 'jenis-anyaman', title: 'Jenis Anyaman' },
-  { id: 'material-rotan', title: 'Material Rotan' },
-  { id: 'alat', title: 'Alat' },
-  { id: 'pengembangan-produk', title: 'Pengembangan Produk' },
-];
-
 export const ARCHIVE_ITEMS = [
   {
     id: 1,

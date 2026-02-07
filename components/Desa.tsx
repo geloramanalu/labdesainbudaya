@@ -12,24 +12,24 @@ const Desa = () => {
       desc: "Lab Desain Budaya merupakan ruang kolaboratif yang berfokus pada pengembangan desain berbasis potensi lokal di Indonesia, khususnya wilayah Jawa Tengah. Terinspirasi dari filosofi Mingei \"seni untuk rakyat\", lab ini menyoroti nilai kesederhanaan, keindahan, dan keberlanjutan yang lahir dari kehidupan sehari-hari masyarakat.",
       picture: "/homepage/desa-trangsan-card-thumbnail.png"
     },
-    {
-      id: 2,
-      title: "Desa Delanggu",
-      desc: "Fokus pada revitalisasi pertanian dan kerajinan lokal berbasis ekosistem sawah yang berkelanjutan dan memberdayakan petani muda.",
-      picture: "/about/dosen/placeholders_founder.png"
-    },
-    {
-      id: 3,
-      title: "Kampung Laweyan",
-      desc: "Menelusuri sejarah batik dan arsitektur kuno sebagai landasan pengembangan wisata edukasi berbasis sejarah dan budaya.",
-      picture: "/about/dosen/placeholders_dosen_individual.jpeg"
-    },
-    {
-      id: 4,
-      title: "Sangiran",
-      desc: "Eksplorasi situs purbakala sebagai inspirasi desain kontemporer yang menghubungkan masa lalu dengan inovasi masa depan.",
-      picture: "/about/dosen/placeholders_founder.png"
-    }
+    // {
+    //   id: 2,
+    //   title: "Desa Delanggu",
+    //   desc: "Fokus pada revitalisasi pertanian dan kerajinan lokal berbasis ekosistem sawah yang berkelanjutan dan memberdayakan petani muda.",
+    //   picture: "/about/dosen/placeholders_founder.png"
+    // },
+    // {
+    //   id: 3,
+    //   title: "Kampung Laweyan",
+    //   desc: "Menelusuri sejarah batik dan arsitektur kuno sebagai landasan pengembangan wisata edukasi berbasis sejarah dan budaya.",
+    //   picture: "/about/dosen/placeholders_dosen_individual.jpeg"
+    // },
+    // {
+    //   id: 4,
+    //   title: "Sangiran",
+    //   desc: "Eksplorasi situs purbakala sebagai inspirasi desain kontemporer yang menghubungkan masa lalu dengan inovasi masa depan.",
+    //   picture: "/about/dosen/placeholders_founder.png"
+    // }
   ];
 
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: 'center' });

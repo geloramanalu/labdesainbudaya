@@ -7,7 +7,6 @@ import SidebarAccordion from '@/components/SidebarAccordion';
 
 const HISTORY_CONTENT = [
   {
-    id: 'sejarah-awal',
     title: 'Sejarah Awal (Sebelum tahun 1910)',
     content: 'Masyarakat Desa Trangsan mayoritas menjadi pengrajin kerajinan bambu. Produk yang dihasilkan berupa perabotan rumah tangga sederhana, alat pertanian, dan anyaman tradisional.'
   },

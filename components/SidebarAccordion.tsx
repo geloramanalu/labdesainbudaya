@@ -31,12 +31,12 @@ const SidebarAccordion = ({ items, activeLabel, subItems = [] }: SidebarAccordio
   };
 
   return (
-    <div className="border border-[#2D2D2D] bg-[#F2F2F2]">
+    <div className="border border-[#2D2D2D] bg-[#F2F2F2] text-raleway max-w-xs md:max-w-md mx-auto">
       {items.map((menu) => {
         const isActive = menu.label === activeLabel;
 
         if (isActive) {
-          // Render as the Active Accordion Header
+          // render as the Active Accordion Header
           return (
             <div key={menu.label}>
               <div 
@@ -47,7 +47,7 @@ const SidebarAccordion = ({ items, activeLabel, subItems = [] }: SidebarAccordio
                 <Menu size={20} />
               </div>
 
-              {/* The Expanded Content */}
+              {/* expanded content */}
               <div className={`
                 overflow-hidden transition-all duration-500 ease-in-out bg-[#F2F2F2]
                 ${isOpen && subItems.length > 0 ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'}

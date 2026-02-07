@@ -4,7 +4,14 @@ import React from 'react';
 import Image from 'next/image';
 import SidebarAccordion from '@/components/SidebarAccordion';
 import { usePathname } from 'next/navigation';
-import { ARCHIVE_CATEGORIES } from '@/data/archiveData';
+
+const ARCHIVE_CATEGORIES = [
+  { id: 'artefak', title: 'Artefak' },
+  { id: 'jenis-anyaman', title: 'Jenis Anyaman' },
+  { id: 'material-rotan', title: 'Material Rotan' },
+  { id: 'alat', title: 'Alat' },
+  { id: 'pengembangan-produk', title: 'Pengembangan Produk' },
+];
 
 const HISTORY_CONTENT = [
   { id: 'sejarah-awal', title: 'Sejarah Awal (Sebelum tahun 1910)' },
@@ -18,17 +25,18 @@ const HISTORY_CONTENT = [
 export default function DesaLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
-  // 1. Fixed Menu Order
   const MENU_ITEMS = [
     { label: 'History', link: '/desa' },
     { label: 'Archive', link: '/desa/archive' },
     { label: 'Events', link: '/desa/events' },
     { label: 'Craftsmen', link: '/desa/craftsmen' },
-    { label: 'Data Collection Team', link: '/desa/team' },
+    { label: 'Data Collection Team', link: '/desa/data-collection-team' },
   ];
 
-  // 2. Logic to determine Active State
   const isArchive = pathname.startsWith('/desa/archive');
+  const isEvents = pathname.startsWith('/desa/events');
+  const isCraftsmen = pathname.startsWith('/desa/craftsmen');
+  const isTeam = pathname.startsWith('/desa/data-collection-team');
   const isHistory = pathname === '/desa' || pathname === '/desa/history';
 
   let activeLabel = '';
@@ -37,11 +45,19 @@ export default function DesaLayout({ children }: { children: React.ReactNode }) 
   if (isArchive) {
     activeLabel = 'Archive';
     subItems = ARCHIVE_CATEGORIES;
+  } else if (isEvents) {
+    activeLabel = 'Events';
+    subItems = []; // add events sub-items here when you have them
+  } else if (isCraftsmen) {
+    activeLabel = 'Craftsmen';
+    subItems = []; // Add craftsmen sub-items here
+  } else if (isTeam) {
+    activeLabel = 'Data Collection Team';
+    subItems = []; // Add Team sub-items here 
   } else if (isHistory) {
     activeLabel = 'History';
     subItems = HISTORY_CONTENT;
-  } 
-  // Add 'else if' for other pages later
+  }
 
   return (
     <main className="min-h-screen bg-[#F2F2F2] font-sans text-[#2D2D2D]">

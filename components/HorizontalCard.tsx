@@ -7,30 +7,35 @@ interface HorizontalCardProps {
   image: string;
   subtitle?: string; 
   link?: string;
-  
+  variant?: string;
+  year?:number;
 }
 
-const HorizontalCard = ({ title, image, subtitle, link = "#" }: HorizontalCardProps) => {
+const HorizontalCard = ({ title, image, subtitle, variant, year, link = "#" }: HorizontalCardProps) => {
   return (
     <a 
       href={link}
       className="group block border border-[#2D2D2D] bg-transparent hover:bg-[#2D2D2D] transition-all duration-300"
     >
       {/* Image Container */}
-      <div className="relative w-full aspect-[275/319]">
+      <div 
+        className={`relative w-full ${variant === "secondary" ? "aspect-[5/3]" : "aspect-[319/281]"}`}
+        >
         <Image
-          src={image}
-          alt={title}
-          fill
-          className="object-contain p-4"
+            src={image}
+            alt={title}
+            fill
+            className="object-cover p-4"
         />
-      </div>
+        </div>
 
       <div className="px-4 pb-4 flex justify-between items-center transition-colors duration-300 group-hover:text-white">
         
         <div className="flex flex-col justify-center gap-2">
           <span className="font-raleway text-lg xl:text-2xl font-medium leading-tight">
             {title}
+            <span className='text-[#8d8d8d]'>{year != null ? '/ '+year : ''}</span>
+            
           </span>
           {subtitle && (
             <span className="font-raleway text-gray-500 text-lg xl:text-2xl font-medium leading-tight">
