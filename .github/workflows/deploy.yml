@@ -6,6 +6,11 @@ on:
 
 permissions:
   contents: write
+# write permission added due to,
+# remote: Permission to geloramanalu/labdesainbudaya.git denied to github-actions[bot].
+# fatal: unable to access '...': The requested URL returned error: 403
+## [error]Process completed with exit code 128.
+
 
 jobs:
   build-and-deploy:

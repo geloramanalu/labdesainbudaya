@@ -75,7 +75,7 @@ const Desa = () => {
       </div>
 
       
-      <div className="max-w-6xl mx-auto flex justify-end items-center gap-4 px-6 xl:px-0">
+      {/* <div className="max-w-6xl mx-auto flex justify-end items-center gap-4 px-6 xl:px-0">
       
         <button onClick={scrollPrev} className="hover:opacity-80 transition-opacity cursor-pointer">
           <svg width="45" height="45" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -106,7 +106,7 @@ const Desa = () => {
           </svg>
         </button>
 
-      </div>
+      </div> */}
     </div>
   );
 };
