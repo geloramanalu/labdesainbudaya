@@ -42,24 +42,35 @@ jobs:
         run: |
           npm install
           npm run build
+      
+      # rewrites history with force push
+      # works in deployment from hostinger but not autodeployment 
+      # - name: Deploy to output 
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   run: |
+      #     # 1. Configure Git Identity
+      #     git config --global user.name "github-actions[bot]"
+      #     git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-      - name: Deploy to output 
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          # 1. Configure Git Identity
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      #     # 2. Navigate into the build output directory
+      #     cd out
 
-          # 2. Navigate into the build output directory
-          cd out
+      #     # 3. Initialize a fresh git repository inside 'out'
+      #     git init
 
-          # 3. Initialize a fresh git repository inside 'out'
-          git init
+      #     # 4. Stage and Commit all files
+      #     git add -A
+      #     git commit -m "Deploying build from commit ${{ github.sha }}"
 
-          # 4. Stage and Commit all files
-          git add -A
-          git commit -m "Deploying build from commit ${{ github.sha }}"
+      #     # 5. Force Push to the target branch
+      #     git push -f https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git HEAD:output
 
-          # 5. Force Push to the target branch
-          git push -f https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git HEAD:output
+      - name: Deploy to output branch (Linear History)
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: output          # the branch to deploy to
+          folder: out             # folder containing export in curr branch, main
+          force: false            # disables force push
+          clean: true             # automatically removes deleted files
+          single-commit: false    # keeps history so Hostinger can 'git pull'
