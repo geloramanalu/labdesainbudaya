@@ -37,12 +37,16 @@ const MITRA_INTERNATIONAL_DATA = [
   // },
 ];
 
-const PARTNERS_INSTITUTIONAL = [
-  { id: 1, name: 'FSRD UNS', src: '/logos/logo-uns.png' },
-  { id: 2, name: 'Design Research Institute Chiba University', src: '/logos/02_Chiba_2.png' },
-  { id: 3, name: 'Forum Rembuk Klaster Industri Rotan Trangsan', src: '/logos/logo-uns.png' },
-  { id: 4, name: 'Gabungan Kelompok Tani Sedyo Makmur Delanggu', src: '/logos/07_URDC.png' },
-  { id: 5, name: 'URDC Laboratory', src: '/logos/07_URDC.png' },
+const PARTNER_LOGOS = [
+  "/logos/silhouette-logo/uns-silhouette.png",
+  "/logos/silhouette-logo/chiba-silhouette.png",
+   "/logos/silhouette-logo/silhouette-fsrd.png", 
+   "/logos/silhouette-logo/silhouette-dri.png",
+   "/logos/silhouette-logo/New Project (3).png",
+   "/logos/silhouette-logo/silhouette-magister.png",
+   "/logos/silhouette-logo/New Project.png",
+   "/logos/silhouette-logo/silhouette-urdc.png",
+
 ];
 
 // refactored about into several sections
@@ -335,22 +339,20 @@ const InteractiveProfileCard = ({ title, data, placeholderImage, aspectRatio = "
   );
 };
 
-const PartnerCard = ({ partner }: { partner: InstitutionalPartner }) => {
+const PartnerCard = ({ fileName }: { fileName: string }) => {
   return (
     <div className="flex flex-col items-center gap-3 group">
       <div className="w-full aspect-[4/3] flex items-center justify-center p-6 bg-[#EFEFEF] border-[0.8px] border-[#2d2d2d] transition-colors duration-300 ease-in group-hover:bg-[#2d2d2d]">
         <div className="relative w-20 h-20 md:w-24 md:h-24 xl:w-32 xl:h-32">
           <Image
-            src={partner.src}
-            alt={partner.name}
+            src={`${fileName}`}
+            alt=""
             fill
             className="scale-125 object-contain transition-all duration-300 ease-in group-hover:brightness-0 group-hover:invert"
           />
         </div>
       </div>
-      <p className="text-[11px] md:text-xs xl:text-sm text-[#2d2d2d] text-center leading-tight max-w-[90%] font-medium">
-        {partner.name}
-      </p>
+      
     </div>
   );
 };
@@ -396,15 +398,17 @@ const PendiriMitraLab = () => {
         </h3>
 
         <div className="grid grid-cols-2 xl:grid-cols-5 gap-4 xl:gap-8 xl:max-w-7xl xl:mx-auto">
-          {PARTNERS_INSTITUTIONAL.slice(0, 5).map((partner) => (
-            <PartnerCard key={partner.id} partner={partner} />
-          ))}
+         {PARTNER_LOGOS.map((fileName, index) => (
+          <PartnerCard key={index} fileName={fileName} />
+        ))}
         </div>
       </div>
 
     </section>
   );
 };
+
+
 
 
 

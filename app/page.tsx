@@ -10,6 +10,7 @@ export default function Home() {
 
       <HomepageHero />
       <Prakarsa />
+      {/* to do @Desa, make card covers 80% width of desktop, height follows */}
       <Desa />
       <Publikasi />
       <CTAPesanBuku />
@@ -104,7 +105,7 @@ const Prakarsa = () => {
   )
 }
 
-
+// to do @Publikasi, desktop width to wider viewport
 const Publikasi = () => {
   
   const PUBLICATION_DATA = [
