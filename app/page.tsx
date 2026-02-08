@@ -168,53 +168,73 @@ const Publikasi = () => {
 
 const CTAPesanBuku = () => {
   return (
-    <div className="mt-12 mx-12 flex flex-col gap-4 xl:flex-row xl:ml-48">
-      <div className="flex flex-col justify-between xl:py-20">
-        <h1 className="text-3xl text-center font-extralight xl:hidden">Segera Terbit</h1>
-        <h1 className="font-extralight hidden xl:inline xl:text-start xl:text-6xl xl:leading-16">Segera <br/> Terbit</h1>
-
-        <div className="xl:flex flex-col">
-          <p className="text-center xl:text-start xl:max-w-sm">Lab Desain Budaya merupakan ruang kolaboratif yang berfokus pada pengembangan desain berbasis potensi lokal di Indonesia, khususnya wilayah Jawa Tengah.  </p>
-
-          <div className="items-center mt-5 transparent border border-black px-4 w-62 mx-auto xl:ml-0 flex justify-between group cursor-pointer">
-            <a href='mailto:labdesainbudaya@gmail.com?subject=Pesan Buku Menandur&body=Halo Lab Desain Budaya,%0D%0A%0D%0ASaya tertarik untuk memesan buku "Menandur". Mohon informasi lebih lanjut mengenai proses pemesanan dan pembayaran.%0D%0A%0D%0ATerima kasih.'
-              className="group-hover:cursor-pointer font-raleway text-lg" >
-              Pesan lebih awal
-            </a>
-            <ArrowRight size={20} strokeWidth={1} />
-
+    <section className="w-full max-w-[1440px] mx-auto px-6 xl:px-24 py-12 xl:py-24">
+      <div className="flex flex-col xl:flex-row xl:gap-12">
+        
+        <div className="flex flex-col xl:justify-between flex-1">
+          <div>
+            <h1 className="text-3xl font-extralight mb-4 xl:hidden font-raleway text-center xl:text-left">
+              Rattan and The Act of Weaving
+            </h1>
+            <h1 className="hidden xl:block font-extralight text-6xl leading-tight font-raleway text-[#2D2D2D]">
+              Rattan and <br /> The Act of Weaving
+            </h1>
           </div>
 
+          <div className="flex flex-col items-center xl:items-start mt-8 xl:mt-0">
+            <p className="text-[#2D2D2D] font-light leading-relaxed text-center xl:text-left max-w-md xl:max-w-xl">
+              Buku ini menampilkan perjalanan Desa Trangsan sebagai ruang hidup kerajinan rotan yang terus bertransformasi seiring waktu. Melalui pendekatan historis, etnografis, dan visual, buku ini mendokumentasikan praktik kerja para perajin: dari proses memilih material, teknik anyaman, relasi antar bengkel, hingga negosiasi dengan pasar global.
+            </p>
+
+            <a 
+              
+              href='mailto:labdesainbudaya@gmail.com?subject=Pesan Buku Menandur&body=Halo Lab Desain Budaya,%0D%0A%0D%0ASaya tertarik untuk memesan buku "Menandur". Mohon informasi lebih lanjut mengenai proses pemesanan dan pembayaran.%0D%0A%0D%0ATerima kasih.'
+              className="group mt-8 xl:flex items-center justify-between w-64 px-6 py-3 border border-[#2D2D2D] hover:bg-[#2D2D2D] hover:text-white transition-all duration-300 cursor-pointer hidden"
+            >
+              <span className="font-raleway text-lg font-medium">
+                Pesan lebih awal
+              </span>
+              <ArrowRight 
+                size={20} 
+                strokeWidth={1} 
+                className="transform group-hover:translate-x-1 transition-transform duration-300"
+              />
+            </a>
+          </div>
         </div>
 
+        <div className="flex-1 flex justify-center xl:justify-end mt-12 xl:mt-0">
+          <div className="relative w-full max-w-[437px] xl:max-w-[500px]">
+            <Image
+              src="/homepage/MockupBuku_Rattan_wihout_bg_cropped.png"
+              alt="Buku Rattan and The Act of Weaving"
+              width={500} 
+              height={320}
+              className="object-contain w-full h-auto drop-shadow-xl"
+              priority
+            />
+          </div>
+        </div>
+
+        <a 
+              
+              href='mailto:labdesainbudaya@gmail.com?subject=Pesan Buku Menandur&body=Halo Lab Desain Budaya,%0D%0A%0D%0ASaya tertarik untuk memesan buku "Menandur". Mohon informasi lebih lanjut mengenai proses pemesanan dan pembayaran.%0D%0A%0D%0ATerima kasih.'
+              className="group mt-8 flex items-center mx-auto justify-between w-64 px-6 py-3 border border-[#2D2D2D] hover:bg-[#2D2D2D] hover:text-white transition-all duration-300 cursor-pointer xl:hidden mb-12"
+            >
+              <span className="font-raleway text-lg font-medium">
+                Pesan lebih awal
+              </span>
+              <ArrowRight 
+                size={20} 
+                strokeWidth={1} 
+                className="transform group-hover:translate-x-1 transition-transform duration-300"
+              />
+            </a>
       </div>
+    </section>
+  );
+};
 
-      <div className="xl:hidden relative overflow-hidden max-w-full mt-12 mx-auto">
-        <Image
-          src="/homepage/MockupBuku_Rattan_without_bg.png"
-          alt="Craftsman hand"
-          width={437}
-          height={278}
-          className=""
-
-        />
-      </div>
-
-      <div className="hidden xl:inline overflow-hidden max-w-full mt-12 mx-auto">
-        <Image
-          src="/homepage/MockupBuku_Rattan_without_bg.png"
-          alt="Craftsman hand"
-          width={743}
-          height={471}
-          className=""
-
-        />
-      </div>
-
-
-    </div>
-  )
-}
 
 
 const CTAKolaborasi = () => {
