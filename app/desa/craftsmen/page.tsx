@@ -11,9 +11,9 @@ const Craftsmen = () => {
           <HorizontalCard 
             key={item.id}
             title={item.title}
-            subtitle={item.subtitle} 
+            // subtitle={item.subtitle} 
             image={item.image}
-            link={item.link}
+            // link={item.link}
           />
         ))}
       </div>

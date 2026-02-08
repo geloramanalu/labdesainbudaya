@@ -1,48 +1,23 @@
-name: Build and Deploy Next.js to Hostinger
-
-on:
-  push:
-    branches: main
-
-jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: Cache Next.js build # source: https://nextjs.org/docs/pages/guides/ci-build-caching
-        uses: actions/cache@v4
-        with:
-          # See here for caching with `yarn`, `bun` or other package managers https://github.com/actions/cache/blob/main/examples.md or you can leverage caching with actions/setup-node https://github.com/actions/setup-node
-          path: |
-            ~/.npm
-            ${{ github.workspace }}/.next/cache
-          # Generate a new cache whenever packages or source files change.
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
-          # If source files changed but packages didn't, rebuild from a prior cache.
-          restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
-
-      - name: Install and Build
+- name: Deploy to build-branch (From Scratch)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          npm install
-          npm run build
+          # 1. Configure Git Identity (Uses a generic bot identity)
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Sync Contents of Out # https://github.com/SamKirkland/FTP-Deploy-Action
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_HOST }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./out/ #real output file
-          server-dir: /domains/labdesainbudaya.com/public_html/ 
-          timeout: 240000 
-          # dangerous-clean-slate: true # to expell FTPError 550 | caused state discrepancy (?) removed for now to keep clear state tracing
+          # 2. Navigate into the build output directory
+          # This is the crucial step: We make 'out' the root of our new repo
+          cd out
 
+          # 3. Initialize a fresh git repository inside 'out'
+          git init
+
+          # 4. Stage and Commit all files
+          git add -A
+          git commit -m "Deploying build from commit ${{ github.sha }}"
+
+          # 5. Force Push to the target branch
+          # -f (force) overwrites the history of 'build-branch' so it only contains this latest build
+          # HEAD:build-branch means "push the current commit (HEAD) to the remote branch named 'build-branch'"
+          git push -f https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git HEAD:build-branch
