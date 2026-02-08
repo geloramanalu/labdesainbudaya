@@ -8,17 +8,17 @@ const FOUNDERS_DATA = [
   {
     id: 'pandu',
     name: 'Pandu Purwandaru, S.Ds.,M.Ds., Ph.D',
-    image: '/about/dosen/pandu_purwandaru_photo.jpg',
+    image: '/about/dosen/Pak Pandu.jpg',
   },
   {
     id: 'trisna',
     name: 'Trisna Dwi Putri Novitabella S.Ds., M.Ds.',
-    image: '/about/dosen/placeholders_dosen_individual.jpeg',
+    image: '/about/dosen/bu Trisna.jpg',
   },
   {
     id: 'silmi',
     name: 'Dott. Silmi Cahya Pradini Priliana S.T., M.Sc.',
-    image: '/about/dosen/placeholders_dosen_individual.jpeg',
+    image: '/about/dosen/bu Silmi.jpg',
   },
 ];
 
@@ -27,14 +27,14 @@ const MITRA_INTERNATIONAL_DATA = [
     id: 'aoki',
     name: 'Aoki Hironobu',
     desc: 'Design Research Institute Chiba University',
-    image: '/about/dosen/placeholders_dosen_individual.jpeg',
+    image: '/about/dosen/Aoki Sensei.jpg',
   },
-  {
-    id: 'mitsuha',
-    name: 'Mitsuha Sato',
-    desc: 'Suha Design',
-    image: '/about/dosen/placeholders_dosen_individual.jpeg',
-  },
+  // {
+  //   id: 'mitsuha',
+  //   name: 'Mitsuha Sato',
+  //   desc: 'Suha Design',
+  //   image: '/about/dosen/placeholders_dosen_individual.jpeg',
+  // },
 ];
 
 const PARTNERS_INSTITUTIONAL = [
@@ -52,8 +52,7 @@ const About = () => {
       <HeroAbout />
       <PhilosophySection />
       <PhilosophyGrid />
-      <FoundersSection />
-      <PartnersSection />
+      <PendiriMitraLab />
     </main>
   );
 };
@@ -245,46 +244,63 @@ const PhilosophyGrid = () => {
   );
 };
 
-const FoundersSection = () => {
-  const [activeFounder, setActiveFounder] = useState<string | null>(null);
+
+interface ProfileData {
+  id: string | number;
+  name: string;
+  image: string;
+  desc?: string; // Optional for partners
+}
+
+interface InstitutionalPartner {
+    id: number;
+    name: string;
+    src: string;
+}
+
+interface InteractiveProfileCardProps {
+  title: React.ReactNode;
+  data: ProfileData[];
+  placeholderImage: string;
+  aspectRatio?: string;
+}
+
+const InteractiveProfileCard = ({ title, data, placeholderImage, aspectRatio = "aspect-[4/3]" }: InteractiveProfileCardProps) => {
+  const [activeId, setActiveId] = useState<string | number | null>(null);
 
   return (
-    <div className="bg-[#2d2d2d] xl:bg-[#F2F2F2] text-white xl:text-[#2d2d2d] py-20 px-6 xl:px-32 xl:py-32 xl:flex xl:flex-row xl:items-center xl:justify-center xl:gap-24">
-      <div className="text-center mb-12 xl:mb-0 xl:w-1/3">
-        <span className="text-xl font-light text-gray-400 xl:text-gray-600 block mb-2 xl:text-3xl">Pendiri</span>
-        <h2 className="text-4xl xl:text-7xl leading-tight tracking-wide font-raleway font-light">
-          Lab <br /> Desain <br /> Budaya
-        </h2>
-        <p className="mt-8 text-sm xl:text-base text-gray-300 xl:text-gray-600 leading-relaxed max-w-xs mx-auto xl:text-center">
-          Lab Desain Budaya terlahir dari ..., berfokus pada pengembangan desain berbasis komunitas, riset material lokal, dan kolaborasi lintas disiplin di berbagai wilayah Indonesia.
-        </p>
+    <div className="flex flex-col items-center w-full">
+      {/* Title Section */}
+      <div className="text-center mb-8 xl:mb-12">
+        {title}
       </div>
 
-      <div className="bg-[#E5E5E5] text-[#2d2d2d] max-w-md mx-auto xl:mx-0 xl:w-1/2  overflow-hidden border border-transparent xl:border-[#2d2d2d]">
-        <div className="relative w-full aspect-4/3">
+      {/* Image & List Container */}
+      <div className="bg-[#E5E5E5] text-[#2d2d2d] w-full max-w-md mx-auto overflow-hidden border border-[#2d2d2d]">
+        
+        <div className={`relative w-full ${aspectRatio}`}>
+          {/* Placeholder (Default) */}
           <div
-            className={`absolute inset-0 w-full h-full transition-opacity duration-500 ease-in-out ${activeFounder === null ? 'opacity-100' : 'opacity-0'
-              }`}
+            className={`absolute inset-0 w-full h-full transition-opacity duration-500 ease-in-out ${activeId === null ? 'opacity-100' : 'opacity-0'}`}
           >
             <Image
-              src="/about/dosen/placeholders_founder.png"
-              alt="Lab Desain Budaya Founders"
+              src={placeholderImage}
+              alt="Placeholder"
               fill
-              className="object-cover grayscale "
+              className="object-cover grayscale"
               priority
             />
-
           </div>
 
-          {FOUNDERS_DATA.map((founder) => (
+          {/* Active Hover Image */}
+          {data.map((item) => (
             <div
-              key={founder.id}
-              className={`absolute inset-0 w-full h-full transition-opacity duration-500 ease-in-out ${activeFounder === founder.id ? 'opacity-100 z-10' : 'opacity-0 z-0'
-                }`}
+              key={item.id}
+              className={`absolute inset-0 w-full h-full transition-opacity duration-500 ease-in-out ${activeId === item.id ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
             >
               <Image
-                src={founder.image}
-                alt={founder.name}
+                src={item.image}
+                alt={item.name}
                 fill
                 className="object-cover grayscale"
                 priority
@@ -293,16 +309,24 @@ const FoundersSection = () => {
           ))}
         </div>
 
+        {/* List Area */}
         <div className="border-t border-[#2d2d2d] divide-y divide-[#2d2d2d] text-center text-xs xl:text-sm font-medium bg-[#E5E5E5]">
-          {FOUNDERS_DATA.map((founder) => (
+          {data.map((item) => (
             <div
-              key={founder.id}
-              className={`py-4 px-2 transition-colors duration-300 cursor-pointer ${activeFounder === founder.id ? 'bg-[#2d2d2d] text-white' : 'hover:bg-gray-200'
-                }`}
-              onMouseEnter={() => setActiveFounder(founder.id)}
-              onMouseLeave={() => setActiveFounder(null)}
+              key={item.id}
+              className={`py-4 px-2 transition-colors duration-300 cursor-pointer ${activeId === item.id ? 'bg-[#2d2d2d] text-white' : 'hover:bg-gray-200'}`}
+              onMouseEnter={() => setActiveId(item.id)}
+              onMouseLeave={() => setActiveId(null)}
             >
-              <span className='font-bold'>{founder.name}</span>
+              <div className="flex flex-col xl:flex-row xl:justify-center xl:gap-2 items-center">
+                <span className="font-bold">{item.name}</span>
+                {item.desc && (
+                  <>
+                    <span className="hidden xl:inline text-gray-400 mx-1">|</span>
+                    <span className="font-light block xl:inline mt-1 xl:mt-0 opacity-80 xl:opacity-100">{item.desc}</span>
+                  </>
+                )}
+              </div>
             </div>
           ))}
         </div>
@@ -311,32 +335,19 @@ const FoundersSection = () => {
   );
 };
 
-const PartnerCard = ({ partner }: { partner: { id: number; name: string; src: string } }) => {
+const PartnerCard = ({ partner }: { partner: InstitutionalPartner }) => {
   return (
     <div className="flex flex-col items-center gap-3 group">
-      <div
-        className="
-          w-full aspect-[4/3]
-          flex items-center justify-center p-6
-          bg-[#EFEFEF] border-[0.8px] border-[#2d2d2d]
-          transition-colors duration-300 ease-in
-          group-hover:bg-[#2d2d2d]
-        "
-      >
+      <div className="w-full aspect-[4/3] flex items-center justify-center p-6 bg-[#EFEFEF] border-[0.8px] border-[#2d2d2d] transition-colors duration-300 ease-in group-hover:bg-[#2d2d2d]">
         <div className="relative w-20 h-20 md:w-24 md:h-24 xl:w-32 xl:h-32">
           <Image
             src={partner.src}
             alt={partner.name}
             fill
-            className=" scale-125
-              object-contain 
-              transition-all duration-300 ease-in
-              group-hover:brightness-0 group-hover:invert
-            "
+            className="scale-125 object-contain transition-all duration-300 ease-in group-hover:brightness-0 group-hover:invert"
           />
         </div>
       </div>
-
       <p className="text-[11px] md:text-xs xl:text-sm text-[#2d2d2d] text-center leading-tight max-w-[90%] font-medium">
         {partner.name}
       </p>
@@ -344,83 +355,58 @@ const PartnerCard = ({ partner }: { partner: { id: number; name: string; src: st
   );
 };
 
-const PartnersSection = () => {
-  const [activePartner, setActivePartner] = useState<string | null>(null);
-
+const PendiriMitraLab = () => {
   return (
-    <div className="bg-[#F2F2F2] py-20 px-6 xl:px-32 xl:pb-40">
+    <section className="bg-[#F2F2F2] text-[#2d2d2d] py-20 px-6 xl:px-32 xl:py-32">
       
-      <div className="mb-16 text-center">
-        <h3 className="text-3xl xl:text-5xl text-[#333] mb-8 xl:mb-16 font-raleway font-light">Mitra Internasional</h3>
-
-        <div className="bg-[#E5E5E5] text-[#2d2d2d] max-w-md xl:max-w-4xl mx-auto overflow-hidden  border xl:border-[#2d2d2d]">
-          
-          <div className="relative w-full aspect-[4/3] xl:aspect-[21/9] bg-gray-300">
-            
-            <div
-              className={`absolute inset-0 w-full h-full transition-opacity duration-500 ease-in-out ${activePartner === null ? 'opacity-100' : 'opacity-0'
-                }`}
-            >
-              <Image
-                src="/about/dosen/placeholders_founder.png"
-                alt="Lab Desain Budaya Partners"
-                fill
-                className="object-cover grayscale"
-                priority
-              />
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-20 xl:gap-12 max-w-[1440px] mx-auto">
+        
+        <InteractiveProfileCard
+          title={
+            <div className="flex flex-col items-center">
+             
+              <h2 className="text-3xl xl:text-5xl leading-tight tracking-wide font-raleway font-light">
+                Pendiri Lab Desain Budaya
+              </h2>
             </div>
-            
-            
-            {MITRA_INTERNATIONAL_DATA.map((founder) => (
-              <div
-                key={founder.id}
-                className={`absolute inset-0 w-full h-full transition-opacity duration-500 ease-in-out ${activePartner === founder.id ? 'opacity-100 z-10' : 'opacity-0 z-0'
-                  }`}
-              >
-                <Image
-                  src={founder.image}
-                  alt={founder.name}
-                  fill
-                  className="object-cover grayscale"
-                  priority
-                />
-              </div>
-            ))}
-          </div>
+          }
+          data={FOUNDERS_DATA}
+          placeholderImage="/about/dosen/placeholders_founder.png"
+          aspectRatio="aspect-[4/3]"
+        />
 
-          <div className="border-t border-[#2d2d2d] divide-y divide-[#2d2d2d] text-center text-xs xl:text-sm font-medium bg-[#E5E5E5]">
-            {MITRA_INTERNATIONAL_DATA.map((founder) => (
-              <div
-                key={founder.id}
-                className={`py-4 px-4 transition-colors duration-300 cursor-pointer ${activePartner === founder.id ? 'bg-[#2d2d2d] text-white' : 'hover:bg-gray-200'
-                  }`}
-                onMouseEnter={() => setActivePartner(founder.id)}
-                onMouseLeave={() => setActivePartner(null)}
-              >
-                <div className="flex flex-col xl:flex-row xl:justify-center xl:gap-2 items-center">
-                    <span className='font-bold text-sm xl:text-lg'>{founder.name}</span> 
-                    <span className="hidden xl:inline text-gray-400 mx-2">|</span>
-                    <span className="font-light xl:text-lg">{founder.desc}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        <InteractiveProfileCard
+          title={
+             <div className="flex flex-col items-center xl:pt-10"> 
+              <h3 className="text-3xl xl:text-5xl text-[#333] mb-2 xl:mb-4 font-raleway font-light">
+                Mitra Internasional
+              </h3>
+            </div>
+          }
+          data={MITRA_INTERNATIONAL_DATA}
+          placeholderImage="/about/dosen/placeholders_founder.png" 
+          aspectRatio="aspect-[4/3]" 
+        />
+
       </div>
 
-      <div className="text-center mt-16 xl:mt-32">
-        <h3 className="text-3xl xl:text-5xl text-[#333] mb-8 xl:mb-16 font-raleway font-light">Mitra Institusi</h3>
+      <div className="text-center mt-24 xl:mt-40 border-t border-[#2d2d2d]/10 pt-16">
+        <h3 className="text-3xl xl:text-5xl text-[#333] mb-8 xl:mb-16 font-raleway font-light">
+          Mitra Institusi
+        </h3>
 
         <div className="grid grid-cols-2 xl:grid-cols-5 gap-4 xl:gap-8 xl:max-w-7xl xl:mx-auto">
           {PARTNERS_INSTITUTIONAL.slice(0, 5).map((partner) => (
             <PartnerCard key={partner.id} partner={partner} />
           ))}
-           
         </div>
       </div>
-    </div>
+
+    </section>
   );
 };
+
+
 
 
 
