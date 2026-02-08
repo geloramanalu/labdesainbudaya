@@ -14,9 +14,7 @@ const ArchivePage = () => {
           <HorizontalCard 
             key={item.id}
             title={item.title}
-            subtitle={item.subtitle} 
             image={item.image}
-            link={item.link}
           />
         ))}
       </div>

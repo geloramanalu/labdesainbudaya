@@ -191,7 +191,7 @@ const CTAPesanBuku = () => {
 
       <div className="xl:hidden relative overflow-hidden max-w-full mt-12 mx-auto">
         <Image
-          src="/homepage/Mockup_Buku.png"
+          src="/homepage/MockupBuku_Rattan_without_bg.png"
           alt="Craftsman hand"
           width={437}
           height={278}
@@ -202,7 +202,7 @@ const CTAPesanBuku = () => {
 
       <div className="hidden xl:inline overflow-hidden max-w-full mt-12 mx-auto">
         <Image
-          src="/homepage/Mockup_Buku.png"
+          src="/homepage/MockupBuku_Rattan_without_bg.png"
           alt="Craftsman hand"
           width={743}
           height={471}

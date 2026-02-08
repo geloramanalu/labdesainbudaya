@@ -5,11 +5,17 @@ import Image from 'next/image';
 import SidebarAccordion from '@/components/SidebarAccordion';
 import { usePathname } from 'next/navigation';
 
-const ARCHIVE_CATEGORIES = [
+// to do: add subfilters for each filters
+// artefak -> ?
+// jenis material rotan -> Semua, Pitrit, Rotan Semi Poles, Rotan Sega, Rotan Jawitm ..., Lainnya
+// jenis anyaman rotan -> Semua, Durno, Diamond Tengah, Double 3, ..., Lainnya
+// alat produksi -> Semua, Gol Kayu, Gol Besi, Rool, ..., Lainnya
+// pengembangan produk
+const ARCHIVE_FILTERS= [
   { id: 'artefak', title: 'Artefak' },
   { id: 'jenis-anyaman', title: 'Jenis Anyaman' },
   { id: 'material-rotan', title: 'Material Rotan' },
-  { id: 'alat', title: 'Alat' },
+  { id: 'alat-produksi', title: 'Alat Produksi' },
   { id: 'pengembangan-produk', title: 'Pengembangan Produk' },
 ];
 
@@ -44,16 +50,16 @@ export default function DesaLayout({ children }: { children: React.ReactNode }) 
 
   if (isArchive) {
     activeLabel = 'Archive';
-    subItems = ARCHIVE_CATEGORIES;
+    subItems = ARCHIVE_FILTERS;
   } else if (isEvents) {
     activeLabel = 'Events';
     subItems = []; // add events sub-items here when you have them
   } else if (isCraftsmen) {
     activeLabel = 'Craftsmen';
-    subItems = []; // Add craftsmen sub-items here
+    subItems = []; // add craftsmen sub-items here
   } else if (isTeam) {
     activeLabel = 'Data Collection Team';
-    subItems = []; // Add Team sub-items here 
+    subItems = []; // add team sub-items here 
   } else if (isHistory) {
     activeLabel = 'History';
     subItems = HISTORY_CONTENT;
@@ -61,13 +67,13 @@ export default function DesaLayout({ children }: { children: React.ReactNode }) 
 
   return (
     <main className="min-h-screen bg-[#F2F2F2] font-sans text-[#2D2D2D]">
-      <div className="relative w-full h-[60vh] xl:h-[80vh] overflow-hidden">
+      <div className="relative w-full h-[60vh] xl:h-[40vh] overflow-hidden">
         <div className="absolute inset-0">
           <Image
             src="/homepage/desa-trangsan-card-thumbnail.png"
             alt="Desa Trangsan Craftsman"
             fill
-            className="object-cover object-top"
+            className="object-cover xl:object-[75%_25%]  object-top"
             priority
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/10 via-transparent to-black/60" />

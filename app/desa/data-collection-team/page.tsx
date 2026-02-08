@@ -51,7 +51,6 @@ const DataCollectionTeam = () => {
 
                 <div onClick={scrollToTop} className='w-[45px] h-[45px] border flex items-center justify-center mx-auto mt-4 cursor-pointer hover:bg-[#2d2d2d] hover:text-white transition-colors group xl:hidden '>
                     <MoveUp strokeWidth={0.5}></MoveUp>
-
                 </div>
 
             </div>
