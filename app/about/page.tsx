@@ -29,12 +29,12 @@ const MITRA_INTERNATIONAL_DATA = [
     desc: 'Design Research Institute Chiba University',
     image: '/about/dosen/Aoki Sensei.jpg',
   },
-  // {
-  //   id: 'mitsuha',
-  //   name: 'Mitsuha Sato',
-  //   desc: 'Suha Design',
-  //   image: '/about/dosen/placeholders_dosen_individual.jpeg',
-  // },
+  {
+    id: 'mitsuha',
+    name: 'Mitsuha Sato',
+    desc: 'Suha Design',
+    image: '/about/dosen/MitsuhaSato.png',
+  },
 ];
 
 const PARTNER_LOGOS = [
@@ -46,6 +46,12 @@ const PARTNER_LOGOS = [
    "/logos/silhouette-logo/silhouette-magister.png",
    "/logos/silhouette-logo/New Project.png",
    "/logos/silhouette-logo/silhouette-urdc.png",
+   "/logos/silhouette-logo/silhouette-pusat-studi-jepang.png",
+  //  insert forum rojolele
+  "/logos/silhouette-logo/silhouette-draw-workroom.png",
+  "/logos/silhouette-logo/silhouette-sedyo-makmur.png",
+  "/logos/silhouette-logo/silhouette-rojolele.png",
+
 
 ];
 
@@ -373,7 +379,7 @@ const PendiriMitraLab = () => {
             <div className="flex flex-col items-center">
              
               <h2 className="text-3xl xl:text-5xl leading-tight tracking-wide font-raleway font-light">
-                Pendiri Lab Desain Budaya
+                Tim Kami
               </h2>
             </div>
           }
@@ -386,7 +392,7 @@ const PendiriMitraLab = () => {
           title={
              <div className="flex flex-col items-center"> 
               <h3 className="text-3xl xl:text-5xl text-[#333] xl:leading-14 tracking-wide  font-raleway font-light">
-                Mitra <br className='hidden xl:inline' /> Internasional
+                Mitra Internasional
               </h3>
             </div>
           }

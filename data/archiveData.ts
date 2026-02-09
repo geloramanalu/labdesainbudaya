@@ -1,4 +1,3 @@
-// data/archiveData.ts
 export const ARCHIVE_ITEMS = [
   {
     id: 1,

@@ -101,8 +101,8 @@ const HomepageHero = () => {
 
           <div className="flex justify-around w-full font-raleway text-lg xl:flex-col xl:gap-2 xl:text-4xl xl:tracking-tight xl:w-auto xl:mb-4">
             <h3 className="">01 / Research </h3>
-            <h3 className="">03 / Innovate </h3>
             <h3 className="">02 / Archive </h3>
+            <h3 className="">03 / Innovate </h3>
           </div>
 
           <p className="text-center text-sm leading-relaxed xl:text-right xl:text-base xl:max-w-md opacity-90">
