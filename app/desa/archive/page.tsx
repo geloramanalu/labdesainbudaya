@@ -1,40 +1,22 @@
-'use client';
-
 import React from 'react';
 import { ARCHIVE_ITEMS } from '@/data/archiveData';
-import HorizontalCard from '@/components/HorizontalCard';
-import { ArrowRight } from 'lucide-react';
-
+import { getArchiveImages } from '@/util/getArchiveImages';
+import ArchivePaginatedGrid from './ArchivePaginatedGrid';
 
 const ArchivePage = () => {
+  const processedItems = ARCHIVE_ITEMS.map((item) => {
+    const { thumbnail } = getArchiveImages(item.slug);
+    
+    return {
+      id: item.id,
+      title: item.title,
+      slug: item.slug,
+      thumbnail: thumbnail 
+    };
+  });
+
   return (
-    <div className="flex flex-col gap-8">
-      <div className="grid grid-cols-2 xl:grid-cols-3 gap-4 xl:gap-6">
-        {ARCHIVE_ITEMS.map((item) => (
-          <HorizontalCard 
-            key={item.id}
-            title={item.title}
-            image={item.image}
-          />
-        ))}
-      </div>
-      
-      {/* Pagination */}
-      <div className="flex items-center justify-center gap-4 mt-8">
-        <button className="w-10 h-10 border border-[#2D2D2D] flex items-center justify-center hover:bg-[#2D2D2D] hover:text-white transition-colors">
-          <ArrowRight className="rotate-180" size={20} />
-        </button>
-        <div className="flex gap-2">
-            <div className="w-2 h-4 bg-[#2D2D2D]"></div>
-            <div className="w-2 h-4 border border-[#2D2D2D]"></div>
-            <div className="w-2 h-4 border border-[#2D2D2D]"></div>
-            <div className="w-2 h-4 border border-[#2D2D2D]"></div>
-        </div>
-        <button className="w-10 h-10 bg-[#2D2D2D] text-white flex items-center justify-center hover:opacity-90 transition-opacity">
-          <ArrowRight size={20} />
-        </button>
-      </div>
-    </div>
+    <ArchivePaginatedGrid items={processedItems} />
   );
 };
 

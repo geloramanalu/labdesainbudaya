@@ -32,7 +32,7 @@ const HorizontalCard = ({
         className={`relative w-full overflow-hidden ${
           variant === "secondary" 
             ? "aspect-[3/4] " 
-            : "aspect-[4/3]"
+            : "aspect-[5/3]"
         }`}
       >
         
