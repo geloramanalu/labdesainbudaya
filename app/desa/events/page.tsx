@@ -6,14 +6,13 @@ import { EVENT_ITEMS } from '@/data/eventsData'
 // to do: incorporate year information to be dynamically displayed
 const Events = () => {
   return (
-    <div className='border p-4'>
+    <div className='border p-2 xl:p-4 xl:-ml-[1px]'>
     <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 xl:gap-6 ">
         {EVENT_ITEMS.map((item) => (
           <HorizontalCard 
             key={item.id}
             title={item.title}
             image={item.image}
-            variant='secondary'
             subtitle=''
             year={item.year}
           />

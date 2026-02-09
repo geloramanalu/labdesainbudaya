@@ -4,7 +4,6 @@ import { useState } from 'react';
 import HorizontalCard from '@/components/HorizontalCard';
 import { ArrowRight } from 'lucide-react';
 
-
 interface CraftsmanItem {
   id: number;
   name: string;
@@ -12,6 +11,7 @@ interface CraftsmanItem {
   thumbnail: string | null;
 }
 
+// to do: differentiate for desktop 9, mobile other value
 const ITEMS_PER_PAGE = 9; // adjust this number as needed
 
 const CraftsmenPaginatedGrid = ({ items }: { items: CraftsmanItem[] }) => {
@@ -36,8 +36,8 @@ const CraftsmenPaginatedGrid = ({ items }: { items: CraftsmanItem[] }) => {
   };
 
   return (
-    <div>
-      <div className="grid grid-cols-2 xl:grid-cols-3 gap-4 xl:gap-6 min-h-[500px]">
+    <div className=' p-2 xl:p-4 border xl:-ml-[1px]'>
+      <div className="grid grid-cols-2 xl:grid-cols-3 min-h-[500px] gap-4 xl:gap-6">
         {currentItems.map((item, index) => (
           <HorizontalCard 
             key={item.id}
