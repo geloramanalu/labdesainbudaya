@@ -6,12 +6,13 @@ import HeroCard from './HeroCard';
 
 
 {/* to do @Desa, make card covers 80% width of desktop, height follows */}
+// to do @Desa 2: repair image quality
 const Desa = () => {
   const CAROUSEL_DATA = [
     {
       id: 1,
       title: "Desa Trangsan",
-      desc: "Lab Desain Budaya merupakan ruang kolaboratif yang berfokus pada pengembangan desain berbasis potensi lokal di Indonesia, khususnya wilayah Jawa Tengah. Terinspirasi dari filosofi Mingei \"seni untuk rakyat\", lab ini menyoroti nilai kesederhanaan, keindahan, dan keberlanjutan yang lahir dari kehidupan sehari-hari masyarakat.",
+      desc: "Desa Trangsan, yang terletak di Kecamatan Gatak, Kabupaten Sukoharjo, Jawa Tengah, dikenal sebagai salah satu sentra industri rotan terkemuka di Indonesia. Sejak tahun 1927, desa ini telah berkembang menjadi penghasil kerajinan rotan terbesar di Jawa Tengah dan menempati peringkat kedua di Indonesia.",
       picture: "/homepage/desa-trangsan-card-thumbnail.png"
     },
     // {

@@ -73,7 +73,7 @@ const HomepageHero = () => {
           <h1 className="text-5xl leading-[1.1] tracking-wide text-center xl:text-left xl:text-[100px] 2xl:text-[120px] xl:leading-[0.9] xl:font-thin xl:tracking-tighter">
             <span className="block">Lab</span>
             <span className="block">Desain</span>
-            <span className="block">Budaya autodeploy testing rilkah bisa #3</span>
+            <span className="block">Budaya</span>
           </h1>
 
           <div className="hidden xl:block scale-150 origin-left opacity-90">
