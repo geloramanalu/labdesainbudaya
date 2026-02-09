@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { ArrowUp, ArrowDown } from 'lucide-react';
 
@@ -270,20 +270,26 @@ interface InteractiveProfileCardProps {
 }
 
 const InteractiveProfileCard = ({ title, data, placeholderImage, aspectRatio = "aspect-[4/3]" }: InteractiveProfileCardProps) => {
-  const [activeId, setActiveId] = useState<string | number | null>(null);
+  // if theres placeholder pic
+  // const [activeId, setActiveId] = useState<string | number | null>(null);
+
+  // if no placeholder pic
+  const [activeId, setActiveId] = useState<string | number | null>(data[0]?.id);
+  useEffect(() => {
+    if (activeId === null && data.length > 0) {
+      setActiveId(data[0].id);
+    }
+  }, [activeId, data]);
 
   return (
     <div className="flex flex-col items-center w-full">
-      {/* Title Section */}
       <div className="text-center mb-8 xl:mb-12">
         {title}
       </div>
 
-      {/* Image & List Container */}
       <div className="bg-[#E5E5E5] text-[#2d2d2d] w-full max-w-md mx-auto overflow-hidden border border-[#2d2d2d]">
         
         <div className={`relative w-full ${aspectRatio}`}>
-          {/* Placeholder (Default) */}
           <div
             className={`absolute inset-0 w-full h-full transition-opacity duration-500 ease-in-out ${activeId === null ? 'opacity-100' : 'opacity-0'}`}
           >
@@ -296,7 +302,6 @@ const InteractiveProfileCard = ({ title, data, placeholderImage, aspectRatio = "
             />
           </div>
 
-          {/* Active Hover Image */}
           {data.map((item) => (
             <div
               key={item.id}
@@ -379,9 +384,9 @@ const PendiriMitraLab = () => {
 
         <InteractiveProfileCard
           title={
-             <div className="flex flex-col items-center xl:pt-10"> 
-              <h3 className="text-3xl xl:text-5xl text-[#333] mb-2 xl:mb-4 font-raleway font-light">
-                Mitra Internasional
+             <div className="flex flex-col items-center"> 
+              <h3 className="text-3xl xl:text-5xl text-[#333] xl:leading-14 tracking-wide  font-raleway font-light">
+                Mitra <br className='hidden xl:inline' /> Internasional
               </h3>
             </div>
           }
