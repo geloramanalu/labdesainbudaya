@@ -4,6 +4,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import useEmblaCarousel from 'embla-carousel-react'; // docs: https://www.embla-carousel.com/get-started/react/
 import HeroCard from './HeroCard';
 
+
+{/* to do @Desa, make card covers 80% width of desktop, height follows */}
 const Desa = () => {
   const CAROUSEL_DATA = [
     {

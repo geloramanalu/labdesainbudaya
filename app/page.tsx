@@ -87,12 +87,12 @@ const Prakarsa = () => {
       </div>
       <div className="hidden xl:block xl:absolute xl:right-12">
         <div className="xl:mt-5 bg-transparent border border-[#2d2d2d] xl:py-2 xl:px-4 xl:w-62 xl:mx-auto xl:flex xl:justify-between group cursor-pointer hover:bg-[#2d2d2d] transition-colors duration-300">
-          <a
+          <Link
             className="group-hover:cursor-pointer font-raleway text-lg group-hover:text-white transition-colors duration-300 "
-            href="/desa"
+            href="/desa/"
           >
             Baca selengkapnya
-          </a>
+          </Link>
           <ArrowRight
             size={20}
             strokeWidth={1}
