@@ -3,18 +3,20 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Menu, Plus } from 'lucide-react';
-
-const NAV_ITEMS = [
-  { label: 'TENTANG KAMI', path: '/about' },
-  { label: 'PRAKARSA', path: '/desa' },
-  { label: 'PUBLIKASI', path: '/publikasi' },
-  { label: 'KOLABORASI', path: 'mailto:labdesainbudaya@gmail.com', isEmail: true },
-];
+import { useLanguage } from '../context/LanguageContext'; 
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [selectedLang, setSelectedLang] = useState('ID');
+  const { lang, switchLang, t } = useLanguage();
+
+  const NAV_ITEMS = [
+    { label: t('nav.about'), path: '/about' },
+    { label: t('nav.initiative'), path: '/desa' },
+    { label: t('nav.publication'), path: '/publikasi' },
+    { label: t('nav.collab'), path: 'mailto:email@domain.com', isEmail: true },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -91,21 +93,27 @@ const Navbar = () => {
           })}
         </nav>
 
-        {/* Language Switcher Section... */}
+        {/* language switcher */}
         <div className="mt-20 flex items-center gap-4 text-xl font-normal tracking-wide">
-          {['ID', 'EN'].map((lang, index) => (
-            <div key={index} className="flex items-center gap-4">
-              <span
-                className={`cursor-pointer transition-colors ${
-                  lang === selectedLang ? 'text-[#1A1A1A]' : 'text-gray-400 hover:text-[#1A1A1A]'
-                }`}
-                onClick={() => setSelectedLang(lang)}
-              >
-                {lang}
-              </span>
-              {index === 0 && <span className="text-gray-400">/</span>}
-            </div>
-          ))}
+          <div className="flex items-center gap-4">
+            <span
+              className={`cursor-pointer transition-colors ${
+                lang === 'ID' ? 'text-[#1A1A1A] font-bold' : 'text-gray-400 hover:text-[#1A1A1A]'
+              }`}
+              onClick={() => switchLang('ID')}
+            >
+              ID
+            </span>
+            <span className="text-gray-400">/</span>
+            <span
+               className={`cursor-pointer transition-colors ${
+                lang === 'EN' ? 'text-[#1A1A1A] font-bold' : 'text-gray-400 hover:text-[#1A1A1A]'
+              }`}
+              onClick={() => switchLang('EN')}
+            >
+              EN
+            </span>
+          </div>
         </div>
       </div>
     </header>

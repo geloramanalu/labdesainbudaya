@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Raleway } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { LanguageProvider } from '../context/LanguageContext';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,13 +32,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="id">
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${raleway.variable} antialiased`}
       >
-        <Navbar /> 
-        <main>{children}</main>
-        <Footer /> 
+        <LanguageProvider>
+          <Navbar /> 
+          <main>{children}</main>
+          <Footer /> 
+        </LanguageProvider>
       </body>
     </html>
   );
