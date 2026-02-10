@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
+import GallerySidebar from './GallerySidebar';
 
 export async function generateStaticParams() {
   return CRAFTSMEN_INFO.map((craftsman) => ({
@@ -66,9 +67,9 @@ export default async function CraftsmanPage({ params }: PageProps) {
               </p>
             </div>
           </div>
-
+          {/* main image */}
           <div className="lg:col-span-4 order-2">
-            <div className="relative aspect-[3/4] w-full bg-white border border-black p-2">
+            <div className="relative aspect-[3/4] w-full bg-white border border-black">
               <div className="relative w-full h-full overflow-hidden">
                 {thumbnail ? (
                   <Image 
@@ -88,7 +89,7 @@ export default async function CraftsmanPage({ params }: PageProps) {
             </div>
           </div>
 
-          <div className="lg:col-span-4 flex flex-col gap-8 order-3 lg:items-end lg:text-right lg:pt-20">
+          <div className="lg:col-span-4 flex flex-col gap-8 order-3 lg:items-end lg:justify-end lg:text-right lg:pt-20">
             
             <div className="lg:max-w-[300px]">
               <p className="font-bold text-sm leading-relaxed whitespace-pre-line">
@@ -96,34 +97,15 @@ export default async function CraftsmanPage({ params }: PageProps) {
               </p>
             </div>
 
-            <a href="mailto:labdesainbudaya.com">
+            <a href="mailto:labdesainbudaya@gmail.com">
                 <button className="w-full lg:w-auto border border-black py-3 px-6 flex items-center justify-between gap-4 hover:bg-black hover:text-white transition-colors group">
                     <span>Hubungi Pengrajin</span>
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </button>
             </a>
 
-            <div className="grid grid-cols-2 gap-4 mt-4 w-full lg:w-auto">
-               {gallery && gallery.length > 0 ? (
-                 gallery.slice(0, 2).map((img, idx) => (
-                   <div key={idx} className="relative w-full aspect-square border border-black bg-white p-2">
-                      <div className="relative w-full h-full">
-                        <Image 
-                          src={img} 
-                          alt={`${personName} product ${idx + 1}`} 
-                          fill 
-                          className="object-contain" 
-                        />
-                      </div>
-                   </div>
-                 ))
-               ) : (
-                 // fallback if no detail images exist
-                 <>
-                   <div className="aspect-square border border-black bg-white flex items-center justify-center text-xs text-gray-400">img 1</div>
-                   <div className="aspect-square border border-black bg-white flex items-center justify-center text-xs text-gray-400">img 2</div>
-                 </>
-               )}
+            <div className="w-full lg:w-auto mt-4">
+              <GallerySidebar images={gallery} personName={personName} />
             </div>
           </div>
         </div>
