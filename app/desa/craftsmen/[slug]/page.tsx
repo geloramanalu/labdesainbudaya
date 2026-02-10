@@ -63,7 +63,7 @@ export default async function CraftsmanPage({ params }: PageProps) {
             
             <div className="text-gray-600 leading-relaxed text-sm md:text-base text-justify lg:text-left">
               <p className="">
-                {craftsman.description} 
+                {craftsman.description_id} 
               </p>
             </div>
           </div>

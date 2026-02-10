@@ -12,7 +12,7 @@ interface Props {
 export default function ArchiveImageGallery({ initialImage, gallery, title }: Props) {
   const allImages = initialImage ? [initialImage, ...gallery] : gallery;
   const [activeImage, setActiveImage] = useState(initialImage || gallery[0] || null);
-
+    console.log(gallery)
   return (
     <>
       <div className="lg:col-span-4 order-2">

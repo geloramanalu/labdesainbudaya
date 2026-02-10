@@ -40,7 +40,7 @@ export default async function ArchiveDetailPage({ params }: PageProps) {
               {item.title}
             </h1>
             <div className="text-gray-600 leading-relaxed text-sm md:text-base text-justify">
-              <p>{item.detail}</p>
+              <p>{item.description_id}</p>
             </div>
 
             <div className="mt-10 space-y-6">
@@ -53,13 +53,13 @@ export default async function ArchiveDetailPage({ params }: PageProps) {
               {item.material_rotan && (
                 <div>
                   <h4 className="text-xs uppercase tracking-widest text-gray-400 mb-1 font-bold">Material ({item.material_rotan.type})</h4>
-                  <p className="text-sm text-gray-600">{item.material_rotan.detail}</p>
+                  <p className="text-sm text-gray-600">{item.material_rotan.detail_id}</p>
                 </div>
               )}
               {item.alat_produksi && (
                 <div>
                   <h4 className="text-xs uppercase tracking-widest text-gray-400 mb-1 font-bold">Alat: {item.alat_produksi.name}</h4>
-                  <p className="text-sm text-gray-600">{item.alat_produksi.detail}</p>
+                  <p className="text-sm text-gray-600">{item.alat_produksi.detail_id}</p>
                 </div>
               )}
             </div>
