@@ -7,7 +7,7 @@ import { translations } from '../data/translations';
 export type Language = 'ID' | 'EN';
 
 // 2. Define the shape of the Context
-interface LanguageContextType {
+export interface LanguageContextType {
   lang: Language;
   switchLang: (newLang: Language) => void;
   t: (keyString: string) => string;

@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { ArrowUp, ArrowDown } from 'lucide-react';
+import { useLanguage, LanguageContextType } from '../../context/LanguageContext';
 
 const FOUNDERS_DATA = [
   {
@@ -40,13 +41,13 @@ const MITRA_INTERNATIONAL_DATA = [
 const PARTNER_LOGOS = [
   "/logos/silhouette-logo/uns-silhouette.png",
   "/logos/silhouette-logo/chiba-silhouette.png",
-   "/logos/silhouette-logo/silhouette-fsrd.png", 
-   "/logos/silhouette-logo/silhouette-dri.png",
-   "/logos/silhouette-logo/New Project (3).png",
-   "/logos/silhouette-logo/silhouette-magister.png",
-   "/logos/silhouette-logo/New Project.png",
-   "/logos/silhouette-logo/silhouette-urdc.png",
-   "/logos/silhouette-logo/silhouette-pusat-studi-jepang.png",
+  "/logos/silhouette-logo/silhouette-fsrd.png",
+  "/logos/silhouette-logo/silhouette-dri.png",
+  "/logos/silhouette-logo/New Project (3).png",
+  "/logos/silhouette-logo/silhouette-magister.png",
+  "/logos/silhouette-logo/New Project.png",
+  "/logos/silhouette-logo/silhouette-urdc.png",
+  "/logos/silhouette-logo/silhouette-pusat-studi-jepang.png",
   //  insert forum rojolele
   "/logos/silhouette-logo/silhouette-draw-workroom.png",
   "/logos/silhouette-logo/silhouette-sedyo-makmur.png",
@@ -55,30 +56,36 @@ const PARTNER_LOGOS = [
 
 ];
 
+interface HeroAboutProps {
+  t: LanguageContextType['t'];
+}
+
 // refactored about into several sections
 const About = () => {
+  const { t } = useLanguage();
   return (
     <main className="min-h-screen font-sans bg-[#F2F2F2]">
-      <HeroAbout />
-      <PhilosophySection />
-      <PhilosophyGrid />
-      <PendiriMitraLab />
+      <HeroAbout t={t} />
+      <PhilosophySection t={t} />
+      <PhilosophyGrid t={t} />
+      <PendiriMitraLab t={t} />
     </main>
   );
 };
 
 
-const HeroAbout = () => {
+const HeroAbout = ({ t }: HeroAboutProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
-// to do: add gradient downwards on bg image
+
+  // to do: add gradient downwards on bg image
   return (
     <div className="relative w-full h-screen bg-neutral-900 overflow-hidden">
-      <div className="absolute inset-0 opacity-70 z-0"> 
+      <div className="absolute inset-0 opacity-70 z-0">
         <Image
           src="/about/hero/about-hero-image.png"
           alt="Students in workshop"
           fill
-          className="object-cover grayscale xl:hidden  "
+          className="object-cover grayscale xl:hidden "
           priority
         />
 
@@ -117,14 +124,12 @@ const HeroAbout = () => {
       >
         <div className="shrink-0 xl:flex xl:justify-between xl:items-center">
           <p className="text-[#333333] text-lg leading-relaxed font-light xl:max-w-4xl xl:text-xl">
-            Kami percaya bahwa desain bukan sekadar bentuk,
-            melainkan cara untuk <span className="font-semibold">merawat identitas</span> dan menghidupkan
-            kembali <span className="font-semibold">budaya lokal</span>.
+            {t('about.hero.quote')}
           </p>
           <div className="hidden xl:block">
-             <div className="border border-[#2d2d2d] p-3">
-                <ArrowUp size={24} strokeWidth={1} />
-             </div>
+            <div className="border border-[#2d2d2d] p-3">
+              <ArrowUp size={24} strokeWidth={1} />
+            </div>
           </div>
         </div>
 
@@ -136,16 +141,10 @@ const HeroAbout = () => {
         >
           <div className="space-y-6 text-[#333333] font-light text-sm leading-relaxed xl:text-base xl:max-w-4xl xl:mt-8">
             <p>
-              Lab Desain Budaya merupakan ruang kolaboratif yang berfokus pada pengembangan desain
-              berbasis potensi lokal di Indonesia, khususnya wilayah Jawa Tengah. Terinspirasi dari filosofi
-              Mingei "seni untuk rakyat", lab ini menyoroti nilai kesederhanaan, keindahan, dan keberlanjutan
-              yang lahir dari kehidupan sehari-hari masyarakat.
+              {t('about.hero.description_1')}
             </p>
             <p>
-              Kami percaya bahwa desain tidak hanya soal keindahan dalam karya seni, tetapi tentang
-              identitas, budaya, dan keberlanjutan sosial. Melalui kolaborasi dengan para pengrajin lokal,
-              Lab Desain Budaya berupaya menggali, mendokumentasikan, dan menghidupkan kembali karya
-              kerajinan lokal dengan nilai estetika yang murni untuk inovasi masa kini.
+              {t('about.hero.description_2')}
             </p>
           </div>
         </div>
@@ -167,86 +166,92 @@ const HeroAbout = () => {
   );
 };
 
-const PhilosophySection = () => {
+const PhilosophySection = ({ t }: HeroAboutProps) => {
   return (
     <>
-      <div className="bg-[#2d2d2d] text-white py-20 px-6 flex flex-col items-center justify-center text-center xl:hidden">
-        <span className="text-sm font-light tracking-widest uppercase mb-8 text-gray-300">Filosofi kami</span>
-        <div className="flex space-x-4 mb-4">
-          <div className="text-8xl font-serif font-light">民</div>
-          <div className="text-8xl font-serif font-light">芸</div>
-        </div>
-        <h2 className="text-6xl tracking-widest mb-4 mt-2 font-raleway">MINGEI</h2>
-        <p className="text-xl font-serif italic text-gray-400">['mɪŋgeɪ]</p>
-      </div>
 
       <div className="hidden xl:flex bg-[#F2F2F2] text-[#2d2d2d] py-32 px-24 justify-between items-start">
         <div className="w-1/3">
-            <h2 className="text-7xl font-thin font-raleway leading-tight">
-                Kerangka <br/>
-                Desain <br/>
-                Budaya
-            </h2>
+          <h2 className="text-7xl font-thin font-raleway leading-tight">
+            Kerangka <br />
+            Desain <br />
+            Budaya
+          </h2>
         </div>
-        
+
         <div className="w-2/3 grid grid-cols-2 gap-x-12 gap-y-16">
-            <div>
-                <h3 className="text-5xl font-light mb-4"><span className="font-normal inline mr-2 pb-2">1</span> Being</h3>
-                <p className="text-sm font-light leading-relaxed">
-                    Tahap memahami nilai, praktik, dan identitas budaya yang telah membentuk kehidupan.
-                </p>
-            </div>
-            <div>
-                <h3 className="text-5xl font-light mb-4"><span className="font-normal inline mr-2 pb-2">3</span> Design Process</h3>
-                <p className="text-sm font-light leading-relaxed">
-                    Tahap menerjemahkan "what should be" ke langkah desain melalui riset, eksperimen, kolaborasi, dan prototyping untuk menghasilkan solusi yang bermakna dan sesuai konteks.
-                </p>
-            </div>
-            <div>
-                <h3 className="text-5xl font-light mb-4"><span className="font-normal inline mr-2 pb-2">2</span> What Should Be</h3>
-                <p className="text-sm font-light leading-relaxed">
-                    Tahap menentukan masa depan budaya yang ideal dengan mengidentifikasi kebutuhan, aspirasi, serta pertimbangan etis yang menentukan arah desain bagi komunitas berbasis temuan dalam "being".
-                </p>
-            </div>
-            <div>
-                <h3 className="text-5xl font-light mb-4"><span className="font-normal inline mr-2 pb-2">4</span> Becoming</h3>
-                <p className="text-sm font-light leading-relaxed">
-                    Tahap ketika hasil desain berkembang dalam komunitas, membentuk ekspresi, praktik, dan identitas budaya baru melalui adaptasi berkelanjutan serta dampak jangka panjang.
-                </p>
-            </div>
+          <div>
+            <h3 className="text-5xl font-light mb-4"><span className="font-normal inline mr-2 pb-2">1</span> Being</h3>
+            <p className="text-sm font-light leading-relaxed">
+              {t('about.philosophy.steps.one_desc')}
+            </p>
+          </div>
+          <div>
+            <h3 className="text-5xl font-light mb-4"><span className="font-normal inline mr-2 pb-2">3</span> Design Process</h3>
+            <p className="text-sm font-light leading-relaxed">
+              {t('about.philosophy.steps.two_desc')}
+            </p>
+          </div>
+          <div>
+            <h3 className="text-5xl font-light mb-4"><span className="font-normal inline mr-2 pb-2">2</span> What Should Be</h3>
+            <p className="text-sm font-light leading-relaxed">
+              {t('about.philosophy.steps.three_desc')}
+            </p>
+          </div>
+          <div>
+            <h3 className="text-5xl font-light mb-4"><span className="font-normal inline mr-2 pb-2">4</span> Becoming</h3>
+            <p className="text-sm font-light leading-relaxed">
+              {t('about.philosophy.steps.four_desc')}
+            </p>
+          </div>
         </div>
       </div>
     </>
   );
 };
 
-const PhilosophyGrid = () => {
+const PhilosophyGrid = ({ t }: HeroAboutProps) => {
   return (
-    <div className="bg-[#F2F2F2] py-16 xl:hidden">
+    <div className="bg-[#F2F2F2] pb-16 ">
+      <div className="bg-[#2d2d2d] text-white py-20 px-6 flex flex-col items-center justify-center text-center ">
+        <div className='max-w-xl xl:max-w-5xxl'>
+          <div className="flex space-x-4 mb-4 justify-center">
+            <div className="text-8xl font-serif font-light">民</div>
+            <div className="text-8xl font-serif font-light">芸</div>
+          </div>
+          <h2 className="text-6xl tracking-widest mb-4 mt-2 font-raleway">MINGEI</h2>
+          <p className="text-xl font-serif italic text-gray-400">['mɪŋgeɪ]</p>
+        </div>
+      </div>
       <div className="border border-[#2d2d2d]">
-        <div className="grid grid-cols-2 divide-[#2d2d2d] border-b border-[#2d2d2d] justify-center">
-          <div className="pl-6 py-6 flex flex-col items-center justify-center">
-            <span className="text-7xl font-bold mb-2 text-[#333]">民</span>
-            <span className="text-sm tracking-wider text-gray-600">Rakyat</span>
-          </div>
-          <div className="pr-6 py-6 flex flex-col items-center justify-center">
-            <span className="text-7xl font-bold mb-2 text-[#333]">芸</span>
-            <span className="text-sm tracking-wider text-gray-600">Seni</span>
-          </div>
+
+          <div className=" divide-[#2d2d2d] border-b border-[#2d2d2d] justify-center">
+            <div className='max-w-xs xl:max-w-md mx-auto grid grid-cols-2'>
+              <div className="pl-6 py-12 flex flex-col items-center justify-center ">
+                <span className="text-7xl xl:text-9xl xl:py-4 font-medium xl:font-medium mb-2 text-[#333]">民</span>
+                <span className="text-sm xl:text-xl tracking-wider text-gray-600">{t('about.mingei_grid.kanji_1_meaning')}</span>
+              </div>
+              <div className="pr-6 py-12 flex flex-col items-center justify-center">
+                <span className="text-7xl xl:text-9xl xl:py-4 font-medium xl:font-medium mb-2 text-[#333]">芸</span>
+                <span className="text-sm xl:text-xl tracking-wider text-gray-600">{t('about.mingei_grid.kanji_2_meaning')}</span>
+              </div>
+            </div>
+
+          
         </div>
 
-        <div className="divide-y divide-[#2d2d2d]">
-          <div className="p-4 text-center text-sm text-[#333] leading-relaxed">
-            Diperkenalkan di Jepang awal abad ke-20
+        <div className="divide-y divide-[#2d2d2d] ">
+          <div className="p-4 xl:py-8 text-center text-sm xl:text-xl text-[#333] leading-relaxed">
+            {t('about.mingei_grid.desc_1')}
           </div>
-          <div className="p-4 text-center text-sm text-[#333] leading-relaxed">
-            Kesederhanaan, Kejujuran / Apa Adanya, Anonim
+          <div className="p-4 xl:py-8 text-center text-sm xl:text-xl text-[#333] leading-relaxed">
+            {t('about.mingei_grid.desc_2')}
           </div>
-          <div className="p-4 text-center text-sm text-[#333] italic">
-            "Seni rakyat yang dikembalikan ke rakyat."
+          <div className="p-4 xl:py-8 text-center text-sm xl:text-xl text-[#333] italic">
+            {t('about.mingei_grid.quote')}
           </div>
-          <div className="p-4 text-center text-sm text-[#333] leading-relaxed">
-            Dibuat oleh rakyat biasa, melestarikan warisan budaya dan sejarah.
+          <div className="p-4 xl:py-8 text-center text-sm xl:text-xl text-[#333] leading-relaxed">
+            {t('about.mingei_grid.desc_3')}
           </div>
         </div>
       </div>
@@ -263,9 +268,9 @@ interface ProfileData {
 }
 
 interface InstitutionalPartner {
-    id: number;
-    name: string;
-    src: string;
+  id: number;
+  name: string;
+  src: string;
 }
 
 interface InteractiveProfileCardProps {
@@ -294,7 +299,7 @@ const InteractiveProfileCard = ({ title, data, placeholderImage, aspectRatio = "
       </div>
 
       <div className="bg-[#E5E5E5] text-[#2d2d2d] w-full max-w-md mx-auto overflow-hidden border border-[#2d2d2d]">
-        
+
         <div className={`relative w-full ${aspectRatio}`}>
           <div
             className={`absolute inset-0 w-full h-full transition-opacity duration-500 ease-in-out ${activeId === null ? 'opacity-100' : 'opacity-0'}`}
@@ -363,23 +368,23 @@ const PartnerCard = ({ fileName }: { fileName: string }) => {
           />
         </div>
       </div>
-      
+
     </div>
   );
 };
 
-const PendiriMitraLab = () => {
+const PendiriMitraLab = ({ t }: HeroAboutProps) => {
   return (
     <section className="bg-[#F2F2F2] text-[#2d2d2d] py-20 px-6 xl:px-32 xl:py-32">
-      
+
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-20 xl:gap-12 max-w-[1440px] mx-auto">
-        
+
         <InteractiveProfileCard
           title={
             <div className="flex flex-col items-center">
-             
+
               <h2 className="text-3xl xl:text-5xl leading-tight tracking-wide font-raleway font-light">
-                Tim Kami
+                {t('about.team.title_team')}
               </h2>
             </div>
           }
@@ -390,28 +395,28 @@ const PendiriMitraLab = () => {
 
         <InteractiveProfileCard
           title={
-             <div className="flex flex-col items-center"> 
+            <div className="flex flex-col items-center">
               <h3 className="text-3xl xl:text-5xl text-[#333] xl:leading-14 tracking-wide  font-raleway font-light">
-                Mitra Internasional
+                {t('about.team.title_intl_partners')}
               </h3>
             </div>
           }
           data={MITRA_INTERNATIONAL_DATA}
-          placeholderImage="/about/dosen/placeholders_founder.png" 
-          aspectRatio="aspect-[4/3]" 
+          placeholderImage="/about/dosen/placeholders_founder.png"
+          aspectRatio="aspect-[4/3]"
         />
 
       </div>
 
       <div className="text-center mt-24 xl:mt-40 border-t border-[#2d2d2d]/10 pt-16">
         <h3 className="text-3xl xl:text-5xl text-[#333] mb-8 xl:mb-16 font-raleway font-light">
-          Mitra Institusi
+          {t('about.team.title_inst_partners')}
         </h3>
 
         <div className="grid grid-cols-2 xl:grid-cols-5 gap-4 xl:gap-8 xl:max-w-7xl xl:mx-auto">
-         {PARTNER_LOGOS.map((fileName, index) => (
-          <PartnerCard key={index} fileName={fileName} />
-        ))}
+          {PARTNER_LOGOS.map((fileName, index) => (
+            <PartnerCard key={index} fileName={fileName} />
+          ))}
         </div>
       </div>
 
