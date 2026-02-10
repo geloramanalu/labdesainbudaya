@@ -1,28 +1,36 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Image from 'next/image';
 import { ArrowRight } from "lucide-react";
 import Link from 'next/link';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
+import gsap from 'gsap';
 
 const HERO_IMAGES = [
   "/homepage/hero/hero-mobile.jpg",
-  "/homepage/hero/temp-hero-2.jpg",
-  "/homepage/hero/temp-hero-3.jpeg",
-  "/homepage/hero/temp-hero-4.jpeg",
-  "/homepage/hero/temp-hero-5.webp",
-  "/homepage/hero/temp-hero-6.jpeg"
+  "/homepage/hero/hero-2.jpg",
+  "/homepage/hero/hero-3.jpg",
+  "/homepage/hero/hero-4.jpg",
+  "/homepage/hero/hero-5.jpg",
+  "/homepage/hero/hero-6.jpg",
 ];
 
-const HomepageHero = () => {
+interface HomepageHeroProps {
+  startAnimation?: boolean;
+}
+
+const HomepageHero = ({ startAnimation = false }: HomepageHeroProps) => {
   const [emblaRef, emblaApi] = useEmblaCarousel(
     { loop: true, duration: 40 }, 
     [Autoplay({ delay: 5000, stopOnInteraction: false })]
   );
   
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const heroTextRef = useRef(null);
+  const heroNavRef = useRef(null);
+  const heroDecorRef = useRef(null);
 
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
@@ -38,11 +46,37 @@ const HomepageHero = () => {
     };
   }, [emblaApi, onSelect]);
 
+  // ANIMATION LOGIC
+  useEffect(() => {
+    if (startAnimation) {
+      const tl = gsap.timeline();
+
+      // 1. Reveal Main Text
+      tl.fromTo(".hero-text-span", 
+        { y: 100, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1, stagger: 0.2, ease: "power3.out" }
+      );
+
+      // 2. Reveal Nav
+      tl.fromTo(heroNavRef.current,
+        { x: 50, opacity: 0 },
+        { x: 0, opacity: 1, duration: 1, ease: "power3.out" },
+        "-=0.5"
+      );
+
+      // 3. Reveal Decor
+      tl.fromTo(heroDecorRef.current,
+        { scaleX: 0, opacity: 0 },
+        { scaleX: 1.5, opacity: 0.9, duration: 0.8, ease: "power2.out" },
+        "-=0.8"
+      );
+    }
+  }, [startAnimation]);
+
   const rectPositions = [0, 17.5, 34.5, 51.5, 68.5, 85.5];
 
   return (
     <div className="relative h-screen w-full overflow-hidden text-white font-sans">
-      {/* to do: 1. load heavy image optimization 2. enter homepage animation */}
       <div className="absolute inset-0 -z-20" ref={emblaRef}>
         <div className="flex h-full w-full">
           {HERO_IMAGES.map((src, index) => (
@@ -67,16 +101,14 @@ const HomepageHero = () => {
       />
 
       <div className="absolute inset-0 flex flex-col justify-between xl:flex-row xl:items-center w-full h-full pb-10 pt-24 xl:py-24 pointer-events-none"> 
-        
         <div className="flex flex-col items-center xl:items-start xl:pl-[92px] gap-8 w-full xl:w-1/2 xl:h-full xl:justify-between pointer-events-auto">
-          
-          <h1 className="text-5xl leading-[1.1] tracking-wide text-center xl:text-left xl:text-[100px] 2xl:text-[120px] xl:leading-[0.9] xl:font-thin xl:tracking-tighter">
-            <span className="block">Lab</span>
-            <span className="block">Desain</span>
-            <span className="block">Budaya</span>
+          <h1 ref={heroTextRef} className="text-5xl leading-[1.1] tracking-wide text-center xl:text-left xl:text-[100px] 2xl:text-[120px] xl:leading-[0.9] xl:font-thin xl:tracking-tighter overflow-hidden">
+            <span className="hero-text-span block opacity-0">Lab</span>
+            <span className="hero-text-span block opacity-0">Desain</span>
+            <span className="hero-text-span block opacity-0">Budaya</span>
           </h1>
 
-          <div className="hidden xl:block scale-150 origin-left opacity-90">
+          <div ref={heroDecorRef} className="hidden xl:block scale-150 origin-left opacity-0">
              <svg width="95" height="45" viewBox="0 0 95 45" fill="none" xmlns="http://www.w3.org/2000/svg">
                 {rectPositions.map((xPos, index) => {
                   const isActive = index === selectedIndex;
@@ -97,8 +129,7 @@ const HomepageHero = () => {
           </div>
         </div>
 
-        <div className="flex flex-col gap-6 px-6 xl:px-0 xl:pr-[92px] xl:items-end xl:text-right w-full xl:w-1/2 xl:h-full xl:justify-end pointer-events-auto">
-
+        <div ref={heroNavRef} className="flex flex-col gap-6 px-6 xl:px-0 xl:pr-[92px] xl:items-end xl:text-right w-full xl:w-1/2 xl:h-full xl:justify-end pointer-events-auto opacity-0">
           <div className="flex justify-around w-full font-raleway text-lg xl:flex-col xl:gap-2 xl:text-4xl xl:tracking-tight xl:w-auto xl:mb-4">
             <h3 className="">01 / Research </h3>
             <h3 className="">02 / Archive </h3>
@@ -115,9 +146,7 @@ const HomepageHero = () => {
               <ArrowRight size={18} strokeWidth={1} className="transition-transform group-hover:translate-x-1" />
             </div>
           </Link>
-
         </div>
-
       </div>
     </div>
   );

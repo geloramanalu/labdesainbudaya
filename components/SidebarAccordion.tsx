@@ -12,15 +12,15 @@ interface SubItem {
 interface MenuItem {
   label: string;
   link: string;
+  subItems?: SubItem[]; // <--- Attach subItems directly to the menu item type
 }
 
 interface SidebarAccordionProps {
   items: MenuItem[];
   activeLabel: string;
-  subItems?: SubItem[];
 }
 
-const SidebarAccordion = ({ items, activeLabel, subItems = [] }: SidebarAccordionProps) => {
+const SidebarAccordion = ({ items, activeLabel }: SidebarAccordionProps) => {
   const [isOpen, setIsOpen] = useState(true);
 
   const scrollToSection = (id: string) => {
@@ -31,12 +31,13 @@ const SidebarAccordion = ({ items, activeLabel, subItems = [] }: SidebarAccordio
   };
 
   return (
-    <div className="border border-[#2D2D2D] bg-[#F2F2F2] text-raleway max-w-xs md:max-w-md mx-auto">
+    <div className="border border-[#2D2D2D] bg-[#F2F2F2] text-raleway max-w-xs md:max-w-md mx-auto xl:mx-0 xl:w-full">
       {items.map((menu) => {
         const isActive = menu.label === activeLabel;
+        // Check if THIS specific menu has subItems
+        const hasSubItems = menu.subItems && menu.subItems.length > 0;
 
         if (isActive) {
-          // render as the Active Accordion Header
           return (
             <div key={menu.label}>
               <div 
@@ -44,21 +45,20 @@ const SidebarAccordion = ({ items, activeLabel, subItems = [] }: SidebarAccordio
                 className="bg-[#2D2D2D] text-white p-4 flex justify-between items-center cursor-pointer transition-colors border-b border-[#2D2D2D]"
               >
                 <span className="text-lg font-medium">{menu.label}</span>
-                <Menu size={20} />
+                {hasSubItems && <Menu size={20} />}
               </div>
 
-              {/* expanded content */}
               <div className={`
                 overflow-hidden transition-all duration-500 ease-in-out bg-[#F2F2F2]
-                ${isOpen && subItems.length > 0 ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'}
+                ${isOpen && hasSubItems ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'}
               `}>
                 <ul className="flex flex-col text-sm border-b border-[#2D2D2D]">
-                  {subItems.map((sub) => (
+                  {/* Map through the menu's OWN subItems */}
+                  {menu.subItems?.map((sub) => (
                     <li key={sub.id}>
                       <button 
                         onClick={() => scrollToSection(sub.id)}
-                        // Updated: Changed 'px-8' to 'pl-12 pr-4' to add more padding on the left
-                        className="w-full text-left py-3 pl-12 pr-4 hover:bg-[#2D2D2D]/5 text-[#2D2D2D]/70 hover:text-[#2D2D2D] transition-colors border-l-4 border-transparent hover:border-[#2D2D2D]"
+                        className="w-full text-left py-3 pl-8 pr-4 hover:bg-[#2D2D2D]/5 text-[#2D2D2D]/70 hover:text-[#2D2D2D] transition-colors border-l-4 border-transparent hover:border-[#2D2D2D]"
                       >
                         {sub.title}
                       </button>
@@ -70,7 +70,6 @@ const SidebarAccordion = ({ items, activeLabel, subItems = [] }: SidebarAccordio
           );
         }
 
-        // Render as a Standard Link
         return (
           <Link 
             key={menu.label} 
