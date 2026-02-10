@@ -1,0 +1,28 @@
+path,page,section,subsection,willBeTranslated?,translationBy,indonesian,english
+/global,navbar,menu,about,TRUE,manual,TENTANG KAMI,ABOUT US
+/global,navbar,menu,initiative,TRUE,manual,PRAKARSA,INITIATIVE
+/global,navbar,menu,publication,TRUE,manual,PUBLIKASI,PUBLICATION
+/global,navbar,menu,collab,TRUE,manual,KOLABORASI,COLLABORATION
+/about,about,hero,quote,TRUE,manual,"Kami percaya bahwa desain bukan sekadar bentuk, melainkan cara untuk merawat identitas dan menghidupkan kembali budaya lokal.","We believe that design is not just a form, but a way to preserve identity and revive local culture."
+/about,about,hero,description_1,TRUE,manual,"Lab Desain Budaya merupakan ruang kolaboratif yang berfokus pada pengembangan desain berbasis potensi lokal di Indonesia, khususnya wilayah Jawa Tengah. Terinspirasi dari filosofi Mingei ""seni untuk rakyat"", lab ini menyoroti nilai kesederhanaan, keindahan, dan keberlanjutan yang lahir dari kehidupan sehari-hari masyarakat.","Lab Desain Budaya is a collaborative space focused on developing designs based on local potential in Indonesia, specifically Central Java. Inspired by the Mingei philosophy ""art for the people"", this lab highlights the values of simplicity, beauty, and sustainability born from everyday life."
+/about,about,hero,description_2,TRUE,manual,"Kami percaya bahwa desain tidak hanya soal keindahan dalam karya seni, tetapi tentang identitas, budaya, dan keberlanjutan sosial. Melalui kolaborasi dengan para pengrajin lokal, Lab Desain Budaya berupaya menggali, mendokumentasikan, dan menghidupkan kembali karya kerajinan lokal dengan nilai estetika yang murni untuk inovasi masa kini.","We believe that design is not just about beauty in art, but about identity, culture, and social sustainability. Through collaboration with local artisans, Lab Desain Budaya strives to explore, document, and revive local crafts with pure aesthetic values for modern innovation."
+/about,about,philosophy,label,TRUE,manual,Filosofi kami,Our Philosophy
+/about,about,philosophy,main_title,TRUE,manual,Kerangka Desain Budaya,Design Culture Framework
+/about,about,philosophy,step_1_title,TRUE,manual,Being,Being
+/about,about,philosophy,step_1_desc,TRUE,manual,"Tahap memahami nilai, praktik, dan identitas budaya yang telah membentuk kehidupan.","The stage of understanding cultural values, practices, and identities that have shaped life."
+/about,about,philosophy,step_2_title,TRUE,manual,Design Process,Design Process
+/about,about,philosophy,step_2_desc,TRUE,manual,"Tahap menerjemahkan ""what should be"" ke langkah desain melalui riset, eksperimen, kolaborasi, dan prototyping untuk menghasilkan solusi yang bermakna dan sesuai konteks.","The stage of translating ""what should be"" into design steps through research, experiments, collaboration, and prototyping to produce meaningful and context-appropriate solutions."
+/about,about,philosophy,step_3_title,TRUE,manual,What Should Be,What Should Be
+/about,about,philosophy,step_3_desc,TRUE,manual,"Tahap menentukan masa depan budaya yang ideal dengan mengidentifikasi kebutuhan, aspirasi, serta pertimbangan etis yang menentukan arah desain bagi komunitas berbasis temuan dalam ""being"".","The stage of determining the ideal cultural future by identifying needs, aspirations, and ethical considerations that determine the design direction for the community based on findings in ""being""."
+/about,about,philosophy,step_4_title,TRUE,manual,Becoming,Becoming
+/about,about,philosophy,step_4_desc,TRUE,manual,"Tahap ketika hasil desain berkembang dalam komunitas, membentuk ekspresi, praktik, dan identitas budaya baru melalui adaptasi berkelanjutan serta dampak jangka panjang.","The stage when design results develop within the community, forming new cultural expressions, practices, and identities through continuous adaptation and long-term impact."
+/about,about,mingei_grid,kanji_1,TRUE,manual,Rakyat,People
+/about,about,mingei_grid,kanji_2,TRUE,manual,Seni,Art
+/about,about,mingei_grid,desc_1,TRUE,manual,Diperkenalkan di Jepang awal abad ke-20,Introduced in Japan in the early 20th century
+/about,about,mingei_grid,desc_2,TRUE,manual,"Kesederhanaan, Kejujuran / Apa Adanya, Anonim","Simplicity, Honesty / As It Is, Anonymous"
+/about,about,mingei_grid,quote,TRUE,manual,"""Seni rakyat yang dikembalikan ke rakyat.""","""Folk art returned to the people."""
+/about,about,mingei_grid,desc_3,TRUE,manual,"Dibuat oleh rakyat biasa, melestarikan warisan budaya dan sejarah.","Made by ordinary people, preserving cultural heritage and history."
+/about,about,team,title_team,TRUE,manual,Tim Kami,Our Team
+/about,about,team,title_partners_intl,TRUE,manual,Mitra Internasional,International Partners
+/about,about,team,title_partners_inst,TRUE,manual,Mitra Institusi,Institutional Partners
+/global,common,button,read_more,TRUE,manual,Baca Selengkapnya,Read More

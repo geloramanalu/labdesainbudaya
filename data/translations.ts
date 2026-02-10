@@ -25,10 +25,10 @@ export const translations = {
         steps: {
           one_title: "Being",
           one_desc: "Tahap memahami nilai, praktik, dan identitas budaya yang telah membentuk kehidupan.",
-          two_title: "What Should Be",
-          two_desc: "Tahap menentukan masa depan budaya yang ideal dengan mengidentifikasi kebutuhan, aspirasi, serta pertimbangan etis yang menentukan arah desain bagi komunitas berbasis temuan dalam \"being\".",
-          three_title: "Design Process",
-          three_desc: "Tahap menerjemahkan \"what should be\" ke langkah desain melalui riset, eksperimen, kolaborasi, dan prototyping untuk menghasilkan solusi yang bermakna dan sesuai konteks.",
+          two_title: "Design Process",
+          two_desc: "Tahap menerjemahkan \"what should be\" ke langkah desain melalui riset, eksperimen, kolaborasi, dan prototyping untuk menghasilkan solusi yang bermakna dan sesuai konteks.",
+          three_title: "What Should Be",
+          three_desc: "Tahap menentukan masa depan budaya yang ideal dengan mengidentifikasi kebutuhan, aspirasi, serta pertimbangan etis yang menentukan arah desain bagi komunitas berbasis temuan dalam \"being\".",
           four_title: "Becoming",
           four_desc: "Tahap ketika hasil desain berkembang dalam komunitas, membentuk ekspresi, praktik, dan identitas budaya baru melalui adaptasi berkelanjutan serta dampak jangka panjang."
         }
@@ -58,7 +58,7 @@ export const translations = {
       publication: "PUBLICATION",
       collab: "COLLABORATION",
     },
-    // About Page (Placeholders - to be filled with your English content)
+    // About Page 
     about: {
       hero: {
         quote: "We believe that design is not just a form, but a way to preserve identity and revive local culture.",
