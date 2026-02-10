@@ -11,7 +11,7 @@ import { usePathname } from 'next/navigation';
 // jenis anyaman rotan -> Semua, Durno, Diamond Tengah, Double 3, ..., Lainnya
 // alat produksi -> Semua, Gol Kayu, Gol Besi, Rool, ..., Lainnya
 // pengembangan produk
-const ARCHIVE_FILTERS= [
+const ARCHIVE_FILTERS = [
   { id: 'artefak', title: 'Artefak' },
   { id: 'jenis-anyaman', title: 'Jenis Anyaman' },
   { id: 'material-rotan', title: 'Material Rotan' },
@@ -32,48 +32,46 @@ export default function DesaLayout({ children }: { children: React.ReactNode }) 
   const pathname = usePathname();
 
   const MENU_ITEMS = [
-    { label: 'History', link: '/desa' },
-    { label: 'Archive', link: '/desa/archive' },
+    { 
+      label: 'History', 
+      link: '/desa', 
+      subItems: HISTORY_CONTENT 
+    },
+    { 
+      label: 'Archive', 
+      link: '/desa/archive',
+      subItems: ARCHIVE_FILTERS
+    },
     { label: 'Events', link: '/desa/events' },
     { label: 'Craftsmen', link: '/desa/craftsmen' },
     { label: 'Data Collection Team', link: '/desa/data-collection-team' },
   ];
 
-  const isArchive = pathname.startsWith('/desa/archive');
-  const isEvents = pathname.startsWith('/desa/events');
-  const isCraftsmen = pathname.startsWith('/desa/craftsmen');
-  const isTeam = pathname.startsWith('/desa/data-collection-team');
-  const isHistory = pathname === '/desa' || pathname === '/desa/history';
-
+  // 2. SIMPLIFY LOGIC to just finding the Active Label
   let activeLabel = '';
-  let subItems: { id: string, title: string }[] = [];
 
-  if (isArchive) {
+  if (pathname.startsWith('/desa/archive')) {
     activeLabel = 'Archive';
-    subItems = ARCHIVE_FILTERS;
-  } else if (isEvents) {
+  } else if (pathname.startsWith('/desa/events')) {
     activeLabel = 'Events';
-    subItems = []; // add events sub-items here when you have them
-  } else if (isCraftsmen) {
+  } else if (pathname.startsWith('/desa/craftsmen')) {
     activeLabel = 'Craftsmen';
-    subItems = []; // add craftsmen sub-items here
-  } else if (isTeam) {
+  } else if (pathname.startsWith('/desa/data-collection-team')) {
     activeLabel = 'Data Collection Team';
-    subItems = []; // add team sub-items here 
-  } else if (isHistory) {
+  } else {
+    // fallback: If it's /desa or /desa/history (or any unmatched sub-route), default to History
     activeLabel = 'History';
-    subItems = HISTORY_CONTENT;
   }
 
   return (
     <main className="min-h-screen bg-[#F2F2F2] font-sans text-[#2D2D2D]">
       <div className="relative w-full h-[60vh] xl:h-[40vh] overflow-hidden">
-        <div className="absolute inset-0">
+         <div className="absolute inset-0">
           <Image
             src="/homepage/desa-trangsan-card-thumbnail.png"
             alt="Desa Trangsan Craftsman"
             fill
-            className="object-cover xl:object-[75%_25%]  object-top"
+            className="object-cover xl:object-[75%_25%] object-top"
             priority
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/10 via-transparent to-black/60" />
@@ -84,16 +82,16 @@ export default function DesaLayout({ children }: { children: React.ReactNode }) 
         </div>
       </div>
 
-      <div className="flex flex-col xl:flex-row max-w-[1440px] mx-auto xl:px-12 py-12 xl:py-24 gap-12 xl:gap-0">
-        <aside className="w-full xl:w-1/4 xl:sticky xl:top-32 h-fit px-0 xl:px-0 z-20">
+      <div className="flex flex-col xl:flex-row max-w-[1440px] mx-auto px-6 xl:px-12 py-12 xl:py-24 gap-12 xl:gap-0">
+        <aside className="w-full xl:w-1/4 xl:sticky xl:top-32 h-fit z-20">
           <SidebarAccordion 
+            key={activeLabel}
             items={MENU_ITEMS}
             activeLabel={activeLabel}
-            subItems={subItems}
           />
         </aside>
 
-        <div className="w-full xl:w-3/4 px-6 xl:px-0">
+        <div className="w-full xl:w-3/4 xl:pl-12">
           {children}
         </div>
       </div>

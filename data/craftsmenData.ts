@@ -133,13 +133,13 @@ export const CRAFTSMEN_INFO: Craftsman[] = [
     address: "Jl. Manau, Jamur, Kec. Gatak, Kab. Sukoharjo. Jawa Tengah 57557",
     description: "Mas Teguh mulai menjadi pengrajin di tahun 2022 dan merupakan spesialis kerajinan yang berupa peti mati."
   },
-  {
-    id: 19,
-    slug: "pak-muklis",
-    name: "Pak Muklis / Micromini",
-    address: "Trangsan, Kec. Gatak, Kabupaten Sukoharjo, Jawa Tengah 57557",
-    description: "Keahlian yang diperoleh Pak Muklis berasal dari ajaran keluarga dan kemudian melanjutkan usaha tersebut. Beliau merupakan spesialis produk kursi, kaca, dingklik, tempat gelas, kap lampu."
-  },
+  // {
+  //   id: 19,
+  //   slug: "pak-muklis",
+  //   name: "Pak Muklis / Micromini",
+  //   address: "Trangsan, Kec. Gatak, Kabupaten Sukoharjo, Jawa Tengah 57557",
+  //   description: "Keahlian yang diperoleh Pak Muklis berasal dari ajaran keluarga dan kemudian melanjutkan usaha tersebut. Beliau merupakan spesialis produk kursi, kaca, dingklik, tempat gelas, kap lampu."
+  // },
   {
     id: 20,
     slug: "pak-ari",
