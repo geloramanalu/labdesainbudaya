@@ -14,7 +14,7 @@ const Navbar = () => {
     { label: t('nav.about'), path: '/about' },
     { label: t('nav.initiative'), path: '/desa' },
     { label: t('nav.publication'), path: '/publikasi' },
-    { label: t('nav.collab'), path: 'mailto:email@domain.com', isEmail: true },
+    { label: t('nav.collab'), path: 'mailto:labdesainbudaya@gmail.com', isEmail: true },
   ];
 
   useEffect(() => {
@@ -110,7 +110,7 @@ const Navbar = () => {
       </div>
 
 
-      {/* --- MOBILE OVERLAY MENU --- */}
+
       <div 
         className={`
           absolute inset-0 top-0 left-0 w-full h-full bg-[#EFEFEF] 
