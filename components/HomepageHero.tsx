@@ -7,6 +7,7 @@ import Link from 'next/link';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
 import gsap from 'gsap';
+import { useLanguage } from '@/context/LanguageContext'; 
 
 const HERO_IMAGES = [
   "/homepage/hero/hero-mobile.jpg",
@@ -21,7 +22,18 @@ interface HomepageHeroProps {
   startAnimation?: boolean;
 }
 
+// helper to render bold text from "**text**" pattern
+const renderWithBold = (text: string) => {
+  if (!text) return "";
+  const parts = text.split('**');
+  return parts.map((part, index) => 
+    index % 2 === 1 ? <span key={index} className="font-bold">{part}</span> : part
+  );
+};
+
 const HomepageHero = ({ startAnimation = false }: HomepageHeroProps) => {
+  const { t } = useLanguage();
+
   const [emblaRef, emblaApi] = useEmblaCarousel(
     { loop: true, duration: 40 }, 
     [Autoplay({ delay: 5000, stopOnInteraction: false })]
@@ -137,7 +149,8 @@ const HomepageHero = ({ startAnimation = false }: HomepageHeroProps) => {
           </div>
 
           <p className="text-center text-sm leading-relaxed xl:text-right xl:text-base xl:max-w-md opacity-90">
-            Lab Desain Budaya merupakan ruang kolaboratif yang berfokus pada <span className="font-bold">pengembangan desain</span> berbasis potensi lokal di Indonesia, khususnya wilayah Jawa Tengah.
+            
+            {renderWithBold(t('homepage.hero.description'))}
           </p>
 
           <Link href='/about' className="mx-auto xl:mx-0">

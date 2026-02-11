@@ -1,18 +1,22 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, use } from 'react';
 import useEmblaCarousel from 'embla-carousel-react'; // docs: https://www.embla-carousel.com/get-started/react/
 import HeroCard from './HeroCard';
+import { useLanguage } from '@/context/LanguageContext'; 
+
 
 
 {/* to do @Desa, make card covers 80% width of desktop, height follows */}
 // to do @Desa 2: repair image quality
 const Desa = () => {
+  const {t} = useLanguage();
+
   const CAROUSEL_DATA = [
     {
       id: 1,
-      title: "Desa Trangsan",
-      desc: "Desa Trangsan, yang terletak di Kecamatan Gatak, Kabupaten Sukoharjo, Jawa Tengah, dikenal sebagai salah satu sentra industri rotan terkemuka di Indonesia. Sejak tahun 1927, desa ini telah berkembang menjadi penghasil kerajinan rotan terbesar di Jawa Tengah dan menempati peringkat kedua di Indonesia.",
+      title: t('homepage.desa.title'), 
+      desc: t('homepage.desa.description'),
       picture: "/homepage/desa-trangsan-card-thumbnail.png"
     },
     // {

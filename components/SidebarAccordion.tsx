@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { Menu, Plus } from 'lucide-react';
+// import { useLanguage } from '@/context/LanguageContext';
 
 interface SubItem {
   id: string;
@@ -21,6 +22,7 @@ interface SidebarAccordionProps {
 }
 
 const SidebarAccordion = ({ items, activeLabel }: SidebarAccordionProps) => {
+  // const {t} = useLanguage();
   const [isOpen, setIsOpen] = useState(true);
 
   const scrollToSection = (id: string) => {
@@ -58,7 +60,7 @@ const SidebarAccordion = ({ items, activeLabel }: SidebarAccordionProps) => {
                     <li key={sub.id}>
                       <button 
                         onClick={() => scrollToSection(sub.id)}
-                        className="w-full text-left py-3 pl-8 pr-4 hover:bg-[#2D2D2D]/5 text-[#2D2D2D]/70 hover:text-[#2D2D2D] transition-colors border-l-4 border-transparent hover:border-[#2D2D2D]"
+                        className="w-full text-left py-3 pl-8 pr-4 hover:bg-[#2D2D2D]/5 text-[#2D2D2D]/70 hover:text-[#2D2D2D] transition-colors border-l-4 border-transparent hover:border-[#2D2D2D] hover:cursor-pointer"
                       >
                         {sub.title}
                       </button>
