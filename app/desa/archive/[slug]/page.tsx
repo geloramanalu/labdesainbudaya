@@ -21,7 +21,7 @@ export default async function ArchiveDetailPage({ params }: PageProps) {
 
   const { thumbnail, gallery } = getArchiveImages(slug);
   
-  // Pre-calculate suggestions and their images on server
+  // pre-calculate suggestions and their images on server
   const otherItems = ARCHIVE_ITEMS
     .filter(i => i.id !== item.id)
     .sort(() => 0.5 - Math.random())

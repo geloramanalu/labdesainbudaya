@@ -43,6 +43,7 @@ const ArchivePaginatedGrid = ({ items }: { items: ArchiveItem[] }) => {
             image={item.thumbnail}
             link={`/desa/archive/${item.slug}`}
             variant='secondary'
+            // category='archive'
           />
         ))}
       </div>

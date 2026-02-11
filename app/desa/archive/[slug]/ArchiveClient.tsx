@@ -31,7 +31,6 @@ export default function ArchiveClient({
   const description = lang === 'EN' && item.description_en ? item.description_en : item.description_id;
   
   // 2. Title is ALWAYS the default (Indonesian) title from the data
-  // Removed the check for item.title_en
   const title = item.title; 
 
   return (
@@ -110,7 +109,6 @@ export default function ArchiveClient({
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             {otherItems.map(({ data, thumbnail }) => {
-               // Removed title translation logic here too
                const otherTitle = data.title;
                
                return (
