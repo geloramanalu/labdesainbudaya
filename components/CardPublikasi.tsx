@@ -20,7 +20,7 @@ const CardPublikasi = ({ title, type, year, url, imageSrc }: CardPublikasiProps)
       rel="noopener noreferrer" 
       className="block group"
     >
-      <div className="flex flex-col gap-4 w-72 h-[350px] mx-auto border border-black p-2 justify-between hover:bg-[#2d2d2d] transition-colors duration-300">
+      <div className="flex flex-col gap-4 xl:w-84 w-72 h-[375px] mx-auto border border-black p-2 justify-between hover:bg-[#2d2d2d] transition-colors duration-300">
         
         <div className="flex flex-col gap-2">
           <div className="relative overflow-hidden w-full h-[163px]">
@@ -31,7 +31,7 @@ const CardPublikasi = ({ title, type, year, url, imageSrc }: CardPublikasiProps)
               className="object-cover border border-black grayscale group-hover:grayscale-0 transition-all duration-300"
             />
           </div>
-          <h3 className="font-raleway font-bold text-sm leading-snug text-[#2d2d2d] group-hover:text-white line-clamp-3">
+          <h3 className="font-raleway font-bold text-md xl:text-lg leading-snug text-[#2d2d2d] group-hover:text-white line-clamp-4">
             {title}
           </h3>
         </div>
