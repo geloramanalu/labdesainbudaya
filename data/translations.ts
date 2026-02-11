@@ -12,7 +12,7 @@ export const translations = {
         archive: "Arsip Hidup",
         revitalize: "Revitalisasi Kerajinan",
         partners: "Kemitraan Lokal",
-        read_more: "Baca selengkapnya"
+        read_more: "Telusuri jejak kolaborasi kami"
       },
       desa: {
         title: "Desa Trangsan",
@@ -43,7 +43,7 @@ export const translations = {
     // About Page
     about: {
       hero: {
-        quote: "Kami percaya bahwa desain bukan sekadar bentuk, melainkan cara untuk merawat identitas dan menghidupkan kembali budaya lokal.",
+        quote: "Kami percaya bahwa desain bukan sekadar bentuk, melainkan cara untuk **merawat identitas** dan menghidupkan kembali **budaya lokal**.",
         description_1: "Lab Desain Budaya merupakan ruang kolaboratif yang berfokus pada pengembangan desain berbasis potensi lokal di Indonesia, khususnya wilayah Jawa Tengah. Terinspirasi dari filosofi Mingei \"seni untuk rakyat\", lab ini menyoroti nilai kesederhanaan, keindahan, dan keberlanjutan yang lahir dari kehidupan sehari-hari masyarakat.",
         description_2: "Kami percaya bahwa desain tidak hanya soal keindahan dalam karya seni, tetapi tentang identitas, budaya, dan keberlanjutan sosial. Melalui kolaborasi dengan para pengrajin lokal, Lab Desain Budaya berupaya menggali, mendokumentasikan, dan menghidupkan kembali karya kerajinan lokal dengan nilai estetika yang murni untuk inovasi masa kini."
       },
@@ -51,13 +51,13 @@ export const translations = {
         mobile_label: "Filosofi kami",
         main_title: "Kerangka Desain Budaya",
         steps: {
-          one_title: "Being",
+          one_title: "Eksistensi",
           one_desc: "Tahap memahami nilai, praktik, dan identitas budaya yang telah membentuk kehidupan.",
-          two_title: "Design Process",
+          two_title: "Perancangan desain",
           two_desc: "Tahap menerjemahkan \"what should be\" ke langkah desain melalui riset, eksperimen, kolaborasi, dan prototyping untuk menghasilkan solusi yang bermakna dan sesuai konteks.",
-          three_title: "What Should Be",
+          three_title: "Visi",
           three_desc: "Tahap menentukan masa depan budaya yang ideal dengan mengidentifikasi kebutuhan, aspirasi, serta pertimbangan etis yang menentukan arah desain bagi komunitas berbasis temuan dalam \"being\".",
-          four_title: "Becoming",
+          four_title: "Transformasi",
           four_desc: "Tahap ketika hasil desain berkembang dalam komunitas, membentuk ekspresi, praktik, dan identitas budaya baru melalui adaptasi berkelanjutan serta dampak jangka panjang."
         }
       },
@@ -146,7 +146,7 @@ export const translations = {
         desc_part1: "Let's **partner** to develop designs that highlight local identity and make a real impact on the community.",
         desc_part2: "We welcome **villages, agencies,** or **activists** to work and grow together."
       }
-    }, // <--- Perbaikan: Koma di sini, bukan kurung kurawal ganda penutup
+    }, 
     
     // Navbar
     nav: {

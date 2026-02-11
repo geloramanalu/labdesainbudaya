@@ -60,6 +60,14 @@ interface HeroAboutProps {
   t: LanguageContextType['t'];
 }
 
+const renderWithBold = (text: string) => {
+  if (!text) return "";
+  const parts = text.split('**');
+  return parts.map((part, index) =>
+    index % 2 === 1 ? <span key={index} className="font-bold">{part}</span> : part
+  );
+};
+
 // refactored about into several sections
 const About = () => {
   const { t } = useLanguage();
@@ -124,11 +132,16 @@ const HeroAbout = ({ t }: HeroAboutProps) => {
       >
         <div className="shrink-0 xl:flex xl:justify-between xl:items-center">
           <p className="text-[#333333] text-lg leading-relaxed font-light xl:max-w-4xl xl:text-xl">
-            {t('about.hero.quote')}
+            {renderWithBold(t('about.hero.quote'))}
           </p>
           <div className="hidden xl:block">
             <div className="border border-[#2d2d2d] p-3">
-              <ArrowUp size={24} strokeWidth={1} />
+              {isExpanded ?
+                <ArrowDown size={24} strokeWidth={1} />
+
+                :
+                <ArrowUp size={24} strokeWidth={1} />
+              }
             </div>
           </div>
         </div>
@@ -169,43 +182,61 @@ const HeroAbout = ({ t }: HeroAboutProps) => {
 const PhilosophySection = ({ t }: HeroAboutProps) => {
   return (
     <>
-
-      <div className="hidden xl:flex bg-[#F2F2F2] text-[#2d2d2d] py-32 px-24 justify-between items-start">
-        <div className="w-1/3">
-          <h2 className="text-7xl font-thin font-raleway leading-tight">
-            Kerangka <br />
-            Desain <br />
-            Budaya
+     
+      <section className="flex flex-col xl:flex-row items-start gap-12 xl:gap-24 p-24">
+        <div className="w-full xl:w-1/3">
+          <h2 className="text-5xl xl:text-7xl font-thin leading-tight w-40 xl:w-full">
+            {t('about.philosophy.main_title')}
           </h2>
         </div>
 
-        <div className="w-2/3 grid grid-cols-2 gap-x-12 gap-y-16">
+        <div className="w-full xl:w-2/3 grid grid-cols-1 xl:grid-cols-2 gap-x-16 gap-y-20 xl:pt-32">
+
           <div>
-            <h3 className="text-5xl font-light mb-4"><span className="font-normal inline mr-2 pb-2">1</span> Being</h3>
-            <p className="text-sm font-light leading-relaxed">
+            <h3 className="text-4xl font-light mb-4">
+              <span className="font-medium text-4xl xl:text-6xl inline mr-2 pb-2 absolute -mt-6 -ml-6 xl:-mt-12 xl:-ml-8">1</span>
+              {t('about.philosophy.steps.one_title')}
+            </h3>
+            <p className="text-xl font-light leading-relaxed">
               {t('about.philosophy.steps.one_desc')}
             </p>
           </div>
+
+          {/* Step 2 */}
           <div>
-            <h3 className="text-5xl font-light mb-4"><span className="font-normal inline mr-2 pb-2">3</span> Design Process</h3>
-            <p className="text-sm font-light leading-relaxed">
+            <h3 className="text-4xl font-light mb-4">
+              <span className="font-medium text-4xl xl:text-6xl inline mr-2 pb-2 absolute -mt-6 -ml-6 xl:-mt-12 xl:-ml-12">2</span>
+              {t('about.philosophy.steps.two_title')}
+            </h3>
+            <p className="text-xl font-light leading-relaxed">
               {t('about.philosophy.steps.two_desc')}
             </p>
           </div>
+
+          {/* Step 3 */}
           <div>
-            <h3 className="text-5xl font-light mb-4"><span className="font-normal inline mr-2 pb-2">2</span> What Should Be</h3>
-            <p className="text-sm font-light leading-relaxed">
+            <h3 className="text-4xl font-light mb-4">
+              <span className="font-medium text-4xl xl:text-6xl inline mr-2 pb-2 absolute -mt-6 -ml-6 xl:-mt-12 xl:-ml-12">3</span>
+              {t('about.philosophy.steps.three_title')}
+            </h3>
+            <p className="text-xl font-light leading-relaxed">
               {t('about.philosophy.steps.three_desc')}
             </p>
           </div>
+
+          {/* Step 4 */}
           <div>
-            <h3 className="text-5xl font-light mb-4"><span className="font-normal inline mr-2 pb-2">4</span> Becoming</h3>
-            <p className="text-sm font-light leading-relaxed">
+            <h3 className="text-4xl font-light mb-4">
+              <span className="font-medium text-4xl xl:text-6xl inline mr-2 pb-2 absolute -mt-6 -ml-6 xl:-mt-12 xl:-ml-12">4</span>
+              {t('about.philosophy.steps.four_title')}
+            </h3>
+            <p className="text-xl font-light leading-relaxed">
               {t('about.philosophy.steps.four_desc')}
             </p>
           </div>
+
         </div>
-      </div>
+      </section>
     </>
   );
 };
@@ -225,19 +256,19 @@ const PhilosophyGrid = ({ t }: HeroAboutProps) => {
       </div>
       <div className="border border-[#2d2d2d]">
 
-          <div className=" divide-[#2d2d2d] border-b border-[#2d2d2d] justify-center">
-            <div className='max-w-xs xl:max-w-md mx-auto grid grid-cols-2'>
-              <div className="pl-6 py-12 flex flex-col items-center justify-center ">
-                <span className="text-7xl xl:text-9xl xl:py-4 font-medium xl:font-medium mb-2 text-[#333]">民</span>
-                <span className="text-sm xl:text-xl tracking-wider text-gray-600">{t('about.mingei_grid.kanji_1_meaning')}</span>
-              </div>
-              <div className="pr-6 py-12 flex flex-col items-center justify-center">
-                <span className="text-7xl xl:text-9xl xl:py-4 font-medium xl:font-medium mb-2 text-[#333]">芸</span>
-                <span className="text-sm xl:text-xl tracking-wider text-gray-600">{t('about.mingei_grid.kanji_2_meaning')}</span>
-              </div>
+        <div className=" divide-[#2d2d2d] border-b border-[#2d2d2d] justify-center">
+          <div className='max-w-xs xl:max-w-md mx-auto grid grid-cols-2'>
+            <div className="pl-6 py-12 flex flex-col items-center justify-center ">
+              <span className="text-7xl xl:text-9xl xl:py-4 font-medium xl:font-medium mb-2 text-[#333]">民</span>
+              <span className="text-sm xl:text-xl tracking-wider text-gray-600">{t('about.mingei_grid.kanji_1_meaning')}</span>
             </div>
+            <div className="pr-6 py-12 flex flex-col items-center justify-center">
+              <span className="text-7xl xl:text-9xl xl:py-4 font-medium xl:font-medium mb-2 text-[#333]">芸</span>
+              <span className="text-sm xl:text-xl tracking-wider text-gray-600">{t('about.mingei_grid.kanji_2_meaning')}</span>
+            </div>
+          </div>
 
-          
+
         </div>
 
         <div className="divide-y divide-[#2d2d2d] ">
