@@ -4,22 +4,23 @@ import React from 'react';
 import Image from 'next/image';
 import SidebarAccordion from '@/components/SidebarAccordion';
 import { usePathname } from 'next/navigation';
-import { useLanguage } from '@/context/LanguageContext'; // 1. Import Hook
-import { HISTORY_DATA } from '@/data/historyData'; // 2. Import Data
+import { useLanguage } from '@/context/LanguageContext'; 
+import { HISTORY_DATA } from '@/data/historyData'; 
 
 export default function DesaLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const { t, lang } = useLanguage(); // 3. Init Hook
+  const { t, lang } = useLanguage();
 
-  // 4. Generate Sub-items Dinamis (Sejarah)
-  // Kita map data dan pilih title berdasarkan bahasa yang aktif
   const historySubItems = HISTORY_DATA.map(item => ({
     id: item.id,
     title: lang === 'EN' ? item.title_en : item.title_id
   }));
+  const isDetailPage = 
+    pathname.startsWith('/desa/archive/') || 
+    pathname.startsWith('/desa/craftsmen/') || 
+    pathname.startsWith('/desa/events/');
 
-  // 5. Generate Sub-items Statis (Archive Filters)
-  // Menggunakan kamus translasi
+
   const archiveFilters = [
     { id: 'artefak', title: t('desa.filters.artifact') },
     { id: 'jenis-anyaman', title: t('desa.filters.weave_type') },
