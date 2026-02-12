@@ -1,21 +1,23 @@
-name: Build and Deploy Next.js to Hostinger
+name: Deploy Dev to GitHub Pages
 
 on:
   push:
-    branches: main
+    branches:
+      - dev  
 
 permissions:
-  contents: write
-# write permission added due to,
-# remote: Permission to geloramanalu/labdesainbudaya.git denied to github-actions[bot].
-# fatal: unable to access '...': The requested URL returned error: 403
-## [error]Process completed with exit code 128.
+  contents: read
+  pages: write
+  id-token: write
 
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
-  build-and-deploy:
+  # Build Job
+  build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -23,54 +25,26 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
+          cache: "npm"
 
-      - name: Cache Next.js build # source: https://nextjs.org/docs/pages/guides/ci-build-caching
-        uses: actions/cache@v4
-        with:
-          # See here for caching with `yarn`, `bun` or other package managers https://github.com/actions/cache/blob/main/examples.md or you can leverage caching with actions/setup-node https://github.com/actions/setup-node
-          path: |
-            ~/.npm
-            ${{ github.workspace }}/.next/cache
-          # Generate a new cache whenever packages or source files change.
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
-          # If source files changed but packages didn't, rebuild from a prior cache.
-          restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
-      
       - name: Install and Build
         run: |
-          npm install
+          npm ci
           npm run build
-      
-      # rewrites history with force push
-      # works in deployment from hostinger but not autodeployment 
-      # - name: Deploy to output 
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   run: |
-      #     # 1. Configure Git Identity
-      #     git config --global user.name "github-actions[bot]"
-      #     git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-      #     # 2. Navigate into the build output directory
-      #     cd out
-
-      #     # 3. Initialize a fresh git repository inside 'out'
-      #     git init
-
-      #     # 4. Stage and Commit all files
-      #     git add -A
-      #     git commit -m "Deploying build from commit ${{ github.sha }}"
-
-      #     # 5. Force Push to the target branch
-      #     git push -f https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git HEAD:output
-
-      - name: Deploy to output branch (Linear History)
-        uses: JamesIves/github-pages-deploy-action@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          branch: output          # the branch to deploy to
-          folder: out             # folder containing export in curr branch, main
-          force: false            # disables force push
-          clean: true             # automatically removes deleted files
-          single-commit: false    # keeps history so Hostinger can 'git pull'
+          path: ./out  
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
