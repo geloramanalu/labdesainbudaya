@@ -165,35 +165,11 @@ const Prakarsa = () => {
 }
 
 // to do @Publikasi, desktop width to wider viewport
+
+import { PUBLICATION_DATA } from '@/data/publicationData';
+
 const Publikasi = () => {
-
-  const PUBLICATION_DATA = [
-    {
-      id: 1,
-      title: "Mahasiswa Desain Interior UNS dan Chiba University Kembangkan Kerajinan Lokal Rotan Desa Trangsan",
-      type: "Artikel",
-      year: "2026",
-      url: "https://uns.ac.id/id/uns-research/mahasiswa-desain-interior-uns-dan-chiba-university-kembangkan-kerajinan-lokal-rotan-desa-trangsan.html", // Example Link
-      imageSrc: "/homepage/thumbnail-publikasi-2026.jpeg"
-    },
-    {
-      id: 2,
-      title: "Utilization of Augmented Reality and Direct Practices in Introducing Traditional Rice Farming Culture in Delanggu Subdistrict, Indonesia",
-      type: "Jurnal",
-      year: "2025",
-      url: "https://iopscience.iop.org/article/10.1088/1755-1315/1452/1/012002",
-      imageSrc: "/homepage/thumbnail-publikasi-2025.png"
-    },
-    {
-      id: 3,
-      title: "Prodi Desain Interior UNS Lakukan Preservasi Padi Varietas Lokal di Desa Sabrang, Klaten",
-      type: "Artikel",
-      year: "2024",
-      url: "https://uns.ac.id/id/pengabdian/prodi-desain-interior-uns-lakukan-preservasi-padi-varietas-lokal-di-desa-sabrang-klaten.html",
-      imageSrc: "/homepage/thumbnail-publikasi-2024.jpeg"
-    },
-
-  ];
+  
   const { t } = useLanguage();
 
   return (
@@ -214,7 +190,7 @@ const Publikasi = () => {
             <CardPublikasi
               key={item.id}
               title={item.title}
-              type={item.type}
+              type={item.type_id}
               year={item.year}
               url={item.url}
               imageSrc={item.imageSrc}

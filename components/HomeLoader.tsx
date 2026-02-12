@@ -93,42 +93,22 @@ const HomeLoader = ({ onComplete }: HomeLoaderProps) => {
             className="absolute top-0 left-0 w-full bg-gray-200 overflow-hidden "
             style={{ 
               zIndex: index + 10,
-              // IMPORTANT: This ensures the mask *container* is always aligned top
-              // so when height grows 0->100%, it reveals from top down.
+              
             }} 
           >
-            {/* THE IMAGE WRAPPER 
-              Set to h-full relative to the MAIN CONTAINER (not the mask).
-              We use a trick: 
-              If the mask is 50% height, we still want the image to be 100% height of the parent
-              so it doesn't look squashed.
-            */}
+            
             <div 
               className="relative w-full"
               style={{ 
-                // This is the key fix for "fitting":
-                // The image container must match the PARENT container size (220x300 or 100vwx100vh)
-                // We force it to be 100% of the *containerRef*, not the mask.
-                // Since the mask is absolute, we can use h-[300px] (initial) -> 100vh (final)? 
-                // No, just use h-full of the closest relative parent.
                 height: '100%', 
-                // Since the mask cuts it off, we need the image to stay 'fixed' visually while mask moves.
-                // But simply having h-full works if the mask is just a window.
-                // Actually, for the wipe to look like a curtain, the image inside should probably be static.
-                // Let's use the containerRef's height.
               }}
             >
-               {/* For the expansion to match the Hero exactly:
-                 It acts as 'h-full' of the containerRef.
-                 When containerRef is 300px, image is 300px.
-                 When containerRef is 100vh, image is 100vh.
-               */}
                <div className="relative w-full h-full min-h-[300px]"> 
                   <Image
                     src={src}
                     alt={`loader-${index}`}
                     fill
-                    // CHANGED: Match HomepageHero exactly
+            
                     className="object-cover object-center" 
                     priority
                   />

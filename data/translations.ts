@@ -75,156 +75,178 @@ export const translations = {
         title_inst_partners: "Mitra Institusi"
       }
     },
-    // Common
-    readMore: "Baca Selengkapnya",
-    craftsman: {
-      contact: "Hubungi Pengrajin",
-      more_from: "Lebih Banyak Dari Pengrajin:",
-      read_more: "Baca Selengkapnya"
-    },
-    archive: {
-      type_weave: "Tipe Anyaman",
-      material: "Material",
-      tool: "Alat",
-      design_dev: "Pengembangan Desain",
-      more_collection: "Koleksi Arsip Lainnya:",
-      view_all: "Lihat Semua"
-    },
 
-    desa: {
+    publicationPage: {
+      title: "Publikasi",
+      subtitle: "Lab Desain Budaya",
+      filters: {
+        all: "Semua",
+        article: "Artikel",
+        journal: "Jurnal",
+        other: "Lainnya"
+      },
+      // Common
+      readMore: "Baca Selengkapnya",
+      craftsman: {
+        contact: "Hubungi Pengrajin",
+        more_from: "Lebih Banyak Dari Pengrajin:",
+        read_more: "Baca Selengkapnya"
+      },
+      archive: {
+        type_weave: "Tipe Anyaman",
+        material: "Material",
+        tool: "Alat",
+        design_dev: "Pengembangan Desain",
+        more_collection: "Koleksi Arsip Lainnya:",
+        view_all: "Lihat Semua"
+      },
+
+      desa: {
         title: "Desa Trangsan",
         location: "Sukoharjo, Jawa Tengah",
         scroll_more: "Gulir untuk melihat lebih banyak",
         sidebar: {
-            history: "Sejarah",
-            archive: "Arsip",
-            events: "Acara",
-            craftsmen: "Pengrajin",
-            team: "Tim Pendataan"
+          history: "Sejarah",
+          archive: "Arsip",
+          events: "Acara",
+          craftsmen: "Pengrajin",
+          team: "Tim Pendataan"
         },
         filters: {
-            artifact: "Artefak",
-            weave_type: "Jenis Anyaman",
-            material: "Material Rotan",
-            tool: "Alat Produksi",
-            product_dev: "Pengembangan Produk"
+          artifact: "Artefak",
+          weave_type: "Jenis Anyaman",
+          material: "Material Rotan",
+          tool: "Alat Produksi",
+          product_dev: "Pengembangan Produk"
         }
+      },
+
+
     },
-
-
   },
-  EN: {
-    // Homepage
-    homepage: {
-      hero: {
-        description: "The Cultural Design Lab is a collaborative space that focuses on **developing designs** based on local potential in Indonesia, especially in Central Java.",
-        read_more: "Read more about us"
-      },
-      prakarsa: {
-        title: "Initiative",
-        collab: "Collaboration Network",
-        archive: "Living Archives",
-        revitalize: "Craft Revitalization",
-        partners: "Local Partnerships",
-        read_more: "Read more"
-      },
-      desa: {
-        title: "Trangsan Village",
-        description: "Trangsan Village, located in Gatak District, Sukoharjo Regency, Central Java, is known as one of Indonesia's leading rattan industry centers. Since 1927, the village has grown to become the largest producer of rattan crafts in Central Java and ranks second in Indonesia.",
-        read_more: "Read more"
-      },
-      publication: {
-        title: "Publication"
-      },
-      book: {
-        title: "Rattan and The Act of Weaving",
-        description: "This book chronicles the journey of Trangsan Village as a vibrant rattan craft community that continues to transform over time. Through historical, ethnographic, and visual approaches, the book documents the artisans' work practices: from material selection and weaving techniques to relationships between workshops and negotiations with the global market.",
-        order_btn: "Order Early"
-      },
-      collab: {
-        title: "Collaborate with Us!",
-        desc_part1: "Let's **partner** to develop designs that highlight local identity and make a real impact on the community.",
-        desc_part2: "We welcome **villages, agencies,** or **activists** to work and grow together."
-      }
-    }, 
-    
-    // Navbar
-    nav: {
-      about: "ABOUT US",
-      initiative: "INITIATIVE",
-      publication: "PUBLICATION",
-      collab: "COLLABORATION",
-    },
-    // About Page 
-    about: {
-      hero: {
-        quote: "We believe that design is not just a form, but a way to preserve identity and revive local culture.",
-        description_1: "Lab Desain Budaya is a collaborative space focused on developing designs based on local potential in Indonesia, specifically Central Java. Inspired by the Mingei philosophy \"art for the people\", this lab highlights the values of simplicity, beauty, and sustainability born from everyday life.",
-        description_2: "We believe that design is not just about beauty in art, but about identity, culture, and social sustainability. Through collaboration with local artisans, Lab Desain Budaya strives to explore, document, and revive local crafts with pure aesthetic values for modern innovation."
-      },
-      philosophy: {
-        mobile_label: "Our Philosophy",
-        main_title: "Design Culture Framework",
-        steps: {
-          one_title: "Being",
-          one_desc: "The stage of understanding cultural values, practices, and identities that have shaped life.",
-          two_title: "What Should Be",
-          two_desc: "The stage of determining the ideal cultural future by identifying needs, aspirations, and ethical considerations that determine the design direction for the community based on findings in \"being\".",
-          three_title: "Design Process",
-          three_desc: "The stage of translating \"what should be\" into design steps through research, experiments, collaboration, and prototyping to produce meaningful and context-appropriate solutions.",
-          four_title: "Becoming",
-          four_desc: "The stage when design results develop within the community, forming new cultural expressions, practices, and identities through continuous adaptation and long-term impact."
+    EN: {
+      // Homepage
+      homepage: {
+        hero: {
+          description: "Lab Desain Budaya (Cultural Design Lab) is a collaborative space that focuses on **developing designs** based on local potential in Indonesia, especially in Central Java.",
+          read_more: "Read more about us"
+        },
+        prakarsa: {
+          title: "Initiative",
+          collab: "Collaboration Network",
+          archive: "Living Archives",
+          revitalize: "Craft Revitalization",
+          partners: "Local Partnerships",
+          read_more: "Read more"
+        },
+        desa: {
+          title: "Trangsan Village",
+          description: "Trangsan Village, located in Gatak District, Sukoharjo Regency, Central Java, is known as one of Indonesia's leading rattan industry centers. Since 1927, the village has grown to become the largest producer of rattan crafts in Central Java and ranks second in Indonesia.",
+          read_more: "Read more"
+        },
+        publication: {
+          title: "Publication"
+        },
+        book: {
+          title: "Rattan and The Act of Weaving",
+          description: "This book chronicles the journey of Trangsan Village as a vibrant rattan craft community that continues to transform over time. Through historical, ethnographic, and visual approaches, the book documents the artisans' work practices: from material selection and weaving techniques to relationships between workshops and negotiations with the global market.",
+          order_btn: "Order Early"
+        },
+        collab: {
+          title: "Collaborate with Us!",
+          desc_part1: "Let's **partner** to develop designs that highlight local identity and make a real impact on the community.",
+          desc_part2: "We welcome **villages, agencies,** or **activists** to work and grow together."
         }
       },
-      mingei_grid: {
-        kanji_1_meaning: "People",
-        kanji_2_meaning: "Art",
-        desc_1: "Introduced in Japan in the early 20th century",
-        desc_2: "Simplicity, Honesty / As It Is, Anonymous",
-        quote: "\"Folk art returned to the people.\"",
-        desc_3: "Made by ordinary people, preserving cultural heritage and history."
-      },
-      team: {
-        title_team: "Our Team",
-        title_intl_partners: "International Partners",
-        title_inst_partners: "Institutional Partners"
-      }
-    },
-    // Common
-    readMore: "Read More",
-    craftsman: {
-      contact: "Contact Craftsman",
-      more_from: "More from Craftsman:",
-      read_more: "Read More"
-    },
-    archive: {
-      type_weave: "Weaving Type",
-      material: "Material",
-      tool: "Tool",
-      design_dev: "Design Development",
-      more_collection: "Other Archive Collections:",
-      view_all: "View All"
-    },
 
-    desa: {
+      // Navbar
+      nav: {
+        about: "ABOUT US",
+        initiative: "INITIATIVE",
+        publication: "PUBLICATION",
+        collab: "COLLABORATION",
+      },
+      // About Page 
+      about: {
+        hero: {
+          quote: "We believe that design is not just a form, but a way to preserve identity and revive local culture.",
+          description_1: "Lab Desain Budaya is a collaborative space focused on developing designs based on local potential in Indonesia, specifically Central Java. Inspired by the Mingei philosophy \"art for the people\", this lab highlights the values of simplicity, beauty, and sustainability born from everyday life.",
+          description_2: "We believe that design is not just about beauty in art, but about identity, culture, and social sustainability. Through collaboration with local artisans, Lab Desain Budaya strives to explore, document, and revive local crafts with pure aesthetic values for modern innovation."
+        },
+        philosophy: {
+          mobile_label: "Our Philosophy",
+          main_title: "Design Culture Framework",
+          steps: {
+            one_title: "Being",
+            one_desc: "The stage of understanding cultural values, practices, and identities that have shaped life.",
+            two_title: "What Should Be",
+            two_desc: "The stage of determining the ideal cultural future by identifying needs, aspirations, and ethical considerations that determine the design direction for the community based on findings in \"being\".",
+            three_title: "Design Process",
+            three_desc: "The stage of translating \"what should be\" into design steps through research, experiments, collaboration, and prototyping to produce meaningful and context-appropriate solutions.",
+            four_title: "Becoming",
+            four_desc: "The stage when design results develop within the community, forming new cultural expressions, practices, and identities through continuous adaptation and long-term impact."
+          }
+        },
+        mingei_grid: {
+          kanji_1_meaning: "People",
+          kanji_2_meaning: "Art",
+          desc_1: "Introduced in Japan in the early 20th century",
+          desc_2: "Simplicity, Honesty / As It Is, Anonymous",
+          quote: "\"Folk art returned to the people.\"",
+          desc_3: "Made by ordinary people, preserving cultural heritage and history."
+        },
+        team: {
+          title_team: "Our Team",
+          title_intl_partners: "International Partners",
+          title_inst_partners: "Institutional Partners"
+        }
+      },
+      // Common
+      readMore: "Read More",
+      craftsman: {
+        contact: "Contact Craftsman",
+        more_from: "More from Craftsman:",
+        read_more: "Read More"
+      },
+      archive: {
+        type_weave: "Weaving Type",
+        material: "Material",
+        tool: "Tool",
+        design_dev: "Design Development",
+        more_collection: "Other Archive Collections:",
+        view_all: "View All"
+      },
+
+      desa: {
         title: "Trangsan Village",
         location: "Sukoharjo, Central Java",
         scroll_more: "Scroll to view more",
         sidebar: {
-            history: "History",
-            archive: "Archive",
-            events: "Events",
-            craftsmen: "Craftsmen",
-            team: "Data Collection Team"
+          history: "History",
+          archive: "Archive",
+          events: "Events",
+          craftsmen: "Craftsmen",
+          team: "Data Collection Team"
         },
         filters: {
-            artifact: "Artifacts",
-            weave_type: "Weaving Types",
-            material: "Rattan Material",
-            tool: "Production Tools",
-            product_dev: "Product Development"
+          artifact: "Artifacts",
+          weave_type: "Weaving Types",
+          material: "Rattan Material",
+          tool: "Production Tools",
+          product_dev: "Product Development"
+        },
+      },
+      publicationPage: {
+        title: "Publications",
+        subtitle: "Lab Desain Budaya",
+        filters: {
+          all: "All",
+          article: "Article",
+          journal: "Journal",
+          other: "Others"
         }
-    }
+      },
 
-  }, 
-}; 
+    },
+
+}
