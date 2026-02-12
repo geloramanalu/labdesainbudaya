@@ -1,0 +1,1 @@
+self.__SSG_MANIFEST=new Set(["\u002Fdesa\u002Farchive\u002F[slug]","\u002Fdesa\u002Fcraftsmen\u002F[slug]","\u002Fdesa\u002Fevents\u002F[slug]"]);self.__SSG_MANIFEST_CB&&self.__SSG_MANIFEST_CB()

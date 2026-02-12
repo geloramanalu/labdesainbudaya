@@ -1,0 +1,6 @@
+1:"$Sreact.fragment"
+2:I[43612,["/_next/static/chunks/e3fdaaaf0c17deb4.js","/_next/static/chunks/b3600e21d279d170.js","/_next/static/chunks/43515423bec8494d.js"],"default"]
+3:I[97367,["/_next/static/chunks/ff1a16fafef87110.js","/_next/static/chunks/d2be314c3ece3fbe.js"],"OutletBoundary"]
+4:"$Sreact.suspense"
+0:{"buildId":"S_1K0TV6aRdIr0dZBLmjj","rsc":["$","$1","c",{"children":[["$","$L2",null,{"item":{"id":2,"title":"Menjalin Penjalin Rattan Workshop","content":"International Rattan Workshop adalah sebuah program kolaboratif antara Universitas Sebelas Maret dan Chiba University Jepang yang berfokus untuk memperkenalkan produk rotan sebagai identitas Desa Trangsan. Workshop ini mengusung pendekatan mingei yang menekankan tentang kerajinan rakyat dan peran komunitas lokal sebagai desainer utama. Program ini bertujuan melestarikan budaya dan tradisi lokal serta memperkenalkan produk rotan Trangsan ke tingkat internasional","year":2025,"slug":"menjalin-penjalin"},"thumbnail":"/events/menjalin-penjalin/thumbnail.png","gallery":["/events/menjalin-penjalin/detail-1.jpg"]}],[["$","script","script-0",{"src":"/_next/static/chunks/43515423bec8494d.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
+5:null
