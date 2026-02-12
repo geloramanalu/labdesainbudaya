@@ -37,7 +37,7 @@ const HomepageHero = ({ startAnimation = false }: HomepageHeroProps) => {
   // 1. Initialize Embla with Autoplay
   const [emblaRef, emblaApi] = useEmblaCarousel(
     { loop: true, duration: 40 }, 
-    [Autoplay({ delay: 5000, stopOnInteraction: false })]
+    [Autoplay({ delay: 6000, stopOnInteraction: false })]
   );
   
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -138,8 +138,8 @@ const HomepageHero = ({ startAnimation = false }: HomepageHeroProps) => {
       <div className="absolute inset-0 flex flex-col justify-between xl:flex-row xl:items-center w-full h-full pb-10 pt-24 xl:py-24 pointer-events-none"> 
         
         {/* LEFT SIDE: Title & Decor */}
-        <div className="flex flex-col items-center xl:items-start xl:pl-[92px] gap-8 w-full xl:w-1/2 xl:h-full xl:justify-between pointer-events-auto">
-          <h1 ref={heroTextRef} className="text-5xl leading-[1.1] tracking-wide text-center xl:text-left xl:text-[100px] 2xl:text-[120px] xl:leading-[0.9] xl:font-thin xl:tracking-tighter overflow-hidden">
+        <div className="flex flex-col items-center xl:items-start xl:pl-[92px] gap-8 w-full xl:w-1/2 xl:h-full xl:justify-between pointer-events-auto mt-8 xl:mt-0">
+          <h1 ref={heroTextRef} className="text-6xl leading-[1.1] tracking-wide text-center xl:text-left xl:text-[100px] 2xl:text-[120px] xl:leading-[0.9] xl:font-thin xl:tracking-tighter overflow-hidden">
             <span className="hero-text-span block opacity-0">Lab</span>
             <span className="hero-text-span block opacity-0">Desain</span>
             <span className="hero-text-span block opacity-0">Budaya</span>
