@@ -48,7 +48,7 @@ const PARTNER_LOGOS = [
   "/logos/silhouette-logo/New Project.png",
   "/logos/silhouette-logo/silhouette-urdc.png",
   "/logos/silhouette-logo/silhouette-pusat-studi-jepang.png",
-  //  insert forum rojolele
+  "/logos/silhouette-logo/silhouette-rembuk-klaster.png",
   "/logos/silhouette-logo/silhouette-draw-workroom.png",
   "/logos/silhouette-logo/silhouette-sedyo-makmur.png",
   "/logos/silhouette-logo/silhouette-rojolele.png",
