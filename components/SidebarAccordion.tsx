@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+'use client';
+
+import React, { useState, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { Plus, Minus, Check } from 'lucide-react';
 
-// --- TYPES ---
 export interface MenuItem {
   id: string;
   label: string;
@@ -14,145 +15,184 @@ export interface MenuItem {
 
 interface SidebarAccordionProps {
   items: MenuItem[];
-  defaultOpenIds?: string[]; // IDs of items to be open by default
+  defaultOpenIds?: string[];
 }
 
-const SidebarAccordion = ({ items, defaultOpenIds = [] }: SidebarAccordionProps) => {
+// Skeleton fallback
+function SidebarSkeleton() {
+  return (
+    <div className="border border-[#2D2D2D] bg-transparent w-full animate-pulse">
+      {[1, 2, 3, 4, 5].map((i) => (
+        <div key={i} className="p-4 border-b border-[#2D2D2D] last:border-b-0">
+          <div className="h-6 bg-gray-200 rounded w-3/4"></div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// Internal component that uses useSearchParams - wrapped in Suspense
+function SidebarContent({ items, defaultOpenIds = [] }: SidebarAccordionProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  
+  // Separate state tracking:
+  // 1. Which main menu item is active (only ONE at a time)
+  const [activeMainItem, setActiveMainItem] = useState<string | null>(
+    defaultOpenIds.length > 0 ? defaultOpenIds[0] : null
+  );
+  
+  // 2. Which children of the ACTIVE main item are open
+  const [openChildren, setOpenChildren] = useState<Set<string>>(new Set());
 
-  // State to track open sections
-  const [openSections, setOpenSections] = useState<Set<string>>(new Set(defaultOpenIds));
-
-  // --- HANDLERS ---
-
-  const toggleSection = (id: string) => {
-    const newOpen = new Set(openSections);
-    if (newOpen.has(id)) {
-      newOpen.delete(id);
+  const toggleSection = (id: string, parentId?: string) => {
+    if (parentId) {
+      // This is a child item - toggle it within the active main item's children
+      const newOpenChildren = new Set(openChildren);
+      if (newOpenChildren.has(id)) {
+        newOpenChildren.delete(id);
+      } else {
+        newOpenChildren.add(id);
+      }
+      setOpenChildren(newOpenChildren);
     } else {
-      newOpen.add(id);
+      // This is a main item - make it the ONLY active one
+      // If clicking the same main item, toggle it closed/open
+      if (activeMainItem === id) {
+        setActiveMainItem(null);
+        setOpenChildren(new Set()); // Clear all children
+      } else {
+        setActiveMainItem(id);
+        setOpenChildren(new Set()); // Clear all children when switching
+      }
     }
-    setOpenSections(newOpen);
   };
 
   const handleCheckboxChange = (groupKey: string, value: string) => {
-    const current = new URLSearchParams(Array.from(searchParams.entries()));
-    const existing = current.get(groupKey);
-
-    // Toggle logic: If strict single select, replace. If multi, add/remove.
-    // Implementing SINGLE SELECT per category as per typical filter behavior for simplicity first,
-    // or toggle if same.
-    if (existing === value) {
-      current.delete(groupKey);
-    } else {
-      current.set(groupKey, value);
-    }
+    const params = new URLSearchParams(searchParams.toString());
     
-    // Reset page to 1 on filter change
-    // We assume the grid reads 'page' param or handles it, but usually standard to reset.
-    // current.delete('page'); 
-
-    const search = current.toString();
-    const query = search ? `?${search}` : "";
-    
-    // Push new URL. 
-    // Note: If we are NOT on /desa/archive, we should probably navigate there?
-    // But this component is likely rendered in Layout, so it persists.
-    // If the checkbox is clicked, we assume the user intends to filter the archive.
-    if (!pathname.startsWith('/desa/archive')) {
-       router.push(`/desa/archive${query}`);
+    if (value === 'all') {
+      // Clicking "All" clears all filters for this category
+      params.delete(groupKey);
     } else {
-       router.push(`${pathname}${query}`);
+      const existingValue = params.get(groupKey);
+      let selectedValues = existingValue ? existingValue.split(',') : [];
+
+      if (selectedValues.includes(value)) {
+        selectedValues = selectedValues.filter((v) => v !== value);
+      } else {
+        selectedValues.push(value);
+      }
+
+      if (selectedValues.length > 0) {
+        params.set(groupKey, selectedValues.join(','));
+      } else {
+        params.delete(groupKey);
+      }
     }
+
+    const query = params.toString() ? `?${params.toString()}` : "";
+    const targetPath = pathname.startsWith('/desa/archive') ? pathname : '/desa/archive';
+    router.push(`${targetPath}${query}`);
   };
 
   const isChecked = (groupKey: string, value: string) => {
-    return searchParams.get(groupKey) === value;
+    const existingValue = searchParams.get(groupKey);
+    if (value === 'all') return !existingValue; // "All" is checked if no filter exists
+    if (!existingValue) return false;
+    return existingValue.split(',').includes(value);
   };
 
-  // --- RECURSIVE RENDERER ---
-  const renderItem = (item: MenuItem, level: number = 0) => {
+  const renderItem = (item: MenuItem, level: number = 0, parentId?: string) => {
     const hasSubItems = item.subItems && item.subItems.length > 0;
-    const isOpen = openSections.has(item.id);
-    const isActiveLink = item.link && pathname === item.link;
+    
+    // Normalize paths by removing trailing slashes for comparison
+    const normalizedPathname = pathname.endsWith('/') && pathname !== '/' 
+      ? pathname.slice(0, -1) 
+      : pathname;
+    const normalizedLink = item.link?.endsWith('/') && item.link !== '/' 
+      ? item.link.slice(0, -1) 
+      : item.link;
+    
+    const isActiveLink = normalizedLink && normalizedPathname === normalizedLink;
+    
+    // Determine if this item is open based on level
+    const isOpen = level === 0 
+      ? activeMainItem === item.id  // Main items: check activeMainItem
+      : openChildren.has(item.id);   // Child items: check openChildren
 
-    // -- LEAF: CHECKBOX --
-    if (item.type === 'checkbox') {
-        // We assume the PARENT ID is the group key (e.g. 'jenis-anyaman')
-        // But here 'item' is the leaf. We need the parent context.
-        // To solve this in recursion, we relies on structure: Group -> Checkbox Items.
-        // Actually, simpler: The PARENT calls this with context, or we flatten?
-        // Let's assume the item.id IS the value, and we need the key.
-        // We'll handle this by checking if the Parent passed the key logic. 
-        // Refactor: renderItem doesn't know parent.
-        // Solution: We strictly define structure in data.
-        // Level 1: Main (Arsip)
-        // Level 2: Filter Group (Jenis Anyaman) -> id="jenis-anyaman"
-        // Level 3: Option (Durno) -> type="checkbox"
-        return (
-            <div key={item.id} className="pl-8 py-2 flex items-center gap-3 cursor-pointer hover:bg-gray-100" 
-                 onClick={() => {
-                     // Hacky access to parent ID? No.
-                     // The `renderItem` needs to know the parent ID if it's a checkbox.
-                     // Let's pass `parentId` to recursive call.
-                 }}>
-                 {/* Logic moved to recursive call below */}
-            </div>
-        );
-    }
+    // Black background logic for level 0 items:
+    // 1. Items WITH subItems: Black when they are the active page OR active main item
+    // 2. Items WITHOUT subItems: Black when active page (link state)
+    const isMainActive = level === 0 && (
+      hasSubItems ? (isActiveLink || activeMainItem === item.id) : isActiveLink
+    );
 
-    // -- HEADER CONTENT --
     const Header = (
       <div className={`
         flex justify-between items-center p-4 border-b border-[#2D2D2D] transition-colors
-        ${isActiveLink ? 'bg-gray-100' : ''}
         ${level > 0 ? 'pl-8 border-none py-3 text-sm' : ''} 
-        ${level === 0 ? 'font-medium' : 'font-light'}
+        ${isMainActive ? 'text-white bg-[#1d1d1d]' : 'text-[#2D2D2D] font-medium'}
       `}>
-         <span className={`${isActiveLink ? 'font-bold' : ''}`}>{item.label}</span>
+         <span>{item.label}</span>
          {hasSubItems && (
-            <button 
-                onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    toggleSection(item.id);
-                }}
-                className="p-1 hover:bg-gray-200 rounded-full transition-colors"
-            >
+            <div className="p-1">
                 {isOpen ? <Minus size={16}/> : <Plus size={16}/>}
-            </button>
+            </div>
          )}
       </div>
     );
 
     return (
-      <div key={item.id} className={`${level === 0 ? 'border-b border-[#2D2D2D] last:border-b-0' : ''}`}>
-        
-        {/* -- CLICKABLE AREA -- */}
-        {item.link ? (
-           <Link href={item.link} className="block hover:bg-gray-50 transition-colors">
+      <div key={item.id} className={`${level === 0 ? 'border-b border-[#2D2D2D] last:border-b-0' : ''} bg-transparent`}>
+        {/* Items WITHOUT subItems: Simple navigation link */}
+        {item.link && !hasSubItems ? (
+           <Link 
+             href={item.link} 
+             className="block hover:bg-black/5 transition-colors"
+             onClick={() => {
+               // When navigating to simple pages, clear active main item and children
+               setActiveMainItem(null);
+               setOpenChildren(new Set());
+             }}
+           >
               {Header}
            </Link>
-        ) : (
+        ) : /* Items WITH subItems: Accordion with optional link */ (
            <div 
-             className="cursor-pointer hover:bg-gray-50 transition-colors"
-             onClick={() => hasSubItems && toggleSection(item.id)}
+             className="cursor-pointer hover:bg-black/5 transition-colors"
+             onClick={() => {
+                 // For items with subItems:
+                 // 1. If they have a link AND we're NOT on that page, navigate first
+                 // 2. If we're on that page OR no link, toggle accordion
+                 
+                 const shouldNavigate = item.link && !isActiveLink;
+                 
+                 if (shouldNavigate && item.link) {
+                   // Navigate to the page and set as active
+                   if (level === 0) {
+                     setActiveMainItem(item.id);
+                     setOpenChildren(new Set());
+                   }
+                   router.push(item.link);
+                 } else {
+                   // Already on this page or no link - just toggle accordion
+                   toggleSection(item.id, parentId);
+                 }
+             }}
            >
               {Header}
            </div>
         )}
 
-        {/* -- SUB ITEMS -- */}
         {hasSubItems && (
            <div className={`
-             overflow-hidden transition-all duration-300 ease-in-out bg-white
+             overflow-hidden transition-all duration-300 ease-in-out bg-transparent
              ${isOpen ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'}
            `}>
              {item.subItems!.map(sub => {
                 if (sub.type === 'checkbox') {
-                    // Checkbox Logic: The 'item.id' is the Filter Category (e.g. 'jenis-anyaman')
                     const isSelected = isChecked(item.id, sub.id);
                     return (
                         <div 
@@ -161,25 +201,21 @@ const SidebarAccordion = ({ items, defaultOpenIds = [] }: SidebarAccordionProps)
                                 e.stopPropagation();
                                 handleCheckboxChange(item.id, sub.id);
                             }}
-                            className={`
-                                pl-8 pr-4 py-2 text-sm cursor-pointer flex items-center gap-3 transition-colors
-                                hover:bg-gray-100
-                            `}
+                            className="pl-8 pr-4 py-2 text-sm cursor-pointer flex items-center gap-3 transition-colors hover:bg-black/5"
                         >
                             <div className={`
-                                w-4 h-4 border border-[#2D2D2D] flex items-center justify-center
-                                ${isSelected ? 'bg-[#2D2D2D]' : 'bg-white'}
+                                w-4 h-4 border border-[#2D2D2D] flex items-center justify-center transition-colors
+                                ${isSelected ? 'bg-[#2D2D2D]' : 'bg-transparent'}
                             `}>
                                 {isSelected && <Check size={12} className="text-white" />}
                             </div>
-                            <span className={`${isSelected ? 'font-medium' : 'text-gray-600'}`}>
+                            <span className={`${isSelected ? 'font-bold text-[#1d1d1d]' : 'text-gray-600'}`}>
                                 {sub.label}
                             </span>
                         </div>
                     );
                 }
-                // Recursive call for non-checkbox items
-                return renderItem(sub, level + 1);
+                return renderItem(sub, level + 1, item.id); // Pass current item.id as parentId
              })}
            </div>
         )}
@@ -188,9 +224,18 @@ const SidebarAccordion = ({ items, defaultOpenIds = [] }: SidebarAccordionProps)
   };
 
   return (
-    <div className="border border-[#2D2D2D] bg-[#F2F2F2] text-raleway w-full">
+    <div className="border border-[#2D2D2D] bg-transparent text-raleway w-full">
       {items.map(item => renderItem(item))}
     </div>
+  );
+}
+
+// Main component that wraps SidebarContent in Suspense
+const SidebarAccordion = ({ items, defaultOpenIds = [] }: SidebarAccordionProps) => {
+  return (
+    <Suspense fallback={<SidebarSkeleton />}>
+      <SidebarContent items={items} defaultOpenIds={defaultOpenIds} />
+    </Suspense>
   );
 };
 

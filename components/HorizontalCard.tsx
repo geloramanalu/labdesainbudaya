@@ -65,7 +65,7 @@ const HorizontalCard = ({
   return (
     <Link
       href={link}
-      className="group block border border-[#2D2D2D] bg-transparent hover:bg-[#2D2D2D] transition-all duration-300 p-2 xl:p-4"
+      className="group block border border-[#2D2D2D] bg-transparent hover:bg-[#2D2D2D] transition-all duration-300 p-2 xl:p-4 "
     >
       <div
         className={`relative w-full overflow-hidden bg-[#f0f0f0] ${variant === "secondary"

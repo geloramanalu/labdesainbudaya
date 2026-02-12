@@ -1,11 +1,12 @@
 'use client'
-import React, { Suspense } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import SidebarAccordion, { MenuItem } from '@/components/SidebarAccordion';
 import { usePathname } from 'next/navigation';
 import { useLanguage } from '@/context/LanguageContext'; 
 import { HISTORY_DATA } from '@/data/historyData'; 
 import { ARCHIVE_FILTERS } from '@/data/archiveFilter';
+
 export default function DesaLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const { t, lang } = useLanguage();
@@ -88,13 +89,11 @@ export default function DesaLayout({ children }: { children: React.ReactNode }) 
 
       <div className="flex flex-col xl:flex-row max-w-[1440px] mx-auto px-6 xl:px-12 py-12 xl:py-24 gap-12 xl:gap-0">
         <aside className="w-full xl:w-1/4 xl:sticky xl:top-32 h-fit z-20">
-          <Suspense fallback={<div className="h-64 bg-gray-100 animate-pulse rounded"/>}>
-            <SidebarAccordion 
-                key={lang} // Re-render on lang change
-                items={MENU_ITEMS}
-                defaultOpenIds={defaultOpenIds}
-            />
-          </Suspense>
+          <SidebarAccordion 
+              key={lang} 
+              items={MENU_ITEMS}
+              defaultOpenIds={defaultOpenIds}
+          />
         </aside>
 
         <div className="w-full xl:w-3/4 xl:pl-12">

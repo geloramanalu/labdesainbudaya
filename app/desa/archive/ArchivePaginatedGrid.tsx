@@ -1,5 +1,5 @@
 'use client'
-import { useState, useMemo } from 'react';
+import { useState, useMemo, Suspense } from 'react';
 import HorizontalCard from '@/components/HorizontalCard';
 import { ArrowRight } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
@@ -15,62 +15,66 @@ interface ArchiveItem {
   pengembangan_desain?: string;
 }
 
-const ITEMS_PER_PAGE = 9;
+const ITEMS_PER_PAGE = 6;
 
-const ArchivePaginatedGrid = ({ items }: { items: ArchiveItem[] }) => {
+const ArchivePaginatedGridContent = ({ items }: { items: ArchiveItem[] }) => {
   const searchParams = useSearchParams();
   const [currentPage, setCurrentPage] = useState(1);
 
-  // --- FILTERING LOGIC ---
+  const isFilterActive = useMemo(() => {
+    return (
+      searchParams.has('jenis-anyaman') ||
+      searchParams.has('material-rotan') ||
+      searchParams.has('alat-produksi') ||
+      searchParams.has('pengembangan_desain')
+    );
+  }, [searchParams]);
+
   const filteredItems = useMemo(() => {
     let result = items;
     
-    // Read params
-    const filterAnyaman = searchParams.get('jenis-anyaman');
-    const filterMaterial = searchParams.get('material-rotan');
-    const filterAlat = searchParams.get('alat-produksi');
-    const filterDesain = searchParams.get('pengembangan-desain');
+    const filterAnyaman = searchParams.get('jenis-anyaman')?.split(',') || [];
+    const filterMaterial = searchParams.get('material-rotan')?.split(',') || [];
+    const filterAlat = searchParams.get('alat-produksi')?.split(',') || [];
+    const filterDesain = searchParams.get('pengembangan-desain')?.split(',') || [];
 
-    if (filterAnyaman || filterMaterial || filterAlat || filterDesain) {
+    if (filterAnyaman.length > 0 || filterMaterial.length > 0 || filterAlat.length > 0 || filterDesain.length > 0) {
       result = items.filter((item) => {
         const normalize = (str: string) => str?.toLowerCase().trim();
         
-        // 1. Jenis Anyaman
-        if (filterAnyaman) {
-            if (!normalize(item.type_anyaman || '').includes(normalize(filterAnyaman))) return false;
+        if (filterAnyaman.length > 0) {
+            const match = filterAnyaman.some(val => normalize(item.type_anyaman || '').includes(normalize(val)));
+            if (!match) return false;
         }
 
-        // 2. Material
-        if (filterMaterial) {
-            const mat = typeof item.material_rotan === 'string' ? item.material_rotan : item.material_rotan?.type;
-            if (!normalize(mat || '').includes(normalize(filterMaterial))) return false;
+        if (filterMaterial.length > 0) {
+            const matType = typeof item.material_rotan === 'string' ? item.material_rotan : item.material_rotan?.type;
+            const match = filterMaterial.some(val => normalize(matType || '').includes(normalize(val)));
+            if (!match) return false;
         }
 
-        // 3. Alat
-        if (filterAlat) {
-            const tool = typeof item.alat_produksi === 'string' ? item.alat_produksi : item.alat_produksi?.name;
-            if (!normalize(tool || '').includes(normalize(filterAlat))) return false;
+        if (filterAlat.length > 0) {
+            const toolName = typeof item.alat_produksi === 'string' ? item.alat_produksi : item.alat_produksi?.name;
+            const match = filterAlat.some(val => normalize(toolName || '').includes(normalize(val)));
+            if (!match) return false;
         }
 
-        // 4. Pengembangan
-        if (filterDesain) {
-            if (!normalize(item.pengembangan_desain || '').includes(normalize(filterDesain))) return false;
+        if (filterDesain.length > 0) {
+            const match = filterDesain.some(val => normalize(item.pengembangan_desain || '').includes(normalize(val)));
+            if (!match) return false;
         }
 
         return true;
       });
     }
 
-    // --- SORTING ---
     return [...result].sort((a, b) => {
       if (a.thumbnail && !b.thumbnail) return -1;
       if (!a.thumbnail && b.thumbnail) return 1;
       return 0;
     });
+}, [items, searchParams]);
 
-  }, [items, searchParams]);
-
-  // Pagination Logic
   const totalPages = Math.ceil(filteredItems.length / ITEMS_PER_PAGE);
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const currentItems = filteredItems.slice(startIndex, startIndex + ITEMS_PER_PAGE);
@@ -85,14 +89,15 @@ const ArchivePaginatedGrid = ({ items }: { items: ArchiveItem[] }) => {
   return (
     <div className="flex flex-col gap-8 p-2 xl:p-4 border xl:-ml-[1px]">
        
-       {/* Filter Status / Count */}
-       <div className="mb-2">
+       {isFilterActive && (
+         <div className="mb-2">
             <p className="text-sm text-gray-500">
               Showing {filteredItems.length} results
             </p>
-        </div>
+         </div>
+       )}
 
-      <div className="grid grid-cols-2 xl:grid-cols-3 min-h-[500px] gap-4 xl:gap-6">
+      <div className="grid grid-cols-2 xl:grid-cols-3 min-h-[300px] gap-4 xl:gap-6">
         {currentItems.map((item) => (
           <HorizontalCard 
             key={item.id}
@@ -136,6 +141,21 @@ const ArchivePaginatedGrid = ({ items }: { items: ArchiveItem[] }) => {
         </div>
       )}
     </div>
+  );
+};
+
+const ArchivePaginatedGrid = (props: { items: ArchiveItem[] }) => {
+  return (
+    <Suspense fallback={
+      <div className="grid grid-cols-2 xl:grid-cols-3 min-h-[300px] gap-4 xl:gap-6 animate-pulse">
+      {/* simple fallback */}
+        {[1, 2, 3, 4, 5, 6].map((i) => (
+           <div key={i} className="bg-gray-100 aspect-video w-full rounded"></div>
+        ))}
+      </div>
+    }>
+      <ArchivePaginatedGridContent {...props} />
+    </Suspense>
   );
 };
 
