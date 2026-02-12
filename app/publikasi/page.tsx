@@ -75,7 +75,7 @@ const PublikasiPage = () => {
           })}
         </div>
 
-        <div className="flex items-center justify-center gap-4">
+        {/* <div className="flex items-center justify-center gap-4">
           <button className="p-2 bg-[#2D2D2D] text-white hover:opacity-80 transition-opacity">
             <ArrowLeft size={24} strokeWidth={1} />
           </button>
@@ -90,7 +90,7 @@ const PublikasiPage = () => {
           <button className="p-2 bg-[#2D2D2D] text-white hover:opacity-80 transition-opacity">
             <ArrowRight size={24} strokeWidth={1} />
           </button>
-        </div>
+        </div> */}
 
       </div>
 
