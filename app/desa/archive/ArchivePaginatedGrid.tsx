@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react'; // Added useMemo for performance
 import HorizontalCard from '@/components/HorizontalCard';
 import { ArrowRight } from 'lucide-react';
 
@@ -11,14 +11,28 @@ interface ArchiveItem {
   thumbnail: string | null;
 }
 
-const ITEMS_PER_PAGE = 9;
+const ITEMS_PER_PAGE = 6;
 
 const ArchivePaginatedGrid = ({ items }: { items: ArchiveItem[] }) => {
   const [currentPage, setCurrentPage] = useState(1);
 
-  const totalPages = Math.ceil(items.length / ITEMS_PER_PAGE);
+  // 1. SORT ITEMS: Non-null thumbnails come first
+  // We use useMemo so it doesn't re-sort on every render, only when 'items' changes.
+  const sortedItems = useMemo(() => {
+    return [...items].sort((a, b) => {
+      // If a has thumbnail and b doesn't, a comes first (-1)
+      if (a.thumbnail && !b.thumbnail) return -1;
+      // If b has thumbnail and a doesn't, b comes first (1)
+      if (!a.thumbnail && b.thumbnail) return 1;
+      // Otherwise keep original order
+      return 0;
+    });
+  }, [items]);
+
+  // 2. Use 'sortedItems' instead of 'items' for pagination logic
+  const totalPages = Math.ceil(sortedItems.length / ITEMS_PER_PAGE);
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const currentItems = items.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+  const currentItems = sortedItems.slice(startIndex, startIndex + ITEMS_PER_PAGE);
 
   const goToPage = (page: number) => {
     setCurrentPage(page);
@@ -40,10 +54,10 @@ const ArchivePaginatedGrid = ({ items }: { items: ArchiveItem[] }) => {
           <HorizontalCard 
             key={item.id}
             title={item.title}
+            // If sorting worked, items with images appear first in the list
             image={item.thumbnail}
             link={`/desa/archive/${item.slug}`}
             variant='secondary'
-            // category='archive'
           />
         ))}
       </div>
