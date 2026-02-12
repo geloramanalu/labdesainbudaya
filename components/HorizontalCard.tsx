@@ -1,6 +1,6 @@
 import { ArrowRight, User, Archive, Image as ImageIcon } from 'lucide-react'; // Renamed Image to ImageIcon to avoid conflict
 import Image from 'next/image';
-
+import Link from 'next/link';
 interface HorizontalCardProps {
   title: string;
   image: string | null;
@@ -63,7 +63,7 @@ const HorizontalCard = ({
   };
 
   return (
-    <a
+    <Link
       href={link}
       className="group block border border-[#2D2D2D] bg-transparent hover:bg-[#2D2D2D] transition-all duration-300 p-2 xl:p-4"
     >
@@ -111,7 +111,7 @@ const HorizontalCard = ({
           />
         </div>
       </div>
-    </a>
+    </Link>
   );
 }
 

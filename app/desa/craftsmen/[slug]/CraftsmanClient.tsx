@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import GallerySidebar from './GallerySidebar';
-import { Craftsman } from '@/data/craftsmenData'; // Ensure this is imported
+import { Craftsman } from '@/data/craftsmenData'; 
 
 interface CraftsmanClientProps {
   craftsman: Craftsman;
@@ -31,12 +31,12 @@ export default function CraftsmanClient({
   
   const { lang, t } = useLanguage();
 
-  // 1. Language Logic for Description
+  
   const description = lang === 'EN' && craftsman.description_en 
     ? craftsman.description_en 
     : craftsman.description_id;
 
-  // 2. Name parsing logic
+  
   const [personName, companyName] = craftsman.name.includes('/') 
     ? craftsman.name.split('/').map(s => s.trim())
     : [craftsman.name, ''];
@@ -107,8 +107,8 @@ export default function CraftsmanClient({
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-4">
             <div>
               <p className="text-sm text-gray-500 mb-2">{t('craftsman.more_from')}</p>
-              <h3 className="text-4xl md:text-5xl font-medium tracking-tight mb-1">Desa Trangsan</h3>
-              <p className="text-gray-500 text-lg">Sukoharjo, Jawa Tengah</p>
+              <h3 className="text-4xl md:text-5xl font-medium tracking-tight mb-1">{t('craftsman.village')}</h3>
+              <p className="text-gray-500 text-lg">{t('craftsman.province')}</p>
             </div>
             
             <Link 

@@ -27,13 +27,11 @@ export default function DesaLayout({ children }: { children: React.ReactNode }) 
     { id: 'alat-produksi', title: t('desa.filters.tool') },
     { id: 'pengembangan-produk', title: t('desa.filters.product_dev') },
   ];
-
-  // 6. Menu Utama dengan Label Terjemahan
   const MENU_ITEMS = [
     { 
       label: t('desa.sidebar.history'), 
       link: '/desa', 
-      subItems: historySubItems // Masukkan hasil map di sini
+      subItems: historySubItems 
     },
     { 
       label: t('desa.sidebar.archive'), 
@@ -45,7 +43,6 @@ export default function DesaLayout({ children }: { children: React.ReactNode }) 
     { label: t('desa.sidebar.team'), link: '/desa/data-collection-team' },
   ];
 
-  // Logic Active Label (Perlu disesuaikan dengan label terjemahan)
   let activeLabel = '';
   if (pathname.startsWith('/desa/archive')) {
     activeLabel = t('desa.sidebar.archive');
@@ -73,18 +70,13 @@ export default function DesaLayout({ children }: { children: React.ReactNode }) 
           <div className="absolute inset-0 bg-gradient-to-r from-black/10 via-transparent to-black/60" />
         </div>
         
-        {/* Header Text Translated */}
-        {/* <div className="absolute bottom-48 right-6 xl:bottom-96 xl:right-24 text-white text-right"> */}
         <div className="absolute bottom-24 right-6 xl:bottom-32 xl:right-24 text-white text-right">
 
-          {/* <h1 className="text-5xl xl:text-8xl font-bold mb-2 font-raleway">{t('desa.title')}</h1> */}
           <h1 className="text-5xl xl:text-6xl font-bold mb-2 font-raleway">{t('desa.title')}</h1>
-
           <p className="text-lg xl:text-2xl font-light tracking-wide">{t('desa.location')}</p>
         </div>
         
-        {/* Scroll Text Translated */}
-        {/* <div className='absolute bottom-12 flex right-6 xl:bottom-24 xl:right-24 text-white text-right items-center gap-8'> */}
+        
         <div className='absolute bottom-12 flex right-6 xl:bottom-16 xl:right-24 text-white text-right items-center gap-8'>
 
           {/* <p className="text-lg xl:text-2xl font-light tracking-wide">{t('desa.scroll_more')}</p> */}

@@ -1,7 +1,7 @@
 import { CRAFTSMEN_INFO } from '@/data/craftsmenData';
 import { getCraftsmanImages } from '@/util/getCraftsmenImages';
 import { notFound } from 'next/navigation';
-import CraftsmanClient from './CraftsmanClient'; // Import the client view
+import CraftsmanClient from './CraftsmanClient'; 
 
 export async function generateStaticParams() {
   return CRAFTSMEN_INFO.map((craftsman) => ({
@@ -21,11 +21,8 @@ export default async function CraftsmanPage({ params }: PageProps) {
     return notFound();
   }
 
-  // Get images for current item
   const { thumbnail, gallery } = getCraftsmanImages(slug);
   
-  // Get suggestions data + images (Server Side)
-  // We do this here because getCraftsmanImages might not work in Client Component
   const otherCraftsmen = CRAFTSMEN_INFO
     .filter(c => c.id !== craftsman.id) 
     .sort(() => 0.5 - Math.random())    

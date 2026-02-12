@@ -99,7 +99,7 @@ export default function ArchiveClient({
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-4">
             <div>
               <p className="text-sm text-gray-500 mb-2">{t('archive.more_collection')}</p>
-              <h3 className="text-4xl md:text-5xl font-medium tracking-tight">Desa Trangsan</h3>
+              <h3 className="text-4xl md:text-5xl font-medium tracking-tight">{t('desa.title')}</h3>
             </div>
             <Link href="/desa/archive" className="bg-[#2D2D2D] text-white px-8 py-3 flex items-center gap-6 hover:opacity-90 transition-opacity group group-hover:bg-[#1d1d1d]">
               <span className="text-sm font-medium group-hover:text-[#1d1d1d]">{t('archive.view_all')}</span>
