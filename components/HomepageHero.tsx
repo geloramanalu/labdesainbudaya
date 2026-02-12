@@ -180,7 +180,7 @@ const HomepageHero = ({ startAnimation = false }: HomepageHeroProps) => {
 
           <Link href='/about' className="mx-auto xl:mx-0">
             <div className="group flex items-center justify-between gap-4 border border-white/50 bg-transparent py-1 px-4 transition-all hover:bg-white hover:text-black hover:border-white">
-              <span className="font-raleway tracking-wider">Read more about us</span>
+              <span className="font-raleway tracking-wider">{t('homepage.hero.read_more')}</span>
               <ArrowRight size={18} strokeWidth={1} className="transition-transform group-hover:translate-x-1" />
             </div>
           </Link>

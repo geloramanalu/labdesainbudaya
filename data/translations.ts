@@ -4,7 +4,7 @@ export const translations = {
     homepage: {
       hero: {
         description: "Lab Desain Budaya merupakan ruang kolaboratif yang berfokus pada **pengembangan desain** berbasis potensi lokal di Indonesia, khususnya wilayah Jawa Tengah.",
-        read_more: "Baca selanjutnya tentang kami"
+        read_more: "Baca selengkapnya tentang kami"
       },
       prakarsa: {
         title: "Prakarsa",
