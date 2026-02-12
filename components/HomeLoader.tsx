@@ -79,7 +79,7 @@ const HomeLoader = ({ onComplete }: HomeLoaderProps) => {
   }, [onComplete]);
 
   return (
-    <div ref={comp} className="fixed inset-0 z-50 flex items-center justify-center bg-white">
+    <div ref={comp} className="fixed inset-0 z-[9999] flex items-center justify-center bg-white">
       <div 
         ref={containerRef}
         className="relative h-[300px] w-[420px] overflow-hidden bg-white " 

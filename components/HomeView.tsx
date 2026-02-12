@@ -49,7 +49,9 @@ const HomeView = () => {
     }, 1200);
   }, []);
 
-  if (isChecking) return null;
+  if (isChecking) {
+    return <div className="fixed inset-0 bg-white z-[9999]" />;
+  }
 
   return (
     <>
