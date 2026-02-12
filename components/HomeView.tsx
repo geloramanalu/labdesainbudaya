@@ -127,7 +127,7 @@ const Prakarsa = () => {
 
         <div className="group duration-300 flex flex-col items-center">
           <svg width="74" height="73" viewBox="0 0 74 73" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
-            <rect opacity="0.4" className="transition-[filter]/20 duration-500 group-hover:opacity-100 group-hover:[filter:brightness(2.5)_contrast(0.9)]" width="74" height="73" fill="url(#pattern0_464_1415)" strokeWidth={1}  />
+            <rect opacity="0.4" className="transition-[filter]/20 duration-500 group-hover:opacity-100 group-hover:[filter:brightness(2.5)_contrast(0.9)]" width="74" height="73" fill="url(#pattern0_464_1415)" strokeWidth={1} />
             <defs>
               <pattern id="pattern0_464_1415" patternContentUnits="objectBoundingBox" width="1" height="1">
                 <use xlinkHref="#image0_464_1415" transform="matrix(0.00195312 0 0 0.00197988 0 -0.00684932)" />
@@ -169,7 +169,7 @@ const Prakarsa = () => {
 import { PUBLICATION_DATA } from '@/data/publicationData';
 
 const Publikasi = () => {
-  
+
   const { t } = useLanguage();
 
   return (
@@ -186,16 +186,19 @@ const Publikasi = () => {
       {/* grid layout fo cards */}
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 xl:gap-0 gap-8 justify-items-center max-w-xl mx-auto xl:max-w-7xl ">
-          {PUBLICATION_DATA.map((item) => (
-            <CardPublikasi
-              key={item.id}
-              title={item.title}
-              type={item.type_id}
-              year={item.year}
-              url={item.url}
-              imageSrc={item.imageSrc}
-            />
-          ))}
+          {PUBLICATION_DATA
+            .filter((item) => item.url !== '#')
+            .slice(0, 3)
+            .map((item) => (
+              <CardPublikasi
+                key={item.id}
+                title={item.title}
+                type={item.type_id}
+                year={item.year}
+                url={item.url}
+                imageSrc={item.imageSrc}
+              />
+            ))}
         </div>
       </div>
 
