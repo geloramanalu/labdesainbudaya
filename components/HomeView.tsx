@@ -50,8 +50,8 @@ const HomeView = () => {
             setTimeout(() => setShowLoader(false), 600);
           }} 
         />
-      )}  */}
-      {/* <HomepageHero startAnimation={heroAnimationStart} /> */}
+      )} 
+      <HomepageHero startAnimation={heroAnimationStart} /> */}
 
       <HomepageHero startAnimation={true} />
 
