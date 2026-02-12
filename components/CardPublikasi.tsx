@@ -28,7 +28,7 @@ const CardPublikasi = ({ title, type, year, url, imageSrc }: CardPublikasiProps)
     >
       <div 
         className={`
-          flex flex-col gap-4 xl:w-84 w-72 h-[375px] mx-auto border p-2 justify-between transition-colors duration-300
+          flex flex-col gap-4 w-72 h-[375px] mx-auto border p-2 justify-between transition-colors duration-300
           ${isDisabled 
             ? 'border-gray-400 opacity-60 cursor-not-allowed bg-transparent' // Disabled Styles
             : 'border-black hover:bg-[#2d2d2d] cursor-pointer'               // Active Styles

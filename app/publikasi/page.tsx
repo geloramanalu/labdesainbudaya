@@ -56,7 +56,7 @@ const PublikasiPage = () => {
           ))}
         </div>
 
-        {/* 2. Update Grid to use the Component */}
+        
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 xl:gap-8 mb-16">
           {filteredData.map((item) => {
             // Calculate the correct label string
