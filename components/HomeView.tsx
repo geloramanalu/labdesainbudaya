@@ -61,6 +61,7 @@ const HomeView = () => {
         />
       )} 
       <HomepageHero startAnimation={heroAnimationStart} />
+      {/* <HomepageHero startAnimation={true} /> */}
 
       <Prakarsa />
       <Desa />

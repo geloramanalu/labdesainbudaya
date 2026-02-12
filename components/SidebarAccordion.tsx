@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, Suspense } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { Plus, Minus, Check } from 'lucide-react';
@@ -18,21 +18,7 @@ interface SidebarAccordionProps {
   defaultOpenIds?: string[];
 }
 
-// Skeleton fallback
-function SidebarSkeleton() {
-  return (
-    <div className="border border-[#2D2D2D] bg-transparent w-full animate-pulse">
-      {[1, 2, 3, 4, 5].map((i) => (
-        <div key={i} className="p-4 border-b border-[#2D2D2D] last:border-b-0">
-          <div className="h-6 bg-gray-200 rounded w-3/4"></div>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-// Internal component that uses useSearchParams - wrapped in Suspense
-function SidebarContent({ items, defaultOpenIds = [] }: SidebarAccordionProps) {
+const SidebarAccordion = ({ items, defaultOpenIds = [] }: SidebarAccordionProps) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -131,7 +117,7 @@ function SidebarContent({ items, defaultOpenIds = [] }: SidebarAccordionProps) {
 
     const Header = (
       <div className={`
-        flex justify-between items-center p-4 border-b border-[#2D2D2D] transition-colors
+        flex justify-between items-center p-4  border-[#2D2D2D] transition-colors
         ${level > 0 ? 'pl-8 border-none py-3 text-sm' : ''} 
         ${isMainActive ? 'text-white bg-[#1d1d1d]' : 'text-[#2D2D2D] font-medium'}
       `}>
@@ -169,13 +155,15 @@ function SidebarContent({ items, defaultOpenIds = [] }: SidebarAccordionProps) {
                  
                  const shouldNavigate = item.link && !isActiveLink;
                  
-                 if (shouldNavigate && item.link) {
+                 if (shouldNavigate) {
                    // Navigate to the page and set as active
                    if (level === 0) {
                      setActiveMainItem(item.id);
                      setOpenChildren(new Set());
                    }
-                   router.push(item.link);
+                   if (shouldNavigate && item.link) {
+  router.push(item.link);
+}
                  } else {
                    // Already on this page or no link - just toggle accordion
                    toggleSection(item.id, parentId);
@@ -227,15 +215,6 @@ function SidebarContent({ items, defaultOpenIds = [] }: SidebarAccordionProps) {
     <div className="border border-[#2D2D2D] bg-transparent text-raleway w-full">
       {items.map(item => renderItem(item))}
     </div>
-  );
-}
-
-// Main component that wraps SidebarContent in Suspense
-const SidebarAccordion = ({ items, defaultOpenIds = [] }: SidebarAccordionProps) => {
-  return (
-    <Suspense fallback={<SidebarSkeleton />}>
-      <SidebarContent items={items} defaultOpenIds={defaultOpenIds} />
-    </Suspense>
   );
 };
 
