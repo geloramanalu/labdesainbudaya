@@ -11,12 +11,19 @@ const ArchivePage = () => {
       id: item.id,
       title: item.title,
       slug: item.slug,
-      thumbnail: thumbnail 
+      thumbnail: thumbnail,
+      type_anyaman: item.type_anyaman,
+      material_rotan: item.material_rotan,
+      alat_produksi: item.alat_produksi,
+      pengembangan_desain: item.pengembangan_desain
     };
   });
 
   return (
-    <ArchivePaginatedGrid items={processedItems} />
+    <div className="container mx-auto px-4 py-8 max-w-[1440px]">
+       
+       <ArchivePaginatedGrid items={processedItems} />
+    </div>
   );
 };
 

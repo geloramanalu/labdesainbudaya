@@ -1,92 +1,195 @@
-'use client';
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Menu, Plus } from 'lucide-react';
-// import { useLanguage } from '@/context/LanguageContext';
+import { useRouter, useSearchParams, usePathname } from 'next/navigation';
+import { Plus, Minus, Check } from 'lucide-react';
 
-interface SubItem {
+// --- TYPES ---
+export interface MenuItem {
   id: string;
-  title: string;
-}
-
-interface MenuItem {
   label: string;
-  link: string;
-  subItems?: SubItem[]; // <--- Attach subItems directly to the menu item type
+  link?: string;
+  type?: 'checkbox' | 'link' | 'group'; 
+  subItems?: MenuItem[];
 }
 
 interface SidebarAccordionProps {
   items: MenuItem[];
-  activeLabel: string;
+  defaultOpenIds?: string[]; // IDs of items to be open by default
 }
 
-const SidebarAccordion = ({ items, activeLabel }: SidebarAccordionProps) => {
-  // const {t} = useLanguage();
-  const [isOpen, setIsOpen] = useState(true);
+const SidebarAccordion = ({ items, defaultOpenIds = [] }: SidebarAccordionProps) => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // State to track open sections
+  const [openSections, setOpenSections] = useState<Set<string>>(new Set(defaultOpenIds));
+
+  // --- HANDLERS ---
+
+  const toggleSection = (id: string) => {
+    const newOpen = new Set(openSections);
+    if (newOpen.has(id)) {
+      newOpen.delete(id);
+    } else {
+      newOpen.add(id);
+    }
+    setOpenSections(newOpen);
+  };
+
+  const handleCheckboxChange = (groupKey: string, value: string) => {
+    const current = new URLSearchParams(Array.from(searchParams.entries()));
+    const existing = current.get(groupKey);
+
+    // Toggle logic: If strict single select, replace. If multi, add/remove.
+    // Implementing SINGLE SELECT per category as per typical filter behavior for simplicity first,
+    // or toggle if same.
+    if (existing === value) {
+      current.delete(groupKey);
+    } else {
+      current.set(groupKey, value);
+    }
+    
+    // Reset page to 1 on filter change
+    // We assume the grid reads 'page' param or handles it, but usually standard to reset.
+    // current.delete('page'); 
+
+    const search = current.toString();
+    const query = search ? `?${search}` : "";
+    
+    // Push new URL. 
+    // Note: If we are NOT on /desa/archive, we should probably navigate there?
+    // But this component is likely rendered in Layout, so it persists.
+    // If the checkbox is clicked, we assume the user intends to filter the archive.
+    if (!pathname.startsWith('/desa/archive')) {
+       router.push(`/desa/archive${query}`);
+    } else {
+       router.push(`${pathname}${query}`);
     }
   };
 
-  return (
-    <div className="border border-[#2D2D2D] bg-[#F2F2F2] text-raleway max-w-xs md:max-w-md mx-auto xl:mx-0 xl:w-full">
-      {items.map((menu) => {
-        const isActive = menu.label === activeLabel;
-        // Check if THIS specific menu has subItems
-        const hasSubItems = menu.subItems && menu.subItems.length > 0;
+  const isChecked = (groupKey: string, value: string) => {
+    return searchParams.get(groupKey) === value;
+  };
 
-        if (isActive) {
-          return (
-            <div key={menu.label}>
-              <div 
-                onClick={() => setIsOpen(!isOpen)}
-                className="bg-[#2D2D2D] text-white p-4 flex justify-between items-center cursor-pointer transition-colors border-b border-[#2D2D2D]"
-              >
-                <span className="text-lg font-medium">{menu.label}</span>
-                {hasSubItems && <Menu size={20} />}
-              </div>
+  // --- RECURSIVE RENDERER ---
+  const renderItem = (item: MenuItem, level: number = 0) => {
+    const hasSubItems = item.subItems && item.subItems.length > 0;
+    const isOpen = openSections.has(item.id);
+    const isActiveLink = item.link && pathname === item.link;
 
-              <div className={`
-                overflow-hidden transition-all duration-500 ease-in-out bg-[#F2F2F2]
-                ${isOpen && hasSubItems ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'}
-              `}>
-                <ul className="flex flex-col text-sm border-b border-[#2D2D2D]">
-                  {/* Map through the menu's OWN subItems */}
-                  {menu.subItems?.map((sub) => (
-                    <li key={sub.id}>
-                      <button 
-                        onClick={() => scrollToSection(sub.id)}
-                        className="w-full text-left py-3 pl-8 pr-4 hover:bg-[#2D2D2D]/5 text-[#2D2D2D]/70 hover:text-[#2D2D2D] transition-colors border-l-4 border-transparent hover:border-[#2D2D2D] hover:cursor-pointer"
-                      >
-                        {sub.title}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          );
-        }
-
+    // -- LEAF: CHECKBOX --
+    if (item.type === 'checkbox') {
+        // We assume the PARENT ID is the group key (e.g. 'jenis-anyaman')
+        // But here 'item' is the leaf. We need the parent context.
+        // To solve this in recursion, we relies on structure: Group -> Checkbox Items.
+        // Actually, simpler: The PARENT calls this with context, or we flatten?
+        // Let's assume the item.id IS the value, and we need the key.
+        // We'll handle this by checking if the Parent passed the key logic. 
+        // Refactor: renderItem doesn't know parent.
+        // Solution: We strictly define structure in data.
+        // Level 1: Main (Arsip)
+        // Level 2: Filter Group (Jenis Anyaman) -> id="jenis-anyaman"
+        // Level 3: Option (Durno) -> type="checkbox"
         return (
-          <Link 
-            key={menu.label} 
-            href={menu.link}
-            className="flex justify-between items-center p-4 border-b border-[#2D2D2D] last:border-b-0 hover:bg-gray-100 cursor-pointer group transition-colors"
-          >
-            <span className="text-[#2D2D2D] font-light">{menu.label}</span>
-            <Plus 
-              size={20} 
-              strokeWidth={1} 
-              className="text-[#2D2D2D] group-hover:rotate-90 transition-transform" 
-            />
-          </Link>
+            <div key={item.id} className="pl-8 py-2 flex items-center gap-3 cursor-pointer hover:bg-gray-100" 
+                 onClick={() => {
+                     // Hacky access to parent ID? No.
+                     // The `renderItem` needs to know the parent ID if it's a checkbox.
+                     // Let's pass `parentId` to recursive call.
+                 }}>
+                 {/* Logic moved to recursive call below */}
+            </div>
         );
-      })}
+    }
+
+    // -- HEADER CONTENT --
+    const Header = (
+      <div className={`
+        flex justify-between items-center p-4 border-b border-[#2D2D2D] transition-colors
+        ${isActiveLink ? 'bg-gray-100' : ''}
+        ${level > 0 ? 'pl-8 border-none py-3 text-sm' : ''} 
+        ${level === 0 ? 'font-medium' : 'font-light'}
+      `}>
+         <span className={`${isActiveLink ? 'font-bold' : ''}`}>{item.label}</span>
+         {hasSubItems && (
+            <button 
+                onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    toggleSection(item.id);
+                }}
+                className="p-1 hover:bg-gray-200 rounded-full transition-colors"
+            >
+                {isOpen ? <Minus size={16}/> : <Plus size={16}/>}
+            </button>
+         )}
+      </div>
+    );
+
+    return (
+      <div key={item.id} className={`${level === 0 ? 'border-b border-[#2D2D2D] last:border-b-0' : ''}`}>
+        
+        {/* -- CLICKABLE AREA -- */}
+        {item.link ? (
+           <Link href={item.link} className="block hover:bg-gray-50 transition-colors">
+              {Header}
+           </Link>
+        ) : (
+           <div 
+             className="cursor-pointer hover:bg-gray-50 transition-colors"
+             onClick={() => hasSubItems && toggleSection(item.id)}
+           >
+              {Header}
+           </div>
+        )}
+
+        {/* -- SUB ITEMS -- */}
+        {hasSubItems && (
+           <div className={`
+             overflow-hidden transition-all duration-300 ease-in-out bg-white
+             ${isOpen ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'}
+           `}>
+             {item.subItems!.map(sub => {
+                if (sub.type === 'checkbox') {
+                    // Checkbox Logic: The 'item.id' is the Filter Category (e.g. 'jenis-anyaman')
+                    const isSelected = isChecked(item.id, sub.id);
+                    return (
+                        <div 
+                            key={sub.id} 
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                handleCheckboxChange(item.id, sub.id);
+                            }}
+                            className={`
+                                pl-8 pr-4 py-2 text-sm cursor-pointer flex items-center gap-3 transition-colors
+                                hover:bg-gray-100
+                            `}
+                        >
+                            <div className={`
+                                w-4 h-4 border border-[#2D2D2D] flex items-center justify-center
+                                ${isSelected ? 'bg-[#2D2D2D]' : 'bg-white'}
+                            `}>
+                                {isSelected && <Check size={12} className="text-white" />}
+                            </div>
+                            <span className={`${isSelected ? 'font-medium' : 'text-gray-600'}`}>
+                                {sub.label}
+                            </span>
+                        </div>
+                    );
+                }
+                // Recursive call for non-checkbox items
+                return renderItem(sub, level + 1);
+             })}
+           </div>
+        )}
+      </div>
+    );
+  };
+
+  return (
+    <div className="border border-[#2D2D2D] bg-[#F2F2F2] text-raleway w-full">
+      {items.map(item => renderItem(item))}
     </div>
   );
 };
