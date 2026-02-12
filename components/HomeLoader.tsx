@@ -17,51 +17,50 @@ interface HomeLoaderProps {
 const HomeLoader = ({ onComplete }: HomeLoaderProps) => {
   const comp = useRef(null);
   const containerRef = useRef(null);
-  const maskRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const wrapperRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useLayoutEffect(() => {
     let ctx = gsap.context(() => {
+      // 1. Timeline Setup with initial delay
       const tl = gsap.timeline({
-        onComplete: () => {
-           onComplete();
-        }
+        delay: 0.5
       });
 
-      // Prevent scrollbar shifting
       document.body.style.overflow = 'hidden';
 
-      // INITIAL STATE
-      // All masks height 0, except first one is 100% visible
-      gsap.set(maskRefs.current, { height: "0%" });
-      gsap.set(maskRefs.current[0], { height: "100%" });
+      // --- INITIAL SETUP ---
+      gsap.set(wrapperRefs.current, { height: "0%", zIndex: 1 });
 
-      // PHASE 1: The "Wipe" Sequence (Top to Bottom)
+      // --- PHASE 1: THE MONTAGE ---
       LOADER_IMAGES.forEach((_, index) => {
-        if (index > 0) {
-          tl.to(maskRefs.current[index], {
-            height: "100%", // The mask expands down
-            duration: 1.2,
-            ease: "power4.inOut",
-            delay: -0.4 
-          });
-        }
+        gsap.set(wrapperRefs.current[index], { zIndex: index + 1 });
+
+        tl.to(wrapperRefs.current[index], {
+          height: "100%", 
+          duration: 1.8, 
+          ease: "power4.inOut",
+          delay: index === 0 ? 0 : -0.6 
+        });
       });
 
-      // PHASE 2: Immersive Expansion
-      // Container grows, Image inside naturally follows because of h-full/w-full
+      // --- PHASE 2: EXPANSION ---
       tl.to(containerRef.current, {
         width: "100%", 
         height: "100%", 
-        duration: 1.5,
+        duration: 1,
         ease: "expo.inOut", 
         delay: 0.2
       });
 
-      // PHASE 3: Fade out
+      // --- PHASE 3: TRIGGER HERO ---
+      tl.call(onComplete);
+
+      // --- PHASE 4: FADE OUT ---
       tl.to(comp.current, {
         opacity: 0,
         duration: 0.8,
-        delay: 0.1,
+        delay: 0.1, 
         pointerEvents: "none",
         onComplete: () => {
             document.body.style.overflow = ''; 
@@ -71,44 +70,36 @@ const HomeLoader = ({ onComplete }: HomeLoaderProps) => {
     }, comp);
 
     return () => {
-        ctx.revert();
+        // FIX: Use .kill() instead of .revert()
+        // .revert() resets inline styles to blank (causing the flash).
+        // .kill() just stops the GSAP engine but leaves the element at opacity: 0.
+        ctx.kill(); 
         document.body.style.overflow = '';
     };
   }, [onComplete]);
 
   return (
     <div ref={comp} className="fixed inset-0 z-50 flex items-center justify-center bg-white">
-      
       <div 
         ref={containerRef}
-        // Initial size: 220px x 300px
-        // Removed 'will-change' on width/height as it can sometimes cause blurriness on images during scale
-        className="relative h-[300px] w-[420px] overflow-hidden bg-gray-200" 
+        className="relative h-[300px] w-[420px] overflow-hidden bg-white " 
       >
         {LOADER_IMAGES.map((src, index) => (
-          // THE MASK DIV
           <div
             key={index}
-            ref={(el) => { if (el) maskRefs.current[index] = el }}
-            className="absolute top-0 left-0 w-full bg-gray-200 overflow-hidden "
-            style={{ 
-              zIndex: index + 10,
-              
-            }} 
+            ref={(el) => { if (el) wrapperRefs.current[index] = el }}
+            className="absolute top-0 left-0 w-full bg-white overflow-hidden"
+            style={{ zIndex: index + 10 }} 
           >
-            
             <div 
               className="relative w-full"
-              style={{ 
-                height: '100%', 
-              }}
+              style={{ height: '100%' }}
             >
                <div className="relative w-full h-full min-h-[300px]"> 
                   <Image
                     src={src}
                     alt={`loader-${index}`}
                     fill
-            
                     className="object-cover object-center" 
                     priority
                   />

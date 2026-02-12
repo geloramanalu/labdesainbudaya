@@ -22,7 +22,7 @@ interface HomepageHeroProps {
   startAnimation?: boolean;
 }
 
-// helper to render bold text from "**text**" pattern
+// Helper to render bold text from "**text**" pattern
 const renderWithBold = (text: string) => {
   if (!text) return "";
   const parts = text.split('**');
@@ -34,6 +34,7 @@ const renderWithBold = (text: string) => {
 const HomepageHero = ({ startAnimation = false }: HomepageHeroProps) => {
   const { t } = useLanguage();
 
+  // 1. Initialize Embla with Autoplay
   const [emblaRef, emblaApi] = useEmblaCarousel(
     { loop: true, duration: 40 }, 
     [Autoplay({ delay: 5000, stopOnInteraction: false })]
@@ -43,6 +44,23 @@ const HomepageHero = ({ startAnimation = false }: HomepageHeroProps) => {
   const heroTextRef = useRef(null);
   const heroNavRef = useRef(null);
   const heroDecorRef = useRef(null);
+
+  // 2. CRITICAL FIX: Manually Control Autoplay
+  // This ensures the carousel doesn't start moving while hidden behind the loader.
+  useEffect(() => {
+    if (!emblaApi) return;
+    const autoplay = emblaApi.plugins().autoplay;
+
+    if (!autoplay) return;
+
+    if (startAnimation) {
+      // Only start the carousel timer when the loader is finished
+      autoplay.play();
+    } else {
+      // Otherwise, keep it frozen on the first slide
+      autoplay.stop();
+    }
+  }, [emblaApi, startAnimation]);
 
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
@@ -58,27 +76,29 @@ const HomepageHero = ({ startAnimation = false }: HomepageHeroProps) => {
     };
   }, [emblaApi, onSelect]);
 
-  // ANIMATION LOGIC
+  // 3. GSAP TEXT ANIMATION LOGIC
   useEffect(() => {
+    // Initial State: Force Hidden
+    gsap.set(".hero-text-span", { opacity: 0, y: 100 });
+    gsap.set(heroNavRef.current, { opacity: 0, x: 50 });
+    gsap.set(heroDecorRef.current, { opacity: 0, scaleX: 0 });
+
     if (startAnimation) {
       const tl = gsap.timeline();
 
-      // 1. Reveal Main Text
-      tl.fromTo(".hero-text-span", 
-        { y: 100, opacity: 0 },
+      // Reveal Main Text
+      tl.to(".hero-text-span", 
         { y: 0, opacity: 1, duration: 1, stagger: 0.2, ease: "power3.out" }
       );
 
-      // 2. Reveal Nav
-      tl.fromTo(heroNavRef.current,
-        { x: 50, opacity: 0 },
+      // Reveal Nav (Right Side)
+      tl.to(heroNavRef.current,
         { x: 0, opacity: 1, duration: 1, ease: "power3.out" },
         "-=0.5"
       );
 
-      // 3. Reveal Decor
-      tl.fromTo(heroDecorRef.current,
-        { scaleX: 0, opacity: 0 },
+      // Reveal Decor (Rectangles)
+      tl.to(heroDecorRef.current,
         { scaleX: 1.5, opacity: 0.9, duration: 0.8, ease: "power2.out" },
         "-=0.8"
       );
@@ -89,6 +109,7 @@ const HomepageHero = ({ startAnimation = false }: HomepageHeroProps) => {
 
   return (
     <div className="relative h-screen w-full overflow-hidden text-white font-sans">
+      {/* Background Carousel */}
       <div className="absolute inset-0 -z-20" ref={emblaRef}>
         <div className="flex h-full w-full">
           {HERO_IMAGES.map((src, index) => (
@@ -105,6 +126,7 @@ const HomepageHero = ({ startAnimation = false }: HomepageHeroProps) => {
         </div>
       </div>
 
+      {/* Dark Overlay Gradient */}
       <div
         className="absolute bottom-0 left-0 w-full h-[60%] -z-10 pointer-events-none"
         style={{
@@ -112,7 +134,10 @@ const HomepageHero = ({ startAnimation = false }: HomepageHeroProps) => {
         }}
       />
 
+      {/* Main Content Overlay */}
       <div className="absolute inset-0 flex flex-col justify-between xl:flex-row xl:items-center w-full h-full pb-10 pt-24 xl:py-24 pointer-events-none"> 
+        
+        {/* LEFT SIDE: Title & Decor */}
         <div className="flex flex-col items-center xl:items-start xl:pl-[92px] gap-8 w-full xl:w-1/2 xl:h-full xl:justify-between pointer-events-auto">
           <h1 ref={heroTextRef} className="text-5xl leading-[1.1] tracking-wide text-center xl:text-left xl:text-[100px] 2xl:text-[120px] xl:leading-[0.9] xl:font-thin xl:tracking-tighter overflow-hidden">
             <span className="hero-text-span block opacity-0">Lab</span>
@@ -141,6 +166,7 @@ const HomepageHero = ({ startAnimation = false }: HomepageHeroProps) => {
           </div>
         </div>
 
+        {/* RIGHT SIDE: Navigation & Description */}
         <div ref={heroNavRef} className="flex flex-col gap-6 px-6 xl:px-0 xl:pr-[92px] xl:items-end xl:text-right w-full xl:w-1/2 xl:h-full xl:justify-end pointer-events-auto opacity-0">
           <div className="flex justify-around w-full font-raleway text-lg xl:flex-col xl:gap-2 xl:text-4xl xl:tracking-tight xl:w-auto xl:mb-4">
             <h3 className="">01 / Research </h3>
@@ -149,7 +175,6 @@ const HomepageHero = ({ startAnimation = false }: HomepageHeroProps) => {
           </div>
 
           <p className="text-center text-sm leading-relaxed xl:text-right xl:text-base xl:max-w-md opacity-90">
-            
             {renderWithBold(t('homepage.hero.description'))}
           </p>
 
