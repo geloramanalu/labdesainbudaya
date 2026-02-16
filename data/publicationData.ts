@@ -38,49 +38,49 @@ export const PUBLICATION_DATA: PublicationItem[] = [
       url: "https://uns.ac.id/id/pengabdian/prodi-desain-interior-uns-lakukan-preservasi-padi-varietas-lokal-di-desa-sabrang-klaten.html",
       imageSrc: "/homepage/thumbnail-publikasi-2024.jpeg"
     },
-    {
-      id: 4,
-      title: "Integrating Local Culture and Sustainability in Educational Play Tools: Conceptual Design of a Punokawan Puzzle with PLA-Based 3D Printing",
-      type_id: "Jurnal",
-      type_en: "Journal",
-      year: 2025,
-      imageSrc: "/archive/gantungan-kunci/thumbnail.jpg", 
-      url: "#" 
-    },
-    {
-      id: 5,
-      title: "Sustainable Rattan Craftsmanship: Bridging Tradition and Modernity",
-      type_id: "Artikel",
-      type_en: "Article",
-      year: 2024,
-      imageSrc: "/archive/kursi-lengkung/IMG_2488.png", 
-      url: "#" 
-    },
-    {
-      id: 6,
-      title: "Community-Based Design: A Case Study in Central Java",
-      type_id: "Lainnya",
-      type_en: "Others",
-      year: 2024,
-      imageSrc: "/homepage/jurnal-thumbnail.png", 
-      url: "#" 
-    },
-    {
-      id: 7,
-      title: "Digital Archiving of Tangible Cultural Heritage",
-      type_id: "Jurnal",
-      type_en: "Journal",
-      year: 2024,
-      imageSrc: "/homepage/desa-trangsan-card-thumbnail.png", 
-      url: "#" 
-    },
-    {
-      id: 8,
-      title: "Mingei Philosophy in Contemporary Indonesian Design",
-      type_id: "Artikel",
-      type_en: "Article",
-      year: 2024,
-      imageSrc: "/archive/tempat-teh/thumbnail.jpg", 
-      url: "#" 
-    }
+    // {
+    //   id: 4,
+    //   title: "Integrating Local Culture and Sustainability in Educational Play Tools: Conceptual Design of a Punokawan Puzzle with PLA-Based 3D Printing",
+    //   type_id: "Jurnal",
+    //   type_en: "Journal",
+    //   year: 2025,
+    //   imageSrc: "/archive/gantungan-kunci/thumbnail.jpg", 
+    //   url: "#" 
+    // },
+    // {
+    //   id: 5,
+    //   title: "Sustainable Rattan Craftsmanship: Bridging Tradition and Modernity",
+    //   type_id: "Artikel",
+    //   type_en: "Article",
+    //   year: 2024,
+    //   imageSrc: "/archive/kursi-lengkung/IMG_2488.png", 
+    //   url: "#" 
+    // },
+    // {
+    //   id: 6,
+    //   title: "Community-Based Design: A Case Study in Central Java",
+    //   type_id: "Lainnya",
+    //   type_en: "Others",
+    //   year: 2024,
+    //   imageSrc: "/homepage/jurnal-thumbnail.png", 
+    //   url: "#" 
+    // },
+    // {
+    //   id: 7,
+    //   title: "Digital Archiving of Tangible Cultural Heritage",
+    //   type_id: "Jurnal",
+    //   type_en: "Journal",
+    //   year: 2024,
+    //   imageSrc: "/homepage/desa-trangsan-card-thumbnail.png", 
+    //   url: "#" 
+    // },
+    // {
+    //   id: 8,
+    //   title: "Mingei Philosophy in Contemporary Indonesian Design",
+    //   type_id: "Artikel",
+    //   type_en: "Article",
+    //   year: 2024,
+    //   imageSrc: "/archive/tempat-teh/thumbnail.jpg", 
+    //   url: "#" 
+    // }
 ];
