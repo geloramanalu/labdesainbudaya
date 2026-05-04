@@ -2,69 +2,112 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { supabase } from '@/lib/supabaseClient'; // Adjust this path if your client is elsewhere
+import { supabase } from '@/lib/supabaseClient';
 import toast from 'react-hot-toast';
 
 export default function NewArchivePage() {
   const router = useRouter();
   
-  // form State
+  // Form State matching the database schema
   const [title, setTitle] = useState('');
   const [creators, setCreators] = useState('');
-  const [description, setDescription] = useState('');
+  const [descriptionId, setDescriptionId] = useState('');
+  const [descriptionEn, setDescriptionEn] = useState('');
   const [file, setFile] = useState<File | null>(null);
   
-  // Loading State
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0] || null;
+
+    if (selectedFile) {
+      const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
+      
+      if (selectedFile.size > MAX_FILE_SIZE) {
+        toast.error('File is too large! Please select an image under 2MB.');
+        // reset the visual input and the state
+        e.target.value = ''; 
+        setFile(null);
+        return;
+      }
+    }
+    
+    setFile(selectedFile);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Basic Validation
+    // 1. Validation: Required Fields
     if (!title || !file) {
       toast.error('Title and an Image are required!');
       return;
     }
 
+    // file size validation
+    if (file) {
+      const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
+      if (file.size > MAX_FILE_SIZE) {
+        toast.error('File size exceeds 2MB limit. Please replace the image.');
+        setIsSubmitting(false); 
+        return;
+      }
+    }
+
+    // const toastId = toast.loading(isEditMode ? 'Updating...' : 'Creating...');
+    // setIsSubmitting(true);
+
     const toastId = toast.loading('Uploading and saving...');
     setIsSubmitting(true);
 
     try {
-      // 1. Upload the Image to Supabase Storage
+      
       const fileExt = file.name.split('.').pop();
-      const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`;
+      const fileName = `archive-${Date.now()}.${fileExt}`;
       const filePath = `archives/${fileName}`;
 
       const { error: uploadError } = await supabase.storage
-        .from('labdesainbudaya-media') // Ensure this bucket exists in your Supabase project
+        .from('labdesainbudaya-media') // Your exact bucket name
         .upload(filePath, file);
 
-      if (uploadError) throw uploadError;
+      if (uploadError) throw new Error(`Upload Failed: ${uploadError.message}`);
 
-      // 2. Get the Public URL of the uploaded image
       const { data: publicUrlData } = supabase.storage
         .from('labdesainbudaya-media')
         .getPublicUrl(filePath);
 
       const imageUrl = publicUrlData.publicUrl;
 
-      // 3. Insert the Text Data + Image URL into the Database
+      const generatedSlug = title
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9]+/g, '-') 
+        .replace(/(^-|-$)+/g, '');   
+
       const { error: insertError } = await supabase
         .from('archives')
         .insert([
           { 
-            title, 
-            creators, 
-            description, 
+            title: title,
+            slug: generatedSlug,
+            creators: creators, 
+            description_id: descriptionId, 
+            description_en: descriptionEn,
             image_url: imageUrl 
+            // type_anyaman, material_rotan, etc. will just be left null for now
           }
         ]);
 
-      if (insertError) throw insertError;
+      if (insertError) {
+         // if the slug is already taken, Supabase throws code '23505'
+         if (insertError.code === '23505') {
+            throw new Error('An archive with this title already exists. Please use a different title.');
+         }
+         throw new Error(`Database Error: ${insertError.message}`);
+      }
 
-      // Success!
       toast.success('Archive added successfully!', { id: toastId });
-      router.push('/admin/archives'); // Redirect back to the table view
+      router.push('/admin/archives');
       
     } catch (error: any) {
       toast.error(error.message || 'Something went wrong', { id: toastId });
@@ -78,7 +121,6 @@ export default function NewArchivePage() {
       <h1 className="text-2xl font-bold mb-6 text-gray-800">Add New Archive</h1>
       
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Title Input */}
         <div>
           <label className="block text-sm font-medium text-gray-700">Title *</label>
           <input 
@@ -87,11 +129,10 @@ export default function NewArchivePage() {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-            placeholder="e.g., Anyaman Bambu Tradisional"
+            placeholder="e.g., Kursi Bambu Tradisional"
           />
         </div>
 
-        {/* Creators/Authors Input */}
         <div>
           <label className="block text-sm font-medium text-gray-700">Creators / Researchers</label>
           <input 
@@ -103,18 +144,26 @@ export default function NewArchivePage() {
           />
         </div>
 
-        {/* Description Input */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">Description</label>
+          <label className="block text-sm font-medium text-gray-700">Description (Indonesian)</label>
           <textarea 
-            rows={4}
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            rows={3}
+            value={descriptionId}
+            onChange={(e) => setDescriptionId(e.target.value)}
             className="mt-1 block w-full border border-gray-300 rounded-md p-2"
           />
         </div>
 
-        {/* Image File Input */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Description (English)</label>
+          <textarea 
+            rows={3}
+            value={descriptionEn}
+            onChange={(e) => setDescriptionEn(e.target.value)}
+            className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+          />
+        </div>
+
         <div>
           <label className="block text-sm font-medium text-gray-700">Upload Image *</label>
           <input 
@@ -129,10 +178,9 @@ export default function NewArchivePage() {
               file:bg-blue-50 file:text-blue-700
               hover:file:bg-blue-100"
           />
-          <p className="mt-1 text-xs text-gray-500">Max file size: 2MB</p>
+          <p className="mt-1 text-xs text-gray-500">Max file size: 2MB.</p>
         </div>
 
-        {/* Submit Button */}
         <button 
           type="submit" 
           disabled={isSubmitting}

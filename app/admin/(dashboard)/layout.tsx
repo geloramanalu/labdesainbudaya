@@ -1,9 +1,11 @@
+// app/admin/layout.tsx
 "use client";
 
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
 import Link from "next/link";
+import { Toaster } from "react-hot-toast"; // <-- 1. Import Toaster
 
 export default function DashboardLayout({
   children,
@@ -54,6 +56,9 @@ export default function DashboardLayout({
 
   return (
     <div className="min-h-screen flex bg-gray-100">
+      {/* 2. Place Toaster here so it floats above everything */}
+      <Toaster position="bottom-right" reverseOrder={false} /> 
+
       <aside className="w-64 bg-white shadow-md flex flex-col">
         <div className="p-6 border-b border-gray-100">
           <h1 className="text-xl font-bold text-gray-900">Lab Admin</h1>
@@ -61,7 +66,6 @@ export default function DashboardLayout({
         </div>
         
         <nav className="flex-1 p-4 space-y-2">
-          {/* UPDATED LINKS HERE */}
           <Link 
             href="/admin" 
             className={`block px-4 py-2 rounded-md transition-colors ${pathname === '/admin' ? 'bg-black text-white' : 'text-gray-600 hover:bg-gray-50'}`}
