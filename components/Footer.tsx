@@ -2,8 +2,15 @@
 
 import React from 'react'
 import { Instagram, Mail } from 'lucide-react'
+import { usePathname } from "next/navigation";
 
 const Footer = () => {
+    const pathname = usePathname();
+
+  // hide footer on admin page
+  if (pathname?.startsWith("/admin")) {
+    return null;
+  }
   return (
     <footer className="bg-[#2D2D2D] text-white pt-16 pb-8 px-6 flex flex-col items-center text-center overflow-hidden xl:mx-8 xl:mb-8 xl:border-[#1d1d1d] xl:border-2 xl:px-28 xl:pt-12 xl:pb-12 xl:justify-between">
       

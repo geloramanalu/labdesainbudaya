@@ -4,11 +4,17 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Menu, Plus } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext'; 
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const { lang, switchLang, t } = useLanguage();
+  const pathname = usePathname();
+  
+  if (pathname?.startsWith("/admin")) {
+    return null;
+  }
 
   const NAV_ITEMS = [
     { label: t('nav.about'), path: '/about' },
