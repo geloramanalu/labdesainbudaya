@@ -46,8 +46,7 @@ jobs:
         env:
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
           NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
-        - name: Build nextjs App
-
+      
       # rewrites history with force push
       # works in deployment from hostinger but not autodeployment 
       # - name: Deploy to output 
