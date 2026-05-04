@@ -12,7 +12,21 @@ export interface UniversalFormProps {
 
 export function UniversalAdminForm({ tableName, initialData, onSuccess, ...otherProps }: UniversalFormProps) {
   const schema = FORM_SCHEMAS[tableName]; 
-  const [formData, setFormData] = useState<Record<string, any>>(initialData || {});
+  const [formData, setFormData] = useState<Record<string, any>>(() => {
+    if (!initialData) return {};
+    
+    const formattedData = { ...initialData };
+    // convert arrays back to comma-separated strings for the UI inputs
+    const jsonbFields = ['material_rotan', 'alat_produksi'];
+    jsonbFields.forEach(field => {
+      if (Array.isArray(formattedData[field])) {
+        formattedData[field] = formattedData[field].join(', ');
+      }
+    });
+    return formattedData;
+  });
+
+
   const [file, setFile] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -99,10 +113,25 @@ export function UniversalAdminForm({ tableName, initialData, onSuccess, ...other
       }
 
       // --- 3. PREPARE PAYLOAD ---
+      const processedData = { ...formData };
+
+      //  Convert specific comma-separated fields into arrays
+      // You can add any other JSONB column names to this list in the future
+      const jsonbFields = ['material_rotan', 'alat_produksi'];
+
+      jsonbFields.forEach((field) => {
+        if (processedData[field] && typeof processedData[field] === 'string') {
+          processedData[field] = processedData[field]
+            .split(',')
+            .map((item: string) => item.trim()) // Remove extra spaces
+            .filter((item: string) => item !== ''); // Remove empty items (e.g. if they type "Bambu, , Kayu")
+        }
+      });
+
       const dbPayload = {
-        ...formData,
+        ...processedData,
         image_url: imageUrl,
-        slug: finalSlug // Automated slug
+        slug: finalSlug // Explicitly inject the hidden/pregenerated slug
       };
 
       // --- 4. DATABASE ACTION ---
