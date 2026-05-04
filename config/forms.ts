@@ -17,5 +17,29 @@ export const FORM_SCHEMAS = {
     { name: 'creators', label: 'Creators / Researchers', type: 'text', required: true },
     { name: 'description_id', label: 'Description (Indonesian)', type: 'textarea', required: true },
     { name: 'description_en', label: 'Description (English)', type: 'textarea', required: true },
+  ],
+  events: [
+    { name: 'title', label: 'Event Title', type: 'text', required: true },
+    // { name: 'type', label: 'Event Type (e.g., Workshop, Exhibition)', type: 'text', required: true },
+    { name: 'year', label: 'Year', type: 'number', required: true },
+    { name: 'description_id', label: 'Description (Indonesian)', type: 'textarea', required: true },
+    { name: 'description_en', label: 'Description (English)', type: 'textarea', required: true },
+  ],
+  publications: [
+    { name: 'title', label: 'Publication Title', type: 'text', required: true },
+    { 
+      name: 'type', 
+      label: 'Publication Type', 
+      type: 'select', //dropdown type
+      required: true,
+      options: [     
+        { label: 'Article', value: 'Article' },
+        { label: 'Journal', value: 'Journal' },
+        { label: 'Book', value: 'Book' },
+        { label: 'Others', value: 'Others' }
+      ]
+    },
+    { name: 'year', label: 'Year', type: 'number', required: true },
+    { name: 'url', label: 'External Link (URL)', type: 'url', required: true },
   ]
 };

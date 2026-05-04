@@ -51,7 +51,7 @@ export function UniversalAdminForm({ tableName, initialData, onSuccess, ...other
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // --- 1. FORM VALIDATION: Check required text fields based on Schema ---
     for (const field of schema) {
       if (field.required) {
@@ -64,6 +64,7 @@ export function UniversalAdminForm({ tableName, initialData, onSuccess, ...other
     }
 
     // --- 2. FORM VALIDATION: Check required Image ---
+    // If it's a new entry (no initialData) OR there's no existing image, force upload
     if (!file && !initialData?.image_url) {
       toast.error('An image upload is required!');
       return;
@@ -81,18 +82,27 @@ export function UniversalAdminForm({ tableName, initialData, onSuccess, ...other
     const toastId = toast.loading('Uploading and saving...');
 
     try {
-      // --- 1. SLUG LOGIC (New) ---
+      // --- 3. SLUG LOGIC ---
+      // Include 'events' here! Publications is safely excluded.
+      const tablesWithSlugs = ['archives', 'craftsmen']; 
+      const needsSlug = tablesWithSlugs.includes(tableName as string);
+
       let finalSlug = initialData?.slug;
-
-      // Only generate a NEW slug if it's a new entry OR the title has changed
-      const titleChanged = formData.title && formData.title !== initialData?.title;
-      
-      if (!initialData || titleChanged) {
-        toast.loading('Generating unique URL...', { id: toastId });
-        finalSlug = await generateUniqueSlug(formData.title, tableName);
+      if (needsSlug) {
+        // Look for title first, then name (for craftsmen)
+        const identifier = formData.title || formData.name || ""; 
+        const initialIdentifier = initialData?.title || initialData?.name || "";
+        
+        const titleChanged = identifier && identifier !== initialIdentifier;
+        
+        if (!initialData || titleChanged) {
+          toast.loading('Generating unique URL...', { id: toastId });
+          finalSlug = await generateUniqueSlug(identifier, tableName as string);
+        }
       }
+      // NOTE: Removed the duplicate unconditional slug block that was crashing publications!
 
-      // --- 2. STORAGE LOGIC: Upload image ---
+      // --- 4. STORAGE LOGIC: Upload image ---
       let imageUrl = initialData?.image_url || null;
       if (file) {
         const fileExt = file.name.split('.').pop();
@@ -112,29 +122,31 @@ export function UniversalAdminForm({ tableName, initialData, onSuccess, ...other
         imageUrl = publicUrlData.publicUrl;
       }
 
-      // --- 3. PREPARE PAYLOAD ---
+      // --- 5. PREPARE PAYLOAD ---
       const processedData = { ...formData };
 
-      //  Convert specific comma-separated fields into arrays
-      // You can add any other JSONB column names to this list in the future
+      // Convert specific comma-separated fields into JSONB arrays
       const jsonbFields = ['material_rotan', 'alat_produksi'];
-
       jsonbFields.forEach((field) => {
         if (processedData[field] && typeof processedData[field] === 'string') {
           processedData[field] = processedData[field]
             .split(',')
-            .map((item: string) => item.trim()) // Remove extra spaces
-            .filter((item: string) => item !== ''); // Remove empty items (e.g. if they type "Bambu, , Kayu")
+            .map((item: string) => item.trim()) 
+            .filter((item: string) => item !== ''); 
         }
       });
 
-      const dbPayload = {
+      const dbPayload: any = {
         ...processedData,
         image_url: imageUrl,
-        slug: finalSlug // Explicitly inject the hidden/pregenerated slug
       };
 
-      // --- 4. DATABASE ACTION ---
+      // Only attach the slug property to the database payload if this table actually uses it
+      if (needsSlug && finalSlug) {
+        dbPayload.slug = finalSlug;
+      }
+
+      // --- 6. DATABASE ACTION ---
       if (initialData?.id) {
         const { error } = await supabase
           .from(tableName)
@@ -148,10 +160,11 @@ export function UniversalAdminForm({ tableName, initialData, onSuccess, ...other
         if (error) throw error;
       }
 
-      toast.success('Archive saved successfully!', { id: toastId });
+      toast.success('Saved successfully!', { id: toastId });
       onSuccess();
       
     } catch (error: any) {
+      console.error(error);
       toast.error(error.message || 'Something went wrong', { id: toastId });
     } finally {
       setIsSubmitting(false);
@@ -184,6 +197,21 @@ export function UniversalAdminForm({ tableName, initialData, onSuccess, ...other
               onChange={(e) => handleInputChange(field.name, e.target.value)}
               value={formData[field.name] || ''}
             />
+          ) : field.type === 'select' ? (
+            <select
+              className={`mt-1 block w-full border rounded-md p-2 shadow-sm focus:ring-blue-500 focus:border-blue-500 transition-colors bg-white ${
+                field.required && !formData[field.name] ? 'border-gray-300 hover:border-gray-400' : 'border-gray-300'
+              }`}
+              onChange={(e) => handleInputChange(field.name, e.target.value)}
+              value={formData[field.name] || ''}
+            >
+              <option value="" disabled>Select {field.label}</option>
+              {field.options?.map((opt: any) => (
+                <option key={opt.value} value={opt.value}>
+                  {opt.label}
+                </option>
+              ))}
+            </select>
           ) : (
             <input 
               type={field.type}
