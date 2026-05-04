@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
+import Link from "next/link";
 import toast from 'react-hot-toast'
 
 type Archive = {
@@ -11,7 +12,7 @@ type Archive = {
 };
 
 const handleDelete = async (id: string) => {
-  // Always confirm before a destructive action
+  // always confirm before a destructive action
   if (!window.confirm('Are you sure you want to delete this archive?')) return;
 
   const toastId = toast.loading('Deleting...');
@@ -30,6 +31,27 @@ const handleDelete = async (id: string) => {
   } catch (error: any) {
     toast.error(error.message || 'Failed to delete', { id: toastId });
   }
+}
+
+const uploadImage = async (file: File) => {
+  // 1. Create a unique file name to prevent overwriting
+  const fileExt = file.name.split('.').pop();
+  const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`;
+  const filePath = `archives/${fileName}`;
+
+  // 2. Upload to Supabase Storage
+  const { data, error } = await supabase.storage
+    .from('lab-media') // Your bucket name
+    .upload(filePath, file);
+
+  if (error) throw error;
+
+  // 3. Get the public URL to save into your database
+  const { data: publicUrlData } = supabase.storage
+    .from('lab-media')
+    .getPublicUrl(filePath);
+
+  return publicUrlData.publicUrl;
 }
 
 export default function ArchivesPage() {
@@ -60,9 +82,11 @@ export default function ArchivesPage() {
     <div>
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold text-gray-900">Manage Archives</h2>
-        <button className="bg-black text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-800 transition-colors">
-          + Add New Archive
-        </button>
+        <Link href='/admin/archives/new/'>
+          <button className="bg-black text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-800 transition-colors">
+            + Add New Archive
+          </button>
+        </Link>
       </div>
 
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
