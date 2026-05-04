@@ -38,10 +38,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
       
-      - name: Install and Build
-        run: |
-          npm install
-          npm run build
+      - name: Install dependencies
+        run: npm install
+        
+      - name: Build nextjs App
+        run: npm run build
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
       
       # rewrites history with force push
       # works in deployment from hostinger but not autodeployment 
