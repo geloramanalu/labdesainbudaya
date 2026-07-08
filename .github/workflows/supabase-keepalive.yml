@@ -1,13 +1,36 @@
 name: Supabase keepalive
+
 on:
   schedule:
-    - cron: "0 3 */3 * *"  # every 3 days, 3am UTC 
-  workflow_dispatch: # trigger it manual to test
+    # Run every 3 days at 9:15 AM Western Indonesian Time (WIB) which is 2:15 AM UTC.
+    # Scheduled at a non-zero minute to avoid runner queue delays during peak hours.
+    - cron: "15 2 */3 * *"
+  workflow_dispatch: # Allows manual trigger for testing
+
 jobs:
   ping:
-    runs-on: ubuntu-latest 
+    runs-on: ubuntu-latest
     steps:
-      - name: Ping Supabase REST API
+      - name: Ping Supabase REST API (POST Write)
         run: |
-          curl -s -X GET "${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}/rest/v1/archives?limit=1" \
-            -H "apikey: ${{ secrets.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY }}"
+          success=false
+          for i in {1..5}; do
+            echo "Attempt $i to insert keepalive record into Supabase..."
+            if curl -sSf -X POST "${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}/rest/v1/keepalive" \
+              -H "apikey: ${{ secrets.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY }}" \
+              -H "Authorization: Bearer ${{ secrets.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY }}" \
+              -H "Content-Type: application/json" \
+              -H "Prefer: return=minimal" \
+              -d '{"service": "github_actions"}'; then
+              echo "Successfully wrote keepalive record to Supabase."
+              success=true
+              break
+            else
+              echo "Attempt $i failed. Retrying in 30 seconds..."
+              sleep 30
+            fi
+          done
+          if [ "$success" = false ]; then
+            echo "Error: Failed to ping Supabase after 5 attempts."
+            exit 1
+          fi
