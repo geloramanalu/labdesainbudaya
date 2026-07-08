@@ -32,7 +32,7 @@ const CraftsmenGrid = ({ items }: { items: CraftsmanItem[] }) => {
             key={item.id}
             title={item.name}
             image={item.thumbnail} 
-            link={`/desa/craftsmen/${item.slug}`} 
+            link={`/desa/craftsmen/detail?id=${item.id}`} 
             // Priority true for the first 6 images (LCP optimization)
             priority={index < 6}
           />

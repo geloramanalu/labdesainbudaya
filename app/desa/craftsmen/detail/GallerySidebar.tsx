@@ -10,11 +10,11 @@ interface GallerySidebarProps {
 }
 
 export default function GallerySidebar({ images, personName }: GallerySidebarProps) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
   if (!images || images.length < 2) {
     return null;
   }
-
-  const [currentIndex, setCurrentIndex] = useState(0);
 
   const nextSlide = () => {
     setCurrentIndex((prev) => (prev + 1) % images.length);

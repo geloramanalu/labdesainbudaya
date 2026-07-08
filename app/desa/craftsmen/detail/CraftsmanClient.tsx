@@ -17,10 +17,6 @@ interface CraftsmanClientProps {
     thumbnail: string | null;
   }[];
 }
-// to do: tidy up layouting
-// to do: fix detail image fallback & mapping
-// to do: remove sidebar from layout
-// to do: add back button
 
 export default function CraftsmanClient({ 
   craftsman, 
@@ -31,12 +27,10 @@ export default function CraftsmanClient({
   
   const { lang, t } = useLanguage();
 
-  
   const description = lang === 'EN' && craftsman.description_en 
     ? craftsman.description_en 
     : craftsman.description_id;
 
-  
   const [personName, companyName] = craftsman.name.includes('/') 
     ? craftsman.name.split('/').map(s => s.trim())
     : [craftsman.name, ''];
@@ -124,7 +118,7 @@ export default function CraftsmanClient({
             {otherCraftsmen.map(({ data, thumbnail }) => {
                const [suggestionName, suggestionBiz] = data.name.split('/');
                return (
-                <Link key={data.id} href={`/desa/craftsmen/${data.slug}`} className="group block border border-gray-300 bg-[#E5E5E5] hover:border-black transition-colors">
+                <Link key={data.id} href={`/desa/craftsmen/detail?id=${data.id}`} className="group block border border-gray-300 bg-[#E5E5E5] hover:border-black transition-colors">
                   <div className="relative aspect-square overflow-hidden">
                     {thumbnail ? (
                       <Image 

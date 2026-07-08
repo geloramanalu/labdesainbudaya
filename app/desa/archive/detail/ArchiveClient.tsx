@@ -112,7 +112,7 @@ export default function ArchiveClient({
                const otherTitle = data.title;
                
                return (
-                <Link key={data.id} href={`/desa/archive/${data.slug}`} className="group block border border-gray-300 hover:border-black transition-colors">
+                <Link key={data.id} href={`/desa/archive/detail?id=${data.id}`} className="group block border border-gray-300 hover:border-black transition-colors">
                   <div className="relative aspect-square overflow-hidden bg-gray-200">
                     {thumbnail ? (
                       <Image src={thumbnail} alt={data.title} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />

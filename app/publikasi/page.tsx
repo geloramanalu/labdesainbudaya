@@ -1,14 +1,25 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ArrowLeft, ArrowRight } from 'lucide-react'; // Removed Image import as it's inside the component now
-import { PUBLICATION_DATA } from '@/data/publicationData';
 import { useLanguage } from '@/context/LanguageContext';
-import CardPublikasi from '@/components/CardPublikasi'; // 1. Import the component
+import CardPublikasi from '@/components/CardPublikasi'; 
+import { useSupabaseList } from '@/hooks/useSupabaseList';
+import { PublicationItem } from '@/data/publicationData';
+
+interface DbPublication {
+  id: number;
+  title: string;
+  type: string;
+  year: number | string;
+  url: string;
+  image_url: string;
+}
 
 const PublikasiPage = () => {
   const { t, lang } = useLanguage();
   
+  const { data: dbItems, isLoading, error } = useSupabaseList<DbPublication>('publications');
+
   const FILTERS = [
     { value: "Semua", label: t('publicationPage.filters.all') },
     { value: "Artikel", label: t('publicationPage.filters.article') },
@@ -18,9 +29,39 @@ const PublikasiPage = () => {
 
   const [activeFilter, setActiveFilter] = useState("Semua");
 
+  if (isLoading) {
+    return (
+      <main className="min-h-screen bg-[#EFEFEF] font-sans text-[#2D2D2D] flex items-center justify-center">
+        <div className="text-lg text-gray-500 animate-pulse">Loading publications...</div>
+      </main>
+    );
+  }
+
+  if (error) {
+    return (
+      <main className="min-h-screen bg-[#EFEFEF] font-sans text-[#2D2D2D] flex items-center justify-center">
+        <div className="text-lg text-red-500">Error loading publications: {error.message}</div>
+      </main>
+    );
+  }
+
+  const processedData: PublicationItem[] = (dbItems || []).map((item) => {
+    const type_id = item.type === 'Article' ? 'Artikel' : item.type === 'Journal' ? 'Jurnal' : 'Lainnya';
+    const type_en = item.type === 'Article' ? 'Article' : item.type === 'Journal' ? 'Journal' : 'Others';
+    return {
+      id: item.id,
+      title: item.title,
+      type_id,
+      type_en,
+      year: Number(item.year),
+      url: item.url,
+      imageSrc: item.image_url || '',
+    };
+  });
+
   const filteredData = activeFilter === "Semua" 
-    ? PUBLICATION_DATA 
-    : PUBLICATION_DATA.filter(item => item.type_id === activeFilter);
+    ? processedData 
+    : processedData.filter(item => item.type_id === activeFilter);
 
   return (
     <main className="min-h-screen bg-[#EFEFEF] font-sans text-[#2D2D2D]">
@@ -56,7 +97,6 @@ const PublikasiPage = () => {
           ))}
         </div>
 
-        
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 xl:gap-8 mb-16">
           {filteredData.map((item) => {
             // Calculate the correct label string
@@ -74,23 +114,6 @@ const PublikasiPage = () => {
             );
           })}
         </div>
-
-        {/* <div className="flex items-center justify-center gap-4">
-          <button className="p-2 bg-[#2D2D2D] text-white hover:opacity-80 transition-opacity">
-            <ArrowLeft size={24} strokeWidth={1} />
-          </button>
-          
-          <div className="flex gap-2">
-            <div className="w-2 h-2 bg-[#2D2D2D] "></div>
-            <div className="w-2 h-2 border-2 border-[#2D2D2D] "></div>
-            <div className="w-2 h-2 border-2 border-[#2D2D2D] "></div>
-            <div className="w-2 h-2 border-2 border-[#2D2D2D] "></div>
-          </div>
-
-          <button className="p-2 bg-[#2D2D2D] text-white hover:opacity-80 transition-opacity">
-            <ArrowRight size={24} strokeWidth={1} />
-          </button>
-        </div> */}
 
       </div>
 

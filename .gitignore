@@ -24,6 +24,7 @@ out/
 # misc
 .DS_Store
 *.pem
+.ORIGINAL_REQUEST.md
 
 # debug
 npm-debug.log*

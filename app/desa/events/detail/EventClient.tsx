@@ -11,7 +11,7 @@ interface EventClientProps {
   gallery: string[];
 }
 
-export default function EventClient({ item, thumbnail, gallery }: EventClientProps) {
+export default function EventClient({ item, thumbnail }: EventClientProps) {
   const { lang } = useLanguage();
 
   const description = lang === 'EN' && item.content_en ? item.content_en : item.content;

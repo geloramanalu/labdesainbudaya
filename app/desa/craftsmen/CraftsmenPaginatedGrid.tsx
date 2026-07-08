@@ -56,13 +56,13 @@ const CraftsmenPaginatedGrid = ({ items }: { items: CraftsmanItem[] }) => {
   return (
     <div className='p-2 xl:p-4 border xl:-ml-[1px]'>
       <div className="grid grid-cols-2 xl:grid-cols-3 min-h-[500px] gap-4 xl:gap-6">
-        {currentItems.map((item, index) => (
+        {currentItems.map((item) => (
           <HorizontalCard 
             key={item.id}
             // 4. Apply the formatter here
             title={formatCraftsmanName(item.name)}
             image={item.thumbnail} 
-            link={`/desa/craftsmen/${item.slug}`} 
+            link={`/desa/craftsmen/detail?id=${item.id}`} 
             priority={true} 
             variant='secondary'
           />

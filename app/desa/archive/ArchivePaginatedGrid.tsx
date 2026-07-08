@@ -103,7 +103,7 @@ const ArchivePaginatedGridContent = ({ items }: { items: ArchiveItem[] }) => {
             key={item.id}
             title={item.title}
             image={item.thumbnail}
-            link={`/desa/archive/${item.slug}`}
+            link={`/desa/archive/detail?id=${item.id}`}
             variant='secondary'
           />
         ))}
